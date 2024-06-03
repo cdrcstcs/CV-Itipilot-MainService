@@ -1,14 +1,12 @@
 import './App.css'
 import {Route, Routes} from "react-router-dom";
-import IndexPage from "./pages/IndexPage.jsx";
 import LoginPage from "./pages/User/LoginPage.jsx";
 import Layout from "./Layout";
 import RegisterPage from "./pages/User/RegisterPage.jsx";
 import {UserContextProvider} from "./pages/User/UserContext.jsx";
 import ProfilePage from "./pages/User/ProfilePage.jsx";
-import PlacesPage from "./pages/PlacesPage";
-import PlacesFormPage from "./pages/PlacesFormPage";
-import PlacePage from "./pages/PlacePage";
+import ItinerariesPage from './pages/itinerary/ItineraryPage.jsx';
+
 
 function App() {
   return (
