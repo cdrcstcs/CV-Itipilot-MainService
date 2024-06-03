@@ -68,4 +68,5 @@ app.put('/users/:id', verifyToken, updateUser);
 app.delete('/users/:id', verifyToken, deleteUser);
 app.get('/users/profile', verifyToken, userProfile);
 app.post('users/logout', logoutUser); 
+
 app.listen(4000, 'localhost', debug=true);
