@@ -7,23 +7,6 @@ const Header = ({ children }) => {
 
   return (
     <header className="flex justify-between bg-gray-100 p-4">
-      <nav>
-        <ul className="flex gap-4">
-          <li><Link to="/login">Login</Link></li>
-          <li><Link to="/register">Register</Link></li>
-          <li><Link to="/account">Profile</Link></li>
-          <li><Link to="/itinerary/create">Create Itinerary</Link></li>
-          <li><Link to="/attraction/create">Create Attraction</Link></li>
-          <li><Link to="/itineraries">Itineraries</Link></li>
-          <li><Link to="/attractions">Attractions</Link></li>
-          <li><Link to="/ratings">Ratings</Link></li>
-          <li><Link to="/ratings/create">Create Rating</Link></li>
-          <li><Link to="/events">Events</Link></li>
-          <li><Link to="/events/create">Create Event</Link></li>
-          <li><Link to="/tags">Tags</Link></li>
-          <li><Link to="/tags/create">Create Tag</Link></li>
-        </ul>
-      </nav>
       <div className="flex gap-4">
         <div>Welcome to Itipilot</div>
         <button className="bg-primary text-white p-2 rounded-full">
@@ -47,6 +30,22 @@ const Header = ({ children }) => {
           )}
         </Link>
       </div>
+      <nav>
+        <ul className="flex gap-4">
+          <li><Link to="/login">Login</Link></li>
+          <li><Link to="/account">Profile</Link></li>
+          <li><Link to="/itinerary/create">Create Itinerary</Link></li>
+          <li><Link to="/attraction/create">Create Attraction</Link></li>
+          <li><Link to="/itineraries">Itineraries</Link></li>
+          <li><Link to="/attractions">Attractions</Link></li>
+          <li><Link to="/ratings">Ratings</Link></li>
+          <li><Link to="/ratings/create">Create Rating</Link></li>
+          <li><Link to="/events">Events</Link></li>
+          <li><Link to="/events/create">Create Event</Link></li>
+          <li><Link to="/tags">Tags</Link></li>
+          <li><Link to="/tags/create">Create Tag</Link></li>
+        </ul>
+      </nav>
       {children}
     </header>
   );
