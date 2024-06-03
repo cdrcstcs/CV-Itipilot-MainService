@@ -1,12 +1,12 @@
 import './App.css'
 import {Route, Routes} from "react-router-dom";
 import IndexPage from "./pages/IndexPage.jsx";
-import LoginPage from "./pages/LoginPage";
+import LoginPage from "./pages/User/LoginPage.jsx";
 import Layout from "./Layout";
-import RegisterPage from "./pages/RegisterPage";
+import RegisterPage from "./pages/User/RegisterPage.jsx";
 import axios from "axios";
-import {UserContextProvider} from "./UserContext";
-import ProfilePage from "./pages/ProfilePage.jsx";
+import {UserContextProvider} from "./pages/User/UserContext.jsx";
+import ProfilePage from "./pages/User/ProfilePage.jsx";
 import PlacesPage from "./pages/PlacesPage";
 import PlacesFormPage from "./pages/PlacesFormPage";
 import PlacePage from "./pages/PlacePage";

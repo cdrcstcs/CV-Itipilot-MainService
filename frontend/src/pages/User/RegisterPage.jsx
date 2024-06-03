@@ -6,6 +6,8 @@ export default function RegisterPage() {
   const [name,setName] = useState('');
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
+  const [userType, setUserType] = useState('');
+  const [phone, setPhone] = useState('');
   async function registerUser(ev) {
     ev.preventDefault();
     try {
@@ -13,6 +15,8 @@ export default function RegisterPage() {
         name,
         email,
         password,
+        userType,
+        phone,
       });
       alert('Registration successful. Now you can log in');
     } catch (e) {
@@ -36,6 +40,14 @@ export default function RegisterPage() {
                  placeholder="password"
                  value={password}
                  onChange={ev => setPassword(ev.target.value)} />
+          <input type="text"
+                 placeholder="ADMIN or USER"
+                 value={userType}
+                 onChange={ev => setUserType(ev.target.value)} />
+          <input type="text"
+                 placeholder="phone number"
+                 value={phone}
+                 onChange={ev => setPhone(ev.target.value)} />
           <button className="primary">Register</button>
           <div className="text-center py-2 text-gray-500">
             Already a member? <Link className="underline text-black" to={'/login'}>Login</Link>
