@@ -2,8 +2,9 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
-
-const AttractionPage = ({ onAttractionCreated }) => {
+import TagListPage from '../Tag/TagsPage';
+import TagPage from '../Tag/TagPage';
+const CreateAttractionPage = ({ onAttractionCreated }) => {
   const [formData, setFormData] = useState({
     name: '',
     address: '',
@@ -11,7 +12,10 @@ const AttractionPage = ({ onAttractionCreated }) => {
     y: '',
     city: ''
   });
-
+  const [selectedTags, setSelectedTags] = useState();
+  const handleSelectTags = (tags) => {
+    setSelectedTags(tags);
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -55,6 +59,10 @@ const AttractionPage = ({ onAttractionCreated }) => {
           <label>City:</label>
           <input type="text" name="city" value={formData.city} onChange={handleChange} required />
         </div>
+        <TagListPage onSelectTags={handleSelectTags} />
+        {selectedTags && selectedTags.map((tag)=>{
+            <TagPage tagId={tag._id}></TagPage>
+        })}
         <button type="submit">Create</button>
       </form>
     </div>

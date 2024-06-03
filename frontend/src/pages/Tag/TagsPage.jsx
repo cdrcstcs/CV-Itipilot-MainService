@@ -1,9 +1,7 @@
-// TagListPage.js
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const TagListPage = ({ onSelectMode, onTagsSelect }) => {
+const TagListPage = ({ onTagsSelect }) => {
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
 
@@ -22,8 +20,7 @@ const TagListPage = ({ onSelectMode, onTagsSelect }) => {
 
   const handleSelectTag = (tagId) => {
     const selectedTag = tags.find(tag => tag._id === tagId);
-    const tagCopy = { ...selectedTag };
-    setSelectedTags([...selectedTags, tagCopy]);
+    setSelectedTags([...selectedTags, selectedTag]);
   };
 
   const handleRemoveTag = (tagId) => {
@@ -36,30 +33,26 @@ const TagListPage = ({ onSelectMode, onTagsSelect }) => {
 
   return (
     <div>
-      <h1>All Tags</h1>
-      {onSelectMode && (
-        <div>
-          <h2>Selected Tags</h2>
-          <ul>
-            {selectedTags.map(tag => (
-              <li key={tag._id}>
-                <div>
-                  <p>Value: {tag.value}</p>
-                  <button onClick={() => handleRemoveTag(tag._id)}>Remove</button>
-                </div>
-              </li>
-            ))}
-          </ul>
-          <button onClick={handlePropagateTags}>Propagate Tags</button>
-        </div>
-      )}
+      <h1>Select Tags</h1>
+      <h2>Selected Tags</h2>
+      <ul>
+        {selectedTags.map(tag => (
+          <li key={tag._id}>
+            <div>
+              <p>Value: {tag.value}</p>
+              <button onClick={() => handleRemoveTag(tag._id)}>Remove</button>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <button onClick={handlePropagateTags}>Propagate Tags</button>
       <h2>All Tags</h2>
       <ul>
         {tags.map(tag => (
           <li key={tag._id}>
             <div>
               <p>Value: {tag.value}</p>
-              {onSelectMode && <button onClick={() => handleSelectTag(tag._id)}>Select</button>}
+              <button onClick={() => handleSelectTag(tag._id)}>Select</button>
             </div>
           </li>
         ))}

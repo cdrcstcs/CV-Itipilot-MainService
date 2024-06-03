@@ -2,20 +2,24 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
-
-const EventPage = ({ onEventCreated }) => {
+import AttractionListPage from '../Attraction/SelectAttraction';
+import AttractionPage from '../Attraction/AttractionPage';
+const CreateEventPage = ({ onEventCreated }) => {
   const [formData, setFormData] = useState({
     startTime: '',
     endTime: '',
     attractionId: '',
     description: ''
   });
+  const [selectedAttraction, setSelectedAttraction] = useState();
+  const handleSelectAttraction = (attraction) => {
+    setSelectedAttraction(attraction);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -50,6 +54,8 @@ const EventPage = ({ onEventCreated }) => {
           <label>Description:</label>
           <input type="text" name="description" value={formData.description} onChange={handleChange} required />
         </div>
+        <AttractionListPage onSelectAttraction={handleSelectAttraction}></AttractionListPage>
+        {selectedAttraction && <AttractionPage attractionIdId={selectedAttraction._id}></AttractionPage>}
         <button type="submit">Create</button>
       </form>
     </div>

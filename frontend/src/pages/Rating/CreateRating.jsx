@@ -1,9 +1,7 @@
-// RatingPage.js
-
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const RatingPage = ({ onRatingCreated }) => {
+const CreateRating = ({ onRatingCreated }) => {
   const [formData, setFormData] = useState({
     score: 0
   });
@@ -18,12 +16,9 @@ const RatingPage = ({ onRatingCreated }) => {
     try {
       const response = await axios.post('http://localhost:4000/ratings', formData);
       console.log('Rating created:', response.data);
-      // Pass the newly created rating object to the callback function
       onRatingCreated(response.data);
-      // Optionally, you can redirect to another page or show a success message
     } catch (error) {
       console.error('Error creating rating:', error);
-      // Optionally, you can display an error message to the user
     }
   };
 

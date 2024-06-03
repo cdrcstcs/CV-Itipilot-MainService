@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const TagPage = ({ onTagCreated }) => {
+const CreateTagPage = ({ onTagCreated }) => {
   const [formData, setFormData] = useState({
     value: ''
   });

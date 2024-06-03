@@ -1,24 +1,30 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import EventListingPage from './EventListingPage';
-
+import EventPage from '../Event/EventPage';
+import CreateRating from '../Rating/CreateRating';
+import RatingPage from '../Rating/RatingPage';
 const CreateItineraryPage = () => {
   const [formData, setFormData] = useState({
     title: '',
     name: '',
-    userId: '', // You may need to get the user ID from the logged-in user
     startTime: '',
     endTime: ''
   });
   const [selectedEvents, setSelectedEvents] = useState([]);
+  const [rating, onRatingCreated] = useState([]);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSelectEvent = (events) => {
+  const handleSelectEvents = (events) => {
     setSelectedEvents(events);
+  };
+  const handleCreateRating = (rating) => {
+    onRatingCreated(rating);
   };
 
   const handleSubmit = async (e) => {
@@ -26,7 +32,8 @@ const CreateItineraryPage = () => {
     try {
       const response = await axios.post('http://localhost:4000/itinerary', {
         ...formData,
-        selectedEvents: selectedEvents.map(event => event._id) // Send only event IDs to the backend
+        eventIds: selectedEvents.map(event => event._id), // Send only event IDs to the backend
+        ratingId: rating._id,
       });
       console.log('Itinerary created:', response.data);
       // Optionally, you can redirect to another page or show a success message
@@ -56,7 +63,12 @@ const CreateItineraryPage = () => {
           <label>End Time:</label>
           <input type="datetime-local" name="endTime" value={formData.endTime} onChange={handleChange} required />
         </div>
-        <EventListingPage onSelectEvent={handleSelectEvent} />
+        <EventListingPage onSelectEvents={handleSelectEvents} />
+        {selectedEvents && selectedEvents.map((event)=>{
+            <EventPage eventId={event._id}></EventPage>
+        })}
+        <CreateRating onRatingCreated={handleCreateRating}></CreateRating>
+        {rating && <RatingPage ratingId={rating._id}></RatingPage>}
         <button type="submit">Create</button>
       </form>
     </div>
