@@ -1,5 +1,7 @@
-// axiosSetup.js
 import axios from 'axios';
+
+axios.defaults.baseURL = "http://localhost:5713";
+axios.defaults.withCredentials = true;
 
 axios.interceptors.request.use(config => {
   const token = document.cookie.split(';').find(cookie => cookie.trim().startsWith('token='));

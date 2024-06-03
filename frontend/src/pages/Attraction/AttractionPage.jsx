@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'; 
-
+import axios from "../../AxiosSetup";
+import TagPage from '../Tag/TagPage';
 const AttractionPage = ({ attractionId }) => {
   const [attraction, setAttraction] = useState(null);
   const [editedAttraction, setEditedAttraction] = useState(null);
@@ -56,6 +56,7 @@ const AttractionPage = ({ attractionId }) => {
           <p>City: {attraction.city}</p>
           <p>X: {attraction.x}</p>
           <p>Y: {attraction.y}</p>
+          <TagPage tagId={attraction.tagId}></TagPage>
           {editing ? (
             <div>
               <input type="text" name="name" placeholder="New Name" value={editedAttraction.name} onChange={handleChange} />
@@ -63,6 +64,7 @@ const AttractionPage = ({ attractionId }) => {
               <input type="text" name="city" placeholder="New City" value={editedAttraction.city} onChange={handleChange} />
               <input type="text" name="x" placeholder="New X Coordinate" value={editedAttraction.x} onChange={handleChange} />
               <input type="text" name="y" placeholder="New Y Coordinate" value={editedAttraction.y} onChange={handleChange} />
+              <TagPage tagId={attraction.tagId}></TagPage>
               <button onClick={handleEditAttraction}>Save</button>
             </div>
           ) : (

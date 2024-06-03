@@ -11,7 +11,7 @@ function RatingPage({ ratingId }) {
 
   const fetchRatingById = async () => {
     try {
-      const response = await axios.get(`/api/ratings/${ratingId}`); // Replace '/api/ratings' with your actual API endpoint
+      const response = await axios.get(`http://localhost:4000/ratings/${ratingId}`); // Replace '/api/ratings' with your actual API endpoint
       setRating(response.data);
     } catch (error) {
       console.error('Error fetching rating:', error);
@@ -20,7 +20,7 @@ function RatingPage({ ratingId }) {
 
   const handleLike = async () => {
     try {
-      await axios.put(`/api/ratings/${ratingId}`, { score: rating.score + 1 }); // Replace '/api/ratings' with your actual API endpoint
+      await axios.put(`http://localhost:4000/ratings/${ratingId}`, { score: rating.score + 1 }); // Replace '/api/ratings' with your actual API endpoint
       setRating({ ...rating, score: rating.score + 1 });
       setIsLiked(true);
     } catch (error) {

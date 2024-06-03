@@ -3,6 +3,8 @@ import axios from 'axios';
 
 function TagPage({ tagId }) {
   const [tag, setTag] = useState(null);
+  const [editMode, setEditMode] = useState(false);
+  const [editedValue, setEditedValue] = useState('');
 
   useEffect(() => {
     fetchTagById();
@@ -10,10 +12,29 @@ function TagPage({ tagId }) {
 
   const fetchTagById = async () => {
     try {
-      const response = await axios.get(`/api/tags/${tagId}`); // Replace '/api/tags' with your actual API endpoint
+      const response = await axios.get(`http://localhost:4000/tags/${tagId}`); // Replace '/api/tags' with your actual API endpoint
       setTag(response.data);
     } catch (error) {
       console.error('Error fetching tag:', error);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`http://localhost:4000/tags/${tagId}`); // Replace '/api/tags' with your actual API endpoint
+      // Optionally, you can navigate the user back to a different page after deletion
+    } catch (error) {
+      console.error('Error deleting tag:', error);
+    }
+  };
+
+  const handleEdit = async () => {
+    try {
+      await axios.put(`http://localhost:4000/tags/${tagId}`, { value: editedValue }); // Replace '/api/tags' with your actual API endpoint
+      setTag({ ...tag, value: editedValue });
+      setEditMode(false);
+    } catch (error) {
+      console.error('Error editing tag:', error);
     }
   };
 
@@ -22,7 +43,23 @@ function TagPage({ tagId }) {
       <h1>Tag Details</h1>
       {tag ? (
         <div>
-          <p>Value: {tag.value}</p>
+          {editMode ? (
+            <div>
+              <input
+                type="text"
+                value={editedValue}
+                onChange={(e) => setEditedValue(e.target.value)}
+              />
+              <button onClick={handleEdit}>Save</button>
+              <button onClick={() => setEditMode(false)}>Cancel</button>
+            </div>
+          ) : (
+            <div>
+              <p>Value: {tag.value}</p>
+              <button onClick={() => setEditMode(true)}>Edit</button>
+              <button onClick={handleDelete}>Delete</button>
+            </div>
+          )}
         </div>
       ) : (
         <p>Loading...</p>
