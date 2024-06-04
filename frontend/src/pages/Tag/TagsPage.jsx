@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useCookies } from '../../Cookies';
 
 const TagListPage = ({ onTagsSelect }) => {
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
+  const cookie = useCookies();
 
   useEffect(() => {
     fetchTags();
@@ -11,7 +13,7 @@ const TagListPage = ({ onTagsSelect }) => {
 
   const fetchTags = async () => {
     try {
-        const token = useCookies.get('token');
+        const token = cookie.get('token');
       const response = await axios.get('http://localhost:4000/tags',{
         headers: {
             Authorization: `Bearer ${token}`,

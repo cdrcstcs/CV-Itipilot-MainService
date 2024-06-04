@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import UserPage from '../User/UserPage';
 import RatingPage from '../Rating/RatingPage';
+import { useCookies } from '../../Cookies';
+
 const ItinerariesPage = () => {
   const [itineraries, setItineraries] = useState([]);
   const [editedItinerary, setEditedItinerary] = useState(null);
+  const cookie = useCookies();
 
   useEffect(() => {
     fetchItineraries();
@@ -12,7 +15,7 @@ const ItinerariesPage = () => {
 
   const fetchItineraries = async () => {
     try {
-        const token = useCookies.get('token');
+        const token = cookie.get('token');
 
       const response = await axios.get('http://localhost:4000/itinerary',{
         headers: {
@@ -27,7 +30,7 @@ const ItinerariesPage = () => {
 
   const handleDeleteItinerary = async (itineraryId) => {
     try {
-        const token = useCookies.get('token');
+        const token = cookie.get('token');
 
       await axios.delete(`http://localhost:4000/itinerary/${itineraryId}`,{
         headers: {
@@ -46,7 +49,7 @@ const ItinerariesPage = () => {
 
   const handleSaveEdit = async (itineraryId) => {
     try {
-        const token = useCookies.get('token');
+        const token = cookie.get('token');
 
       await axios.put(`http://localhost:4000/itinerary/${itineraryId}`,{
         headers: {

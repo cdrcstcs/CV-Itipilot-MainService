@@ -9,9 +9,10 @@ export default function ProfilePage() {
     password: '', // Add password field
     userType: '', // Add userType field
   });
+  const cookie = useCookies();
 
   async function logout() {
-    useCookies.set('token','');
+    cookie.set('token','');
     setRedirect('/');
   }
 
@@ -23,7 +24,7 @@ export default function ProfilePage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const token = useCookies.get('token');
+      const token = cookie.get('token');
       
       await axios.put(`http://localhost:4000/users`,{
         headers: {

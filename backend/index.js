@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 
 import {createAttraction, getAllAttractions, getAttraction, updateAttraction, deleteAttraction} from "./controllers/Attraction.js";
 import {createEvent, getAllEvents, getEvent, updateEvent, deleteEvent} from "./controllers/Event.js";
-import {createUser, getAllUsers, loginUser, getUser, updateUser, deleteUser, logoutUser, getProfile} from "./controllers/User.js";
+import {createUser, getAllUsers, loginUser, getUser, updateUser, getProfile} from "./controllers/User.js";
 import {createItinerary, getAllItineraries, getItinerary, updateItinerary, deleteItinerary} from "./controllers/Itinerary.js";
 import {createRating, getAllRatings, getRating, updateRating, deleteRating} from "./controllers/Rating.js";
 import {createTag, getAllTags, getTag, updateTag, deleteTag} from "./controllers/Tag.js";
@@ -74,7 +74,6 @@ app.post('/login', loginUser);
 app.get('/users', verifyToken, getAllUsers);
 app.get('/users/:id', verifyToken, getUser);
 app.put('/users', verifyToken, updateUser);
-app.delete('/users/:id', verifyToken, deleteUser);
 app.get('/profile', verifyToken, getProfile);
 
 app.listen(4000, 'localhost');

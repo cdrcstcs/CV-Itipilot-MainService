@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useCookies } from '../../Cookies';
 
 const AttractionListPage = ({ onSelectAttraction }) => {
   const [attractions, setAttractions] = useState([]);
+  const cookie = useCookies();
 
   useEffect(() => {
     fetchAttractions();
@@ -10,7 +12,7 @@ const AttractionListPage = ({ onSelectAttraction }) => {
 
   const fetchAttractions = async () => {
     try {
-      const token = useCookies.get('token');
+      const token = cookie.get('token');
 
       const response = await axios.get('http://localhost:4000/attractions',{
         headers: {

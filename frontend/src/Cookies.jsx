@@ -5,7 +5,7 @@ import { Cookies } from 'react-cookie';
 const CookiesContext = createContext();
 
 // Create a context provider to wrap your application
-export function CookiesProvider({ children }) {
+export default function CookiesProvider({ children }) {
   const cookies = new Cookies();
   return (
     <CookiesContext.Provider value={cookies}>

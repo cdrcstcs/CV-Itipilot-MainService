@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import TagListPage from '../Tag/TagsPage';
 import TagPage from '../Tag/TagPage';
+import { useCookies } from '../../Cookies';
+
 const CreateAttractionPage = ({ onAttractionCreated }) => {
   const [formData, setFormData] = useState({
     name: '',
@@ -12,6 +14,8 @@ const CreateAttractionPage = ({ onAttractionCreated }) => {
     y: '',
     city: ''
   });
+  const cookie = useCookies();
+
   const [selectedTags, setSelectedTags] = useState();
   const handleSelectTags = (tags) => {
     setSelectedTags(tags);
@@ -24,7 +28,7 @@ const CreateAttractionPage = ({ onAttractionCreated }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const token = useCookies.get('token');
+        const token = cookie.get('token');
 
       const response = await axios.post('http://localhost:4000/attractions',{
         headers: {

@@ -1,15 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useCookies } from './Cookies';
+import { useState } from 'react';
+import { useEffect } from 'react';
 const Header = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userName, setUserName] = useState('');
-
+  const cookie = useCookies();
   useEffect(() => {
-    const token = useCookies.get('token');
+    const token = cookie.get('token');
     if (token == '') {
       setLoggedIn(true);
-      const user = decodeToken(token);
       setUserName(user.name); 
     } else {
       setLoggedIn(false);
@@ -18,14 +19,18 @@ const Header = () => {
   }, []);
 
   const handleLogout = () => {
-    useCookies.set('token','');
+    cookie.set('token','');
     setLoggedIn(false);
     setUserName('');
   };
 
   return (
     <header style={{ fontSize:'17px',alignItems:'center',backgroundColor:'rgba(0, 0, 0, 0.5)',backgroundImage: 'url("../header.jpg")', color: 'white', backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }} className="flex justify-between bg-gray-100 p-4">
-  
+      <img 
+        src="../icon.png" 
+        alt="Icon" 
+        style={{ width: '50px', height: '50px', borderRadius: '50%' }} 
+      />
       <nav>
         <ul className="flex gap-4">
           {!loggedIn ? (
@@ -49,7 +54,6 @@ const Header = () => {
           )}
         </ul>
       </nav>
-      {children}
     </header>
   );
 };

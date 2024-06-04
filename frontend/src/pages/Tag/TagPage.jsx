@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useCookies } from '../../Cookies';
 
 function TagPage({ tagId }) {
   const [tag, setTag] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [editedValue, setEditedValue] = useState('');
+  const cookie = useCookies();
 
   useEffect(() => {
     fetchTagById();
@@ -12,7 +14,7 @@ function TagPage({ tagId }) {
 
   const fetchTagById = async () => {
     try {
-        const token = useCookies.get('token');
+        const token = cookie.get('token');
 
       const response = await axios.get(`http://localhost:4000/tags/${tagId}`,{
         headers: {
@@ -27,7 +29,7 @@ function TagPage({ tagId }) {
 
   const handleDelete = async () => {
     try {
-        const token = useCookies.get('token');
+        const token = cookie.get('token');
 
       await axios.delete(`http://localhost:4000/tags/${tagId}`,{
         headers: {
@@ -42,7 +44,7 @@ function TagPage({ tagId }) {
 
   const handleEdit = async () => {
     try {
-        const token = useCookies.get('token');
+        const token = cookie.get('token');
 
       await axios.put(`http://localhost:4000/tags/${tagId}`,{
         headers: {

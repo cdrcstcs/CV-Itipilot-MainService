@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useCookies } from '../../Cookies';
 
 function RatingPage({ ratingId }) {
   const [rating, setRating] = useState(null);
   const [isLiked, setIsLiked] = useState(false);
+  const cookie = useCookies();
 
   useEffect(() => {
     fetchRatingById();
@@ -11,7 +13,7 @@ function RatingPage({ ratingId }) {
 
   const fetchRatingById = async () => {
     try {
-        const token = useCookies.get('token');
+        const token = cookie.get('token');
 
       const response = await axios.get(`http://localhost:4000/ratings/${ratingId}`,{
         headers: {
@@ -26,7 +28,7 @@ function RatingPage({ ratingId }) {
 
   const handleLike = async () => {
     try {
-        const token = useCookies.get('token');
+        const token = cookie.get('token');
 
       await axios.put(`http://localhost:4000/ratings/${ratingId}`,{
         headers: {

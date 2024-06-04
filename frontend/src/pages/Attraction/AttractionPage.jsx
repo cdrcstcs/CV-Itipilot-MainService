@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from "../../AxiosSetup";
 import TagPage from '../Tag/TagPage';
+import { useCookies } from '../../Cookies';
 const AttractionPage = ({ attractionId }) => {
   const [attraction, setAttraction] = useState(null);
   const [editedAttraction, setEditedAttraction] = useState(null);
   const [editing, setEditing] = useState(false);
+  const cookie = useCookies();
 
   useEffect(() => {
     const fetchAttraction = async () => {
       try {
-        const token = useCookies.get('token');
+        const token = cookie.get('token');
 
         const response = await axios.get(`http://localhost:4000/attractions/${attractionId}`,{
             headers: {
@@ -29,7 +31,7 @@ const AttractionPage = ({ attractionId }) => {
 
   const handleDeleteAttraction = async () => {
     try {
-        const token = useCookies.get('token');
+        const token = cookie.get('token');
 
       await axios.delete(`http://localhost:4000/attractions/${attractionId}`,{
         headers: {
@@ -43,7 +45,7 @@ const AttractionPage = ({ attractionId }) => {
 
   const handleEditAttraction = async () => {
     try {
-        const token = useCookies.get('token');
+        const token = cookie.get('token');
 
       await axios.put(`http://localhost:4000/attractions/${attractionId}`,{
         headers: {

@@ -6,7 +6,7 @@ import { useCookies } from '../../Cookies';
 
 const UserPage = ({ userId }) => {
   const [user, setUser] = useState(null);
-
+  const cookie = useCookies();
   useEffect(() => {
     if (userId) {
       fetchUser(userId);
@@ -15,7 +15,7 @@ const UserPage = ({ userId }) => {
 
   const fetchUser = async (userId) => {
     try {
-      const token = useCookies.get('token');
+      const token = cookie.get('token');
       
       const response = await axios.get(`http://localhost:4000/user/${userId}`,{
         headers: {

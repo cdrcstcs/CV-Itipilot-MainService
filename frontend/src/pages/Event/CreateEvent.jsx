@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import AttractionListPage from '../Attraction/SelectAttraction';
 import AttractionPage from '../Attraction/AttractionPage';
+import { useCookies } from '../../Cookies';
+
 const CreateEventPage = ({ onEventCreated }) => {
   const [formData, setFormData] = useState({
     startTime: '',
@@ -11,6 +13,8 @@ const CreateEventPage = ({ onEventCreated }) => {
     attractionId: '',
     description: ''
   });
+  const cookie = useCookies();
+
   const [selectedAttraction, setSelectedAttraction] = useState();
   const handleSelectAttraction = (attraction) => {
     setSelectedAttraction(attraction);
@@ -23,7 +27,7 @@ const CreateEventPage = ({ onEventCreated }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const token = useCookies.get('token');
+        const token = cookie.get('token');
 
       const response = await axios.post('http://localhost:4000/events',{
         headers: {

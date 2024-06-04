@@ -6,6 +6,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
+  const cookie = useCookies();
 
   async function handleLoginSubmit(ev) {
     ev.preventDefault();
@@ -14,7 +15,8 @@ export default function LoginPage() {
         email,
         password,
       });
-      useCookies.set('token',response.cookie)
+      cookie.set('token',response.data.token);
+      console.log(response.data.token);
       alert("Login successful");
       setRedirect(true);
     } catch (e) {

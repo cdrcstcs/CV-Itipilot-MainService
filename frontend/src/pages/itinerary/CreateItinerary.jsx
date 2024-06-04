@@ -4,6 +4,8 @@ import EventListingPage from '../Event/EventsPage';
 import EventPage from '../Event/EventPage';
 import CreateRating from '../Rating/CreateRating';
 import RatingPage from '../Rating/RatingPage';
+import { useCookies } from '../../Cookies';
+
 const CreateItineraryPage = () => {
   const [formData, setFormData] = useState({
     title: '',
@@ -11,6 +13,8 @@ const CreateItineraryPage = () => {
     startTime: '',
     endTime: ''
   });
+  const cookie = useCookies();
+
   const [selectedEvents, setSelectedEvents] = useState([]);
   const [rating, onRatingCreated] = useState([]);
 
@@ -30,7 +34,7 @@ const CreateItineraryPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const token = useCookies.get('token');
+        const token = cookie.get('token');
 
       const response = await axios.post('http://localhost:4000/itinerary',{
         headers: {

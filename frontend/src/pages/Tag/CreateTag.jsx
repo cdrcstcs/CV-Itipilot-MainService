@@ -2,11 +2,13 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useCookies } from '../../Cookies';
 
 const CreateTagPage = ({ onTagCreated }) => {
   const [formData, setFormData] = useState({
     value: ''
   });
+  const cookie = useCookies();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,7 +18,7 @@ const CreateTagPage = ({ onTagCreated }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const token = useCookies.get('token');
+        const token = cookie.get('token');
 
       const response = await axios.post('http://localhost:4000/tags',{
         headers: {

@@ -44,6 +44,7 @@ async function loginUser(req, res) {
   
       // Generate JWT token
       const token = jwt.sign({ userId: user._id }, jwtSecret, { expiresIn: '1h' });
+      console.log(token);
   
       // Set token as a cookie
       res.cookie('token', token, { httpOnly: true });
@@ -109,4 +110,4 @@ async function getProfile(req, res) {
   }
 }
 
-export { createUser, loginUser, logoutUser, getAllUsers, getUser, updateUser, deleteUser, getProfile };
+export { createUser, loginUser, getAllUsers, getUser, updateUser, getProfile };

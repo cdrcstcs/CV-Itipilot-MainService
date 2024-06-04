@@ -3,9 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AttractionPage from '../Attraction/AttractionPage';
+import { useCookies } from '../../Cookies';
+
 const EventPage = ({ eventId }) => {
   const [event, setEvent] = useState(null);
   const [editedEvent, setEditedEvent] = useState(null);
+  const cookie = useCookies();
 
   useEffect(() => {
     if (eventId) {
@@ -15,7 +18,7 @@ const EventPage = ({ eventId }) => {
 
   const fetchEvent = async (eventId) => {
     try {
-        const token = useCookies.get('token');
+        const token = cookie.get('token');
 
       const response = await axios.get(`http://localhost:4000/event/${eventId}`,{
         headers: {
@@ -31,7 +34,7 @@ const EventPage = ({ eventId }) => {
 
   const handleDeleteEvent = async () => {
     try {
-        const token = useCookies.get('token');
+        const token = cookie.get('token');
 
       await axios.delete(`http://localhost:4000/event/${eventId}`,{
         headers: {
@@ -51,7 +54,7 @@ const EventPage = ({ eventId }) => {
 
   const handleSaveEdit = async () => {
     try {
-        const token = useCookies.get('token');
+        const token = cookie.get('token');
 
       await axios.put(`http://localhost:4000/event/${eventId}`,{
         headers: {
