@@ -12,7 +12,13 @@ const ItinerariesPage = () => {
 
   const fetchItineraries = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/itinerary');
+        const token = useCookies.get('token');
+
+      const response = await axios.get('http://localhost:4000/itinerary',{
+        headers: {
+            Authorization: `Bearer ${token}`,
+          },
+      });
       setItineraries(response.data);
     } catch (error) {
       console.error('Error fetching itineraries:', error);
@@ -21,7 +27,13 @@ const ItinerariesPage = () => {
 
   const handleDeleteItinerary = async (itineraryId) => {
     try {
-      await axios.delete(`http://localhost:4000/itinerary/${itineraryId}`);
+        const token = useCookies.get('token');
+
+      await axios.delete(`http://localhost:4000/itinerary/${itineraryId}`,{
+        headers: {
+            Authorization: `Bearer ${token}`,
+          },
+      });
       // Optionally, you can update the itineraries state to reflect the deletion
     } catch (error) {
       console.error('Error deleting itinerary:', error);
@@ -34,7 +46,13 @@ const ItinerariesPage = () => {
 
   const handleSaveEdit = async (itineraryId) => {
     try {
-      await axios.put(`http://localhost:4000/itinerary/${itineraryId}`, editedItinerary);
+        const token = useCookies.get('token');
+
+      await axios.put(`http://localhost:4000/itinerary/${itineraryId}`,{
+        headers: {
+            Authorization: `Bearer ${token}`,
+          },
+      }, editedItinerary);
       setEditedItinerary(null);
       // Optionally, you can update the itineraries state to reflect the changes
     } catch (error) {

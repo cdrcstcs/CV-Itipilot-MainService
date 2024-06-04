@@ -11,7 +11,13 @@ const EventListPage = ({ onSelectEvents }) => {
 
   const fetchEvents = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/events');
+        const token = useCookies.get('token');
+
+      const response = await axios.get('http://localhost:4000/events',{
+        headers: {
+            Authorization: `Bearer ${token}`,
+          },
+      });
       setEvents(response.data);
     } catch (error) {
       console.error('Error fetching events:', error);

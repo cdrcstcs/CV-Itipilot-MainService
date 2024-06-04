@@ -24,7 +24,13 @@ const CreateAttractionPage = ({ onAttractionCreated }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:4000/attractions', formData);
+        const token = useCookies.get('token');
+
+      const response = await axios.post('http://localhost:4000/attractions',{
+        headers: {
+            Authorization: `Bearer ${token}`,
+          },
+      }, formData);
       console.log('Attraction created:', response.data);
       // Pass the newly created attraction object to the callback function
       onAttractionCreated(response.data);
@@ -69,4 +75,4 @@ const CreateAttractionPage = ({ onAttractionCreated }) => {
   );
 };
 
-export default AttractionPage;
+export default CreateAttractionPage;

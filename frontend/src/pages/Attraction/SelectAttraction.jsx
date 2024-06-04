@@ -10,7 +10,13 @@ const AttractionListPage = ({ onSelectAttraction }) => {
 
   const fetchAttractions = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/attractions');
+      const token = useCookies.get('token');
+
+      const response = await axios.get('http://localhost:4000/attractions',{
+        headers: {
+            Authorization: `Bearer ${token}`,
+          },
+      });
       setAttractions(response.data);
     } catch (error) {
       console.error('Error fetching attractions:', error);

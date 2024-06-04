@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+
 const jwtSecret = 'fasefraw4r5r3wq45wdfgw34twdfg';
 
 // Create user
@@ -79,7 +80,8 @@ async function getUser(req, res) {
 // Update user by ID
 async function updateUser(req, res) {
   try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const userData = req.userData;
+    const user = await User.findByIdAndUpdate(userData.userId, req.body, { new: true });
     if (!user) return res.status(404).json({ message: 'User not found' });
     res.json(user);
   } catch (error) {
@@ -87,27 +89,6 @@ async function updateUser(req, res) {
   }
 }
 
-// Delete user by ID
-async function deleteUser(req, res) {
-  try {
-    const user = await User.findByIdAndDelete(req.params.id);
-    if (!user) return res.status(404).json({ message: 'User not found' });
-    res.json({ message: 'User deleted successfully' });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-}
-
-// Logout user
-async function logoutUser(req, res) {
-  try {
-    // Clear the token cookie
-    res.clearCookie('token');
-    res.json({ message: 'Logout successful' });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-}
 
 // Get profile of logged-in user
 async function getProfile(req, res) {

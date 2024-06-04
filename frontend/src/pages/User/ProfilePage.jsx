@@ -1,10 +1,6 @@
-import { useContext, useState } from "react";
-import { UserContext } from "./UserContext.jsx";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import { useCookies } from "../../Cookies";
 import axios from "axios";
-import PlacesPage from "./PlacesPage";
-import AccountNav from "../../Navbar.jsx";
-
 export default function ProfilePage() {
   const [redirect, setRedirect] = useState(null);
   const [formData, setFormData] = useState({
@@ -13,16 +9,10 @@ export default function ProfilePage() {
     password: '', // Add password field
     userType: '', // Add userType field
   });
-  const { ready, user, setUser } = useContext(UserContext);
-  let { subpage } = useParams();
-  if (subpage === undefined) {
-    subpage = 'profile';
-  }
 
   async function logout() {
-    await axios.post('/logout');
+    useCookies.set('token','');
     setRedirect('/');
-    setUser(null);
   }
 
   const handleChange = (e) => {
@@ -33,9 +23,13 @@ export default function ProfilePage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`/api/users/${user._id}`, formData);
-      // Optionally, you can update the user context with the updated user data
-      setUser({ ...user, ...formData });
+      const token = useCookies.get('token');
+      
+      await axios.put(`http://localhost:4000/users`,{
+        headers: {
+            Authorization: `Bearer ${token}`,
+          },
+      }, formData);
       alert('Profile updated successfully!');
     } catch (error) {
       console.error('Error updating user:', error);
@@ -57,8 +51,6 @@ export default function ProfilePage() {
 
   return (
     <div>
-      <AccountNav />
-      {subpage === 'profile' && (
         <div className="text-center max-w-lg mx-auto">
           <h2>Profile</h2>
           <p>Logged in as {user.name} ({user.email})</p>
@@ -88,10 +80,6 @@ export default function ProfilePage() {
             <button type="submit">Save Changes</button>
           </form>
         </div>
-      )}
-      {subpage === 'places' && (
-        <PlacesPage />
-      )}
     </div>
   );
 }

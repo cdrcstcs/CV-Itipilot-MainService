@@ -11,7 +11,12 @@ const TagListPage = ({ onTagsSelect }) => {
 
   const fetchTags = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/tags');
+        const token = useCookies.get('token');
+      const response = await axios.get('http://localhost:4000/tags',{
+        headers: {
+            Authorization: `Bearer ${token}`,
+          },
+      });
       setTags(response.data);
     } catch (error) {
       console.error('Error fetching tags:', error);

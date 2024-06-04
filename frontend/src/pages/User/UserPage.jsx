@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useCookies } from '../../Cookies';
 
 const UserPage = ({ userId }) => {
   const [user, setUser] = useState(null);
@@ -14,7 +15,13 @@ const UserPage = ({ userId }) => {
 
   const fetchUser = async (userId) => {
     try {
-      const response = await axios.get(`http://localhost:4000/user/${userId}`);
+      const token = useCookies.get('token');
+      
+      const response = await axios.get(`http://localhost:4000/user/${userId}`,{
+        headers: {
+            Authorization: `Bearer ${token}`,
+          },
+      });
       setUser(response.data);
     } catch (error) {
       console.error('Error fetching user:', error);

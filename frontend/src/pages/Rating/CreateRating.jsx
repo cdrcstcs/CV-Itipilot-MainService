@@ -14,7 +14,13 @@ const CreateRating = ({ onRatingCreated }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:4000/ratings', formData);
+        const token = useCookies.get('token');
+
+      const response = await axios.post('http://localhost:4000/ratings',{
+        headers: {
+            Authorization: `Bearer ${token}`,
+          },
+      }, formData);
       console.log('Rating created:', response.data);
       onRatingCreated(response.data);
     } catch (error) {
@@ -36,4 +42,4 @@ const CreateRating = ({ onRatingCreated }) => {
   );
 };
 
-export default RatingPage;
+export default CreateRating;

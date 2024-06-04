@@ -9,7 +9,13 @@ const AttractionPage = ({ attractionId }) => {
   useEffect(() => {
     const fetchAttraction = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/attractions/${attractionId}`);
+        const token = useCookies.get('token');
+
+        const response = await axios.get(`http://localhost:4000/attractions/${attractionId}`,{
+            headers: {
+                Authorization: `Bearer ${token}`,
+              },
+          });
         setAttraction(response.data);
         // Initialize editedAttraction with the fetched attraction data
         setEditedAttraction(response.data);
@@ -23,7 +29,13 @@ const AttractionPage = ({ attractionId }) => {
 
   const handleDeleteAttraction = async () => {
     try {
-      await axios.delete(`http://localhost:4000/attractions/${attractionId}`);
+        const token = useCookies.get('token');
+
+      await axios.delete(`http://localhost:4000/attractions/${attractionId}`,{
+        headers: {
+            Authorization: `Bearer ${token}`,
+          },
+      });
     } catch (error) {
       console.error('Error deleting attraction:', error);
     }
@@ -31,7 +43,13 @@ const AttractionPage = ({ attractionId }) => {
 
   const handleEditAttraction = async () => {
     try {
-      await axios.put(`http://localhost:4000/attractions/${attractionId}`, editedAttraction);
+        const token = useCookies.get('token');
+
+      await axios.put(`http://localhost:4000/attractions/${attractionId}`,{
+        headers: {
+            Authorization: `Bearer ${token}`,
+          },
+      } ,editedAttraction);
       // Exit editing mode after successfully editing attraction
       setEditing(false);
     } catch (error) {

@@ -1,14 +1,16 @@
 import express from 'express';
 import cors from 'cors';
-import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-import {createAttraction, getAllAttractions, getAttraction, updateAttraction, deleteAttraction} from "./controllers/Attraction";
-import {createEvent, getAllEvents, getEvent, updateEvent, deleteEvent} from "./controllers/Event";
-import {createUser, getAllUsers, loginUser, getUser, updateUser, deleteUser, logoutUser, getProfile} from "./controllers/User";
-import {createItinerary, getAllItineraries, getItinerary, updateItinerary, deleteItinerary} from "./controllers/Itinerary";
-import {createRating, getAllRatings, getRating, updateRating, deleteRating} from "./controllers/Rating";
-import {createTag, getAllTags, getTag, updateTag, deleteTag} from "./controllers/Tag";
+import {createAttraction, getAllAttractions, getAttraction, updateAttraction, deleteAttraction} from "./controllers/Attraction.js";
+import {createEvent, getAllEvents, getEvent, updateEvent, deleteEvent} from "./controllers/Event.js";
+import {createUser, getAllUsers, loginUser, getUser, updateUser, deleteUser, logoutUser, getProfile} from "./controllers/User.js";
+import {createItinerary, getAllItineraries, getItinerary, updateItinerary, deleteItinerary} from "./controllers/Itinerary.js";
+import {createRating, getAllRatings, getRating, updateRating, deleteRating} from "./controllers/Rating.js";
+import {createTag, getAllTags, getTag, updateTag, deleteTag} from "./controllers/Tag.js";
+
+import connectToDb from './db/db.js';
+connectToDb();
 
 const app = express();
 app.use(express.json());
@@ -17,16 +19,23 @@ app.use(cors({
   origin: 'http://localhost:5173',
 }));
 
+
+const jwtSecret = 'fasefraw4r5r3wq45wdfgw34twdfg';
 function verifyToken(req) {
   return new Promise((resolve, reject) => {
-    jwt.verify(req.cookies.token, jwtSecret, {}, (err, userData) => {
-      if (err) {
-        reject(err); 
-      } else {
-        req.userData = userData;
-        resolve(); 
-      }
-    });
+    const token = req.cookies && req.cookies.token; // Check if token exists in req.cookies
+    if (!token) {
+      reject(new Error('Token not found in cookies')); // Reject if token is not found
+    } else {
+      jwt.verify(req.cookies.token, jwtSecret, {}, (err, userData) => {
+        if (err) {
+          reject(err); 
+        } else {
+          req.userData = userData;
+          resolve(); 
+        }
+      });
+    }
   });
 }
 
@@ -60,13 +69,12 @@ app.get('/ratings/:id', verifyToken, getRating);
 app.put('/ratings/:id', verifyToken, updateRating);
 app.delete('/ratings/:id', verifyToken, deleteRating);
 
-app.post('/users', createUser);
+app.post('/register', createUser);
 app.post('/login', loginUser);
 app.get('/users', verifyToken, getAllUsers);
 app.get('/users/:id', verifyToken, getUser);
-app.put('/users/:id', verifyToken, updateUser);
+app.put('/users', verifyToken, updateUser);
 app.delete('/users/:id', verifyToken, deleteUser);
-app.get('/users/profile', verifyToken, userProfile);
-app.post('users/logout', logoutUser); 
+app.get('/profile', verifyToken, getProfile);
 
-app.listen(4000, 'localhost', debug=true);
+app.listen(4000, 'localhost');

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import EventListingPage from './EventListingPage';
+import EventListingPage from '../Event/EventsPage';
 import EventPage from '../Event/EventPage';
 import CreateRating from '../Rating/CreateRating';
 import RatingPage from '../Rating/RatingPage';
@@ -30,7 +30,13 @@ const CreateItineraryPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:4000/itinerary', {
+        const token = useCookies.get('token');
+
+      const response = await axios.post('http://localhost:4000/itinerary',{
+        headers: {
+            Authorization: `Bearer ${token}`,
+          },
+      }, {
         ...formData,
         eventIds: selectedEvents.map(event => event._id), // Send only event IDs to the backend
         ratingId: rating._id,

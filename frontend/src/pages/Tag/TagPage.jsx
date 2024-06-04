@@ -12,7 +12,13 @@ function TagPage({ tagId }) {
 
   const fetchTagById = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/tags/${tagId}`); // Replace '/api/tags' with your actual API endpoint
+        const token = useCookies.get('token');
+
+      const response = await axios.get(`http://localhost:4000/tags/${tagId}`,{
+        headers: {
+            Authorization: `Bearer ${token}`,
+          },
+      }); // Replace '/api/tags' with your actual API endpoint
       setTag(response.data);
     } catch (error) {
       console.error('Error fetching tag:', error);
@@ -21,7 +27,13 @@ function TagPage({ tagId }) {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:4000/tags/${tagId}`); // Replace '/api/tags' with your actual API endpoint
+        const token = useCookies.get('token');
+
+      await axios.delete(`http://localhost:4000/tags/${tagId}`,{
+        headers: {
+            Authorization: `Bearer ${token}`,
+          },
+      }); // Replace '/api/tags' with your actual API endpoint
       // Optionally, you can navigate the user back to a different page after deletion
     } catch (error) {
       console.error('Error deleting tag:', error);
@@ -30,7 +42,13 @@ function TagPage({ tagId }) {
 
   const handleEdit = async () => {
     try {
-      await axios.put(`http://localhost:4000/tags/${tagId}`, { value: editedValue }); // Replace '/api/tags' with your actual API endpoint
+        const token = useCookies.get('token');
+
+      await axios.put(`http://localhost:4000/tags/${tagId}`,{
+        headers: {
+            Authorization: `Bearer ${token}`,
+          },
+      }, { value: editedValue }); // Replace '/api/tags' with your actual API endpoint
       setTag({ ...tag, value: editedValue });
       setEditMode(false);
     } catch (error) {

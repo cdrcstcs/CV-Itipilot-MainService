@@ -15,7 +15,13 @@ const EventPage = ({ eventId }) => {
 
   const fetchEvent = async (eventId) => {
     try {
-      const response = await axios.get(`http://localhost:4000/event/${eventId}`);
+        const token = useCookies.get('token');
+
+      const response = await axios.get(`http://localhost:4000/event/${eventId}`,{
+        headers: {
+            Authorization: `Bearer ${token}`,
+          },
+      });
       setEvent(response.data);
       setEditedEvent(response.data); // Set edited event initially same as event
     } catch (error) {
@@ -25,7 +31,13 @@ const EventPage = ({ eventId }) => {
 
   const handleDeleteEvent = async () => {
     try {
-      await axios.delete(`http://localhost:4000/event/${eventId}`);
+        const token = useCookies.get('token');
+
+      await axios.delete(`http://localhost:4000/event/${eventId}`,{
+        headers: {
+            Authorization: `Bearer ${token}`,
+          },
+      });
       // Optionally, you can handle state update or redirection after deletion
     } catch (error) {
       console.error('Error deleting event:', error);
@@ -39,7 +51,13 @@ const EventPage = ({ eventId }) => {
 
   const handleSaveEdit = async () => {
     try {
-      await axios.put(`http://localhost:4000/event/${eventId}`, editedEvent);
+        const token = useCookies.get('token');
+
+      await axios.put(`http://localhost:4000/event/${eventId}`,{
+        headers: {
+            Authorization: `Bearer ${token}`,
+          },
+      }, editedEvent);
       // Optionally, you can handle state update or redirection after editing
       setEvent(editedEvent); // Update event state with edited data
     } catch (error) {

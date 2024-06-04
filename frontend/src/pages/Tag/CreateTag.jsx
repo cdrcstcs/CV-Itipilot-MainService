@@ -16,7 +16,13 @@ const CreateTagPage = ({ onTagCreated }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:4000/tags', formData);
+        const token = useCookies.get('token');
+
+      const response = await axios.post('http://localhost:4000/tags',{
+        headers: {
+            Authorization: `Bearer ${token}`,
+          },
+      }, formData);
       console.log('Tag created:', response.data);
       // Pass the newly created tag object to the callback function
       onTagCreated(response.data);
@@ -41,4 +47,4 @@ const CreateTagPage = ({ onTagCreated }) => {
   );
 };
 
-export default TagPage;
+export default CreateTagPage;

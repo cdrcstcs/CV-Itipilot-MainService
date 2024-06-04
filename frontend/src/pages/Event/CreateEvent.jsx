@@ -23,7 +23,13 @@ const CreateEventPage = ({ onEventCreated }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:4000/events', formData);
+        const token = useCookies.get('token');
+
+      const response = await axios.post('http://localhost:4000/events',{
+        headers: {
+            Authorization: `Bearer ${token}`,
+          },
+      } ,formData);
       console.log('Event created:', response.data);
       // Pass the newly created event object to the callback function
       onEventCreated(response.data);
@@ -62,4 +68,4 @@ const CreateEventPage = ({ onEventCreated }) => {
   );
 };
 
-export default EventPage;
+export default CreateEventPage;
