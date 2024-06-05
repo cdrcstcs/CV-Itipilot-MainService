@@ -3,7 +3,7 @@ import axios from 'axios';
 import UserPage from '../User/UserPage';
 import RatingPage from '../Rating/RatingPage';
 import { useCookies } from '../../Cookies';
-
+import EventPage from '../Event/EventPage';
 const ItinerariesPage = () => {
   const [itineraries, setItineraries] = useState([]);
   const [editedItinerary, setEditedItinerary] = useState(null);
@@ -16,8 +16,11 @@ const ItinerariesPage = () => {
   const fetchItineraries = async () => {
     try {
         const token = cookie.get('token');
+        // console.log(token);
+        
+        axios.defaults.withCredentials = true;
 
-      const response = await axios.get('http://localhost:4000/itinerary',{
+        const response = await axios.get('http://localhost:4000/itinerary',{
         headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -71,9 +74,9 @@ const ItinerariesPage = () => {
   return (
     <div>
       <h1>All Itineraries</h1>
-      <ul>
+      <ul style={{ display: 'flex', flexWrap: 'wrap', listStyleType: 'none', padding: 0 }}>
         {itineraries.map((itinerary) => (
-          <li key={itinerary._id}>
+          <li key={itinerary._id} style={{ flex: '0 0 calc(30% - 60px)', margin: '15px', minWidth: '200px' }}>
             {editedItinerary && editedItinerary._id === itinerary._id ? (
               <div>
                 <input
@@ -100,19 +103,21 @@ const ItinerariesPage = () => {
                   value={editedItinerary.endTime}
                   onChange={handleChange}
                 />
-                <UserPage userId = {itinerary._id}></UserPage>
+                <UserPage userId = {itinerary.userId}></UserPage>
                 <RatingPage ratingId={itinerary.ratingId}></RatingPage>
                 {/* Include input fields for other itinerary properties */}
                 <button onClick={() => handleSaveEdit(itinerary._id)}>Save</button>
               </div>
             ) : (
               <div>
-                <h2>{itinerary.title}</h2>
+                <h2>Itinerary: {itinerary.title}</h2>
                 <p>Name: {itinerary.name}</p>
-                <p>User ID: {itinerary.userId}</p>
                 <p>Start Time: {itinerary.startTime}</p>
                 <p>End Time: {itinerary.endTime}</p>
-                <UserPage userId = {itinerary._id}></UserPage>
+                {itinerary.eventIds.map((eventId) => (
+                <EventPage key={eventId} eventId={eventId} />
+                ))}
+                <UserPage userId = {itinerary.userId}></UserPage>
                 <RatingPage ratingId={itinerary.ratingId}></RatingPage>                
                 <button onClick={() => handleDeleteItinerary(itinerary._id)}>Delete</button>
                 <button onClick={() => handleEditItinerary(itinerary)}>Edit</button>

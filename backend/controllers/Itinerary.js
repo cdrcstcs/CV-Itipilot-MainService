@@ -13,7 +13,9 @@ async function createItinerary(req, res) {
 // Read all itineraries
 async function getAllItineraries(req, res) {
   try {
+    console.log('ok');
     const itineraries = await Itinerary.find();
+    console.log(itineraries);
     res.json(itineraries);
   } catch (error) {
     res.status(500).json({ message: error.message });

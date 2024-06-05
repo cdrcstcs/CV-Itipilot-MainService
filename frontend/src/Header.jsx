@@ -9,6 +9,7 @@ const Header = () => {
   const cookie = useCookies();
   useEffect(() => {
     const token = cookie.get('token');
+    console.log(token);
     if (token == '') {
       setLoggedIn(true);
       setUserName(user.name); 

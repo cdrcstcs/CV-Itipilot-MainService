@@ -47,7 +47,6 @@ function RatingPage({ ratingId }) {
       <h1>Rating Details</h1>
       {rating ? (
         <div>
-          <p>Rating ID: {rating._id}</p>
           <p>Score: {rating.score}</p>
           <button onClick={handleLike} disabled={isLiked}>Like</button>
         </div>

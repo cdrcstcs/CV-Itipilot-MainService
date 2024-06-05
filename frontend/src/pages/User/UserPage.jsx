@@ -17,7 +17,7 @@ const UserPage = ({ userId }) => {
     try {
       const token = cookie.get('token');
       
-      const response = await axios.get(`http://localhost:4000/user/${userId}`,{
+      const response = await axios.get(`http://localhost:4000/users/${userId}`,{
         headers: {
             Authorization: `Bearer ${token}`,
           },

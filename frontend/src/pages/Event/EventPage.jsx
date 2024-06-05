@@ -18,15 +18,15 @@ const EventPage = ({ eventId }) => {
 
   const fetchEvent = async (eventId) => {
     try {
-        const token = cookie.get('token');
+      const token = cookie.get('token');
 
-      const response = await axios.get(`http://localhost:4000/event/${eventId}`,{
+      const response = await axios.get(`http://localhost:4000/events/${eventId}`, {
         headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          Authorization: `Bearer ${token}`,
+        },
       });
       setEvent(response.data);
-      setEditedEvent(response.data); // Set edited event initially same as event
+      setEditedEvent(null); // Reset editedEvent state when fetching a new event
     } catch (error) {
       console.error('Error fetching event:', error);
     }
@@ -34,12 +34,12 @@ const EventPage = ({ eventId }) => {
 
   const handleDeleteEvent = async () => {
     try {
-        const token = cookie.get('token');
+      const token = cookie.get('token');
 
-      await axios.delete(`http://localhost:4000/event/${eventId}`,{
+      await axios.delete(`http://localhost:4000/events/${eventId}`, {
         headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          Authorization: `Bearer ${token}`,
+        },
       });
       // Optionally, you can handle state update or redirection after deletion
     } catch (error) {
@@ -54,15 +54,16 @@ const EventPage = ({ eventId }) => {
 
   const handleSaveEdit = async () => {
     try {
-        const token = cookie.get('token');
+      const token = cookie.get('token');
 
-      await axios.put(`http://localhost:4000/event/${eventId}`,{
+      await axios.put(`http://localhost:4000/events/${eventId}`, editedEvent, {
         headers: {
-            Authorization: `Bearer ${token}`,
-          },
-      }, editedEvent);
+          Authorization: `Bearer ${token}`,
+        },
+      });
       // Optionally, you can handle state update or redirection after editing
       setEvent(editedEvent); // Update event state with edited data
+      setEditedEvent(null);
     } catch (error) {
       console.error('Error editing event:', error);
     }
@@ -85,7 +86,7 @@ const EventPage = ({ eventId }) => {
       <AttractionPage attractionId={event.attractionId}></AttractionPage>
       <p>Description: {event.description}</p>
 
-      {editedEvent && (
+      {editedEvent ? (
         <div>
           <input
             type="datetime-local"
@@ -108,9 +109,12 @@ const EventPage = ({ eventId }) => {
           />
           <button onClick={handleSaveEdit}>Save</button>
         </div>
+      ) : (
+        <div>
+          <button onClick={handleEditEvent}>Edit</button>
+          <button onClick={handleDeleteEvent}>Delete</button>
+        </div>
       )}
-      <button onClick={handleEditEvent}>Edit</button>
-      <button onClick={handleDeleteEvent}>Delete</button>
     </div>
   );
 };

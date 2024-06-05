@@ -23,7 +23,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/account" element={<ProfilePage />} />
-        <Route index element={<ItinerariesPage />} />
+        <Route path="/itineraries" element={<ItinerariesPage />} />
         <Route path="/itinerary/create" element={<CreateItineraryPage />} />
         <Route path="/attraction/create" element={<CreateAttractionPage />} />
         <Route path="/attractions" element={<AttractionListPage />} />

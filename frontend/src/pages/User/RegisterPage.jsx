@@ -49,8 +49,8 @@ export default function RegisterPage() {
                  value={phone}
                  onChange={ev => setPhone(ev.target.value)} />
           <button className="primary">Register</button>
-          <div className="text-center py-2 text-gray-500">
-            Already a member? <Link className="underline text-black" to={'/login'}>Login</Link>
+          <div className="text-center py-2 text-white">
+            Already a member? <Link className="underline text-white" to={'/login'}>Login</Link>
           </div>
         </form>
       </div>

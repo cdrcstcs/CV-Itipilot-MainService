@@ -15,8 +15,8 @@ export default function LoginPage() {
         email,
         password,
       });
-      cookie.set('token',response.data.token);
-      console.log(response.data.token);
+      cookie.set('token',response.data.token,{ path: '/' });
+      // console.log(response.data.token);
       alert("Login successful");
       setRedirect(true);
     } catch (e) {
@@ -25,7 +25,7 @@ export default function LoginPage() {
   }
 
   if (redirect) {
-    return <Navigate to={"/"} />;
+    return <Navigate to={"/itineraries"} />;
   }
 
   return (
@@ -46,9 +46,9 @@ export default function LoginPage() {
             onChange={(ev) => setPassword(ev.target.value)}
           />
           <button className="primary">Login</button>
-          <div className="text-center py-2 text-gray-500">
+          <div className="text-center py-2 text-white">
             Don't have an account yet?{" "}
-            <Link className="underline text-black" to={"/register"}>
+            <Link className="underline " to={"/register"}>
               Register now
             </Link>
           </div>

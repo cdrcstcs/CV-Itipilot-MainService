@@ -71,21 +71,26 @@ const AttractionPage = ({ attractionId }) => {
     <div>
       {attraction ? (
         <div>
-          <h2>{attraction.name}</h2>
+          <h1>Attraction Details</h1>
+          <h2>Name: {attraction.name}</h2>
           <p>Address: {attraction.address}</p>
           <p>City: {attraction.city}</p>
           <p>X: {attraction.x}</p>
           <p>Y: {attraction.y}</p>
-          <TagPage tagId={attraction.tagId}></TagPage>
-          {editing ? (
+          {attraction.tagIds.map((tagId) => (
+                <TagPage key={tagId} tagId={tagId} />
+        ))}          
+        {editing ? (
             <div>
               <input type="text" name="name" placeholder="New Name" value={editedAttraction.name} onChange={handleChange} />
               <input type="text" name="address" placeholder="New Address" value={editedAttraction.address} onChange={handleChange} />
               <input type="text" name="city" placeholder="New City" value={editedAttraction.city} onChange={handleChange} />
               <input type="text" name="x" placeholder="New X Coordinate" value={editedAttraction.x} onChange={handleChange} />
               <input type="text" name="y" placeholder="New Y Coordinate" value={editedAttraction.y} onChange={handleChange} />
-              <TagPage tagId={attraction.tagId}></TagPage>
-              <button onClick={handleEditAttraction}>Save</button>
+              {attraction.tagIds.map((tagId) => (
+                <TagPage key={tagId} tagId={tagId} />
+            ))}              
+            <button onClick={handleEditAttraction}>Save</button>
             </div>
           ) : (
             <div>

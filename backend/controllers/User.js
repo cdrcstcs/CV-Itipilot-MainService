@@ -30,27 +30,18 @@ async function createUser(req, res) {
 async function loginUser(req, res) {
     const { email, password } = req.body;
     try {
-      // Find the user by email
       const user = await User.findOne({ email });
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }
-  
-      // Check if the password matches
-      const isPasswordValid = await bcrypt.compare(password, user.password);
+      const isPasswordValid = bcrypt.compare(password, user.password);
       if (!isPasswordValid) {
         return res.status(401).json({ message: 'Invalid credentials' });
       }
   
-      // Generate JWT token
       const token = jwt.sign({ userId: user._id }, jwtSecret, { expiresIn: '1h' });
-      console.log(token);
-  
-      // Set token as a cookie
-      res.cookie('token', token, { httpOnly: true });
-  
-      // Return token and user data
-      res.json({ user });
+      // console.log(token);
+      res.json({ user, token });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

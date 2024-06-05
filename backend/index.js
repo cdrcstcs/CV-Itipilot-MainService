@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import jwt from 'jsonwebtoken';
-
+import cookieParser from 'cookie-parser';
 import {createAttraction, getAllAttractions, getAttraction, updateAttraction, deleteAttraction} from "./controllers/Attraction.js";
 import {createEvent, getAllEvents, getEvent, updateEvent, deleteEvent} from "./controllers/Event.js";
 import {createUser, getAllUsers, loginUser, getUser, updateUser, getProfile} from "./controllers/User.js";
@@ -14,6 +14,7 @@ connectToDb();
 
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 app.use(cors({
   credentials: true,
   origin: 'http://localhost:5173',
@@ -21,12 +22,13 @@ app.use(cors({
 
 
 const jwtSecret = 'fasefraw4r5r3wq45wdfgw34twdfg';
-function verifyToken(req) {
+function verifyToken(req, res, next) {
   return new Promise((resolve, reject) => {
     const token = req.cookies && req.cookies.token; // Check if token exists in req.cookies
     if (!token) {
       reject(new Error('Token not found in cookies')); // Reject if token is not found
     } else {
+      // console.log('backend'+req.cookies.token);
       jwt.verify(req.cookies.token, jwtSecret, {}, (err, userData) => {
         if (err) {
           reject(err); 
@@ -36,8 +38,15 @@ function verifyToken(req) {
         }
       });
     }
+  })
+  .then(() => {
+    next(); // Call next() if the token is verified successfully
+  })
+  .catch(err => {
+    res.status(401).send('Unauthorized'); // Handle authentication failure
   });
 }
+
 
 app.post('/attractions', verifyToken, createAttraction);
 app.get('/attractions', verifyToken, getAllAttractions);
