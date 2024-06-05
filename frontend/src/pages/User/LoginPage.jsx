@@ -48,7 +48,7 @@ export default function LoginPage() {
           <button className="primary">Login</button>
           <div className="text-center py-2 text-white">
             Don't have an account yet?{" "}
-            <Link className="underline " to={"/register"}>
+            <Link style={{ textDecoration: 'none' , color:'orangered'}} to={"/register"}>
               Register now
             </Link>
           </div>

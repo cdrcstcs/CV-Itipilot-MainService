@@ -72,13 +72,13 @@ const AttractionPage = ({ attractionId }) => {
       {attraction ? (
         <div>
           <h1>Attraction Details</h1>
-          <h2>Name: {attraction.name}</h2>
+          <p>Name: {attraction.name}</p>
           <p>Address: {attraction.address}</p>
           <p>City: {attraction.city}</p>
           <p>X: {attraction.x}</p>
           <p>Y: {attraction.y}</p>
           {attraction.tagIds.map((tagId) => (
-                <TagPage key={tagId} tagId={tagId} />
+          <TagPage key={tagId} tagId={tagId} />
         ))}          
         {editing ? (
             <div>

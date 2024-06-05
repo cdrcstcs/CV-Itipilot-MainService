@@ -18,7 +18,7 @@ import CookiesProvider from "./Cookies.jsx";
 function App() {
   return (
     <CookiesProvider>
-      <Header />
+      <Header path="/hi"/>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />

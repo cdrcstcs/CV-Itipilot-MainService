@@ -8,7 +8,7 @@ import {createUser, getAllUsers, loginUser, getUser, updateUser, getProfile} fro
 import {createItinerary, getAllItineraries, getItinerary, updateItinerary, deleteItinerary} from "./controllers/Itinerary.js";
 import {createRating, getAllRatings, getRating, updateRating, deleteRating} from "./controllers/Rating.js";
 import {createTag, getAllTags, getTag, updateTag, deleteTag} from "./controllers/Tag.js";
-
+import { getDataOfUser } from './controllers/UserData.js';
 import connectToDb from './db/db.js';
 connectToDb();
 
@@ -43,10 +43,11 @@ function verifyToken(req, res, next) {
     next(); // Call next() if the token is verified successfully
   })
   .catch(err => {
-    res.status(401).send('Unauthorized'); // Handle authentication failure
+    res.status(401).send(err); // Handle authentication failure
   });
 }
 
+app.get('/userdata', getDataOfUser);
 
 app.post('/attractions', verifyToken, createAttraction);
 app.get('/attractions', verifyToken, getAllAttractions);

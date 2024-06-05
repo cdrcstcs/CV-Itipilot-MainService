@@ -74,9 +74,9 @@ const ItinerariesPage = () => {
   return (
     <div>
       <h1>All Itineraries</h1>
-      <ul style={{ display: 'flex', flexWrap: 'wrap', listStyleType: 'none', padding: 0 }}>
+      <ul style={{ display: 'flex', justifyContent:'space-between',flexWrap: 'wrap', listStyleType: 'none', padding: 0  }}>
         {itineraries.map((itinerary) => (
-          <li key={itinerary._id} style={{ flex: '0 0 calc(30% - 60px)', margin: '15px', minWidth: '200px' }}>
+          <li key={itinerary._id} style={{ height: '1000px', overflow: 'auto', flex: '0 0 calc(30% - 60px)', margin: '15px', width:'30%'}}>
             {editedItinerary && editedItinerary._id === itinerary._id ? (
               <div>
                 <input
@@ -110,7 +110,7 @@ const ItinerariesPage = () => {
               </div>
             ) : (
               <div>
-                <h2>Itinerary: {itinerary.title}</h2>
+                <h1>Itinerary: {itinerary.title}</h1>
                 <p>Name: {itinerary.name}</p>
                 <p>Start Time: {itinerary.startTime}</p>
                 <p>End Time: {itinerary.endTime}</p>

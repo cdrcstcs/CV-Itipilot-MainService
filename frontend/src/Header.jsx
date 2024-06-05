@@ -5,56 +5,44 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 const Header = () => {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [userName, setUserName] = useState('');
   const cookie = useCookies();
+  const token = cookie.get('token');
+
   useEffect(() => {
-    const token = cookie.get('token');
-    console.log(token);
-    if (token == '') {
+    if (token!='') {
       setLoggedIn(true);
-      setUserName(user.name); 
     } else {
       setLoggedIn(false);
-      setUserName('');
     }
-  }, []);
+  }, [token]); // Watch for changes in cookie
+  
 
   const handleLogout = () => {
     cookie.set('token','');
     setLoggedIn(false);
-    setUserName('');
-  };
 
+  };
   return (
-    <header style={{ fontSize:'17px',alignItems:'center',backgroundColor:'rgba(0, 0, 0, 0.5)',backgroundImage: 'url("../header.jpg")', color: 'white', backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }} className="flex justify-between bg-gray-100 p-4">
+    <header style={{ fontFamily:'fantasy',textDecorationColor:'ButtonHighlight',marginTop:'20px',fontSize:'17px',alignItems:'center', justifyContent:'space-between',backgroundColor:'rgba(0, 0, 0, 0.5)',backgroundImage: 'url("../header.jpg")', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', display:'flex' }} >
       <img 
         src="../icon.png" 
         alt="Icon" 
         style={{ width: '50px', height: '50px', borderRadius: '50%' }} 
       />
-      <nav>
-        <ul className="flex gap-4">
-          {!loggedIn ? (
-            <li><Link to="/login">Login</Link></li>
-          ) : (
-            <>
-              <li>Welcome, {userName}!</li>
-              <li><button onClick={handleLogout}>Logout</button></li>
-              <li><Link to="/account">Profile</Link></li>
-              <li><Link to="/itinerary/create">Create Itinerary</Link></li>
-              <li><Link to="/attraction/create">Create Attraction</Link></li>
-              <li><Link to="/">Itineraries</Link></li>
-              <li><Link to="/attractions">Attractions</Link></li>
-              <li><Link to="/ratings">Ratings</Link></li>
-              <li><Link to="/ratings/create">Create Rating</Link></li>
-              <li><Link to="/events">Events</Link></li>
-              <li><Link to="/events/create">Create Event</Link></li>
-              <li><Link to="/tags">Tags</Link></li>
-              <li><Link to="/tags/create">Create Tag</Link></li>
-            </>
-          )}
-        </ul>
-      </nav>
+      {!loggedIn ? (
+        <div style={{ marginRight: '15px' }}><Link to="/login" style={{ textDecoration: 'none' , color:'orangered'}}>Login</Link></div>
+      ) : (
+        <>
+          <div style={{ marginRight: '15px' }}><button onClick={handleLogout}>Logout</button></div>
+          <div style={{ marginRight: '15px' }}><Link to="/account" style={{ textDecoration: 'none', color:'orangered' }}>Profile</Link></div>
+          <div style={{ marginRight: '15px' }}><Link to="/itineraries" style={{ textDecoration: 'none', color:'orangered'}}>Itineraries</Link></div>
+          <div style={{ marginRight: '15px' }}><Link to="/itinerary/create" style={{ textDecoration: 'none' , color:'orangered'}}>Create Itinerary</Link></div>
+          <div style={{ marginRight: '15px' }}><Link to="/events" style={{ textDecoration: 'none' , color:'orangered'}}>Events</Link></div>
+          <div style={{ marginRight: '15px' }}><Link to="/events/create" style={{ textDecoration: 'none' , color:'orangered'}}>Create Event</Link></div>
+          <div style={{ marginRight: '15px' }}><Link to="/attractions" style={{ textDecoration: 'none', color:'orangered' }}>Attractions</Link></div>
+          <div style={{ marginRight: '15px' }}><Link to="/attraction/create" style={{ textDecoration: 'none', color:'orangered' }}>Create Attraction</Link></div>
+        </>
+      )}
     </header>
   );
 };

@@ -24,7 +24,7 @@ export default function RegisterPage() {
     }
   }
   return (
-    <div className="mt-4 grow flex items-center justify-around">
+    <div className="mt-4 grow flex items-center justify-around" style={{flexDirection:'column'}}>
       <div className="mb-64">
         <h1 className="text-4xl text-center mb-4">Register</h1>
         <form className="max-w-md mx-auto" onSubmit={registerUser}>
@@ -50,7 +50,7 @@ export default function RegisterPage() {
                  onChange={ev => setPhone(ev.target.value)} />
           <button className="primary">Register</button>
           <div className="text-center py-2 text-white">
-            Already a member? <Link className="underline text-white" to={'/login'}>Login</Link>
+            Already a member? <Link style={{ textDecoration: 'none' , color:'orangered'}} to={'/login'}>Login</Link>
           </div>
         </form>
       </div>
