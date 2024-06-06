@@ -30,7 +30,7 @@ export const SingleImage = ({imageId}) => {
       <h1>Single Image</h1>
       {image ? (
         <div>
-          <img src={`http://localhost/${image}`} alt={image} />
+          <img src={`http://localhost:5173/${image}`} alt={image} />
         </div>
       ) : (
         <p>Loading...</p>
