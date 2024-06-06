@@ -33,7 +33,7 @@ app.use(cors({
   origin: 'http://localhost:5173',
 }));
 
-app.use('/uploads', express.static('uploads'));
+app.use(express.static('uploads'));
 
 const jwtSecret = 'fasefraw4r5r3wq45wdfgw34twdfg';
 function verifyToken(req, res, next) {
@@ -70,12 +70,12 @@ const storage = multer.diskStorage({
       cb(null, 'uploads/');
     },
     filename: function (req, file, cb) {
-      cb(null, file.originalname);
+      cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));
     }
 });
   
 const upload = multer({ storage });
-app.post('/upload', upload.single('image'),verifyToken, uploadImage);
+app.post('/upload', upload.single('file'),verifyToken, uploadImage);
 
 app.get('/images/:id', verifyToken, getImageById);
 

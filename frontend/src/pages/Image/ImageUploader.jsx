@@ -22,7 +22,7 @@ export const ImageUploader = ({ onImageUpload }) => {
         const token = cookie.get('token');
 
         const formData = new FormData();
-        formData.append('image', selectedFile);
+        formData.append('file', selectedFile);
 
         try {
             const response = await axios.post('http://localhost:4000/upload', {
@@ -31,8 +31,8 @@ export const ImageUploader = ({ onImageUpload }) => {
               }
           }, formData);
 
-            if (response.data && response.data._id) {
-                onImageUpload(response.data._id);
+            if (response.data && response.data[0].image_id) {
+                onImageUpload(response.data[0].image._id);
             }
         } catch (error) {
             console.error('Error uploading image: ', error);

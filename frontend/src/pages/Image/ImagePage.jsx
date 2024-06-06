@@ -14,13 +14,12 @@ export const SingleImage = ({imageId}) => {
   const fetchImage = async () => {
     try {
       const token = cookie.get('token');
-
       const response = await axios.get(`http://localhost:4000/images/${imageId}`,{
         headers: {
             Authorization: `Bearer ${token}`,
         },
       });
-      setImage(response.data);
+      setImage(response.data[0].image);
     } catch (error) {
       console.error('Error fetching image:', error);
     }
@@ -31,7 +30,7 @@ export const SingleImage = ({imageId}) => {
       <h1>Single Image</h1>
       {image ? (
         <div>
-          <img src={`/uploads/${image.filename}`} alt={image.filename} />
+          <img src={`http://localhost/${image}`} alt={image} />
         </div>
       ) : (
         <p>Loading...</p>
