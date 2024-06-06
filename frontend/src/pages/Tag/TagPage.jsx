@@ -27,8 +27,10 @@ function TagPage({ tagId }) {
     }
   };
 
-  const handleDelete = async () => {
+  const handleDelete = async (e) => {
     try {
+      e.preventDefault();
+
         const token = cookie.get('token');
 
       await axios.delete(`http://localhost:4000/tags/${tagId}`,{
@@ -42,8 +44,10 @@ function TagPage({ tagId }) {
     }
   };
 
-  const handleEdit = async () => {
+  const handleEdit = async (e) => {
     try {
+      e.preventDefault();
+
         const token = cookie.get('token');
 
       await axios.put(`http://localhost:4000/tags/${tagId}`,{

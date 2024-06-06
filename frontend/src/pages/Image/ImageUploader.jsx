@@ -3,39 +3,47 @@ import axios from 'axios';
 import { useCookies } from '../../Cookies';
 
 export const ImageUploader = ({ onImageUpload }) => {
-  const [selectedFile, setSelectedFile] = useState(null);
-  const cookie = useCookies();
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [previewURL, setPreviewURL] = useState('');
+    const cookie = useCookies();
 
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
-  };
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        setSelectedFile(file);
+        const reader = new FileReader();
+        reader.onload = () => {
+            setPreviewURL(reader.result);
+        };
+        reader.readAsDataURL(file);
+    };
 
-  const handleUpload = () => {
-    const token = cookie.get('token');
+    const handleUpload = async (e) => {
+        e.preventDefault();
+        const token = cookie.get('token');
 
-    const formData = new FormData();
-    formData.append('image', selectedFile);
+        const formData = new FormData();
+        formData.append('image', selectedFile);
 
-    axios.post('http://localhost:4000/upload', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${token}`,
-      }
-    })
-    .then((response) => {
-      if (response.data && response.data.id) {
-        onImageUpload(response.data._id);
-      }
-    })
-    .catch((error) => {
-      console.error('Error uploading image: ', error);
-    });
-  };
+        try {
+            const response = await axios.post('http://localhost:4000/upload', {
+              headers: {
+                  Authorization: `Bearer ${token}`,
+              }
+          }, formData);
 
-  return (
-    <div>
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUpload}>Upload</button>
-    </div>
-  );
+            if (response.data && response.data._id) {
+                onImageUpload(response.data._id);
+            }
+        } catch (error) {
+            console.error('Error uploading image: ', error);
+        }
+    };
+
+    return (
+        <div>
+            <input type="file" onChange={handleFileChange} />
+            {previewURL && <img src={previewURL} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px', marginTop: '10px' }} />}
+            <button onClick={handleUpload}>Upload</button>
+        </div>
+    );
 };

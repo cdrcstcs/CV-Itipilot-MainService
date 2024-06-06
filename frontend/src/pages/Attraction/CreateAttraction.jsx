@@ -5,7 +5,7 @@ import TagPage from '../Tag/TagPage';
 import { useCookies } from '../../Cookies';
 import { ImageUploader } from '../Image/ImageUploader';
 
-const CreateAttractionPage = ({ onAttractionCreated }) => {
+const CreateAttractionPage = () => {
   const [formData, setFormData] = useState({
     name: '',
     address: '',
@@ -25,20 +25,27 @@ const CreateAttractionPage = ({ onAttractionCreated }) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
+  const handleImageUpload = (imageId) => {
+    setImageId(imageId); // Set the imageId state with the received image ID
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setFormData({ ...formData, imageId: imageId });
+      // Update formData to include both imageId and tagIds
+      const updatedFormData = {
+        ...formData,
+        imageId: imageId,
+        tagIds: selectedTags.map(tag => tag._id)
+      };
+  
       const token = cookie.get('token');
-
-      const response = await axios.post('http://localhost:4000/attractions', formData, {
+  
+      const response = await axios.post('http://localhost:4000/attractions', updatedFormData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       console.log('Attraction created:', response.data);
-      onAttractionCreated(response.data);
     } catch (error) {
       console.error('Error creating attraction:', error);
     }
@@ -69,8 +76,8 @@ const CreateAttractionPage = ({ onAttractionCreated }) => {
           <input type="text" name="city" value={formData.city} onChange={handleChange} required />
         </div>
         {/* Include ImageUploader component for uploading images */}
-        <ImageUploader onImageUpload={setImageId} />
-        <TagListPage onSelectTags={handleSelectTags} />
+        <ImageUploader onImageUpload={handleImageUpload} />
+        <TagListPage onTagsSelect={handleSelectTags} />
         {selectedTags && selectedTags.map((tag) => (
           <TagPage key={tag._id} tagId={tag._id} />
         ))}

@@ -23,7 +23,6 @@ const AttractionPage = ({ attractionId }) => {
           },
         });
         setAttraction(response.data);
-        // Initialize editedAttraction with the fetched attraction data
         setEditedAttraction(response.data);
       } catch (error) {
         console.error('Error fetching attraction:', error);
@@ -33,7 +32,8 @@ const AttractionPage = ({ attractionId }) => {
     fetchAttraction();
   }, [attractionId]);
 
-  const handleDeleteAttraction = async () => {
+  const handleDeleteAttraction = async (e) => {
+    e.preventDefault();
     try {
       const token = cookie.get('token');
 
@@ -47,11 +47,12 @@ const AttractionPage = ({ attractionId }) => {
     }
   };
 
-  const handleEditAttraction = async () => {
+  const handleEditAttraction = async (e) => {
     try {
+      e.preventDefault();
+
       const token = cookie.get('token');
 
-      // Update the editedAttraction object with the imageId
       const updatedAttraction = { ...editedAttraction, imageId };
 
       await axios.put(`http://localhost:4000/attractions/${attractionId}`, updatedAttraction, {

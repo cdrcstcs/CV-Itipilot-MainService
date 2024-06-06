@@ -34,7 +34,8 @@ const TagListPage = ({ onTagsSelect }) => {
     setSelectedTags(selectedTags.filter(tag => tag._id !== tagId));
   };
 
-  const handlePropagateTags = () => {
+  const handlePropagateTags = (e) => {
+    e.preventDefault();
     onTagsSelect(selectedTags);
   };
 

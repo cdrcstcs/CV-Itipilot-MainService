@@ -70,13 +70,13 @@ const storage = multer.diskStorage({
       cb(null, 'uploads/');
     },
     filename: function (req, file, cb) {
-      const ext = path.extname(file.originalname);
-      cb(null, `${Date.now()}${ext}`);
+      cb(null, file.originalname);
     }
 });
   
 const upload = multer({ storage });
-app.post('/upload', upload.single('image'), verifyToken, uploadImage);
+app.post('/upload', upload.single('image'),verifyToken, uploadImage);
+
 app.get('/images/:id', verifyToken, getImageById);
 
 app.get('/userdata', getDataOfUser);

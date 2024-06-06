@@ -6,7 +6,7 @@ import AttractionListPage from '../Attraction/SelectAttraction';
 import AttractionPage from '../Attraction/AttractionPage';
 import { useCookies } from '../../Cookies';
 
-const CreateEventPage = ({ onEventCreated }) => {
+const CreateEventPage = () => {
   const [formData, setFormData] = useState({
     startTime: '',
     endTime: '',
@@ -36,7 +36,6 @@ const CreateEventPage = ({ onEventCreated }) => {
       } ,formData);
       console.log('Event created:', response.data);
       // Pass the newly created event object to the callback function
-      onEventCreated(response.data);
       // Optionally, you can redirect to another page or show a success message
     } catch (error) {
       console.error('Error creating event:', error);

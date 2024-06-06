@@ -25,7 +25,7 @@ const attractionSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Tag'}],
   ratingId: {
-      type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Rating'
   },
   city: {

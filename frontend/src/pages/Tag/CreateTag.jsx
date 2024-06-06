@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useCookies } from '../../Cookies';
 
-const CreateTagPage = ({ onTagCreated }) => {
+const CreateTagPage = () => {
   const [formData, setFormData] = useState({
     value: ''
   });
@@ -27,7 +27,6 @@ const CreateTagPage = ({ onTagCreated }) => {
       }, formData);
       console.log('Tag created:', response.data);
       // Pass the newly created tag object to the callback function
-      onTagCreated(response.data);
       // Optionally, you can redirect to another page or show a success message
     } catch (error) {
       console.error('Error creating tag:', error);
