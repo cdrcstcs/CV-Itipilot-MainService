@@ -4,7 +4,6 @@ import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
 import multer from 'multer';
 import path from 'path';
-import fs from 'fs';
 
 import {createAttraction, getAllAttractions, getAttraction, updateAttraction, deleteAttraction} from "./controllers/Attraction.js";
 import {createEvent, getAllEvents, getEvent, updateEvent, deleteEvent} from "./controllers/Event.js";
@@ -15,13 +14,9 @@ import {createTag, getAllTags, getTag, updateTag, deleteTag} from "./controllers
 import { getDataOfUser } from './controllers/UserData.js';
 import connectToDb from './db/db.js';
 
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 
 import { uploadImage } from './controllers/Image.js';
 import { getImageById } from './controllers/Image.js';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 connectToDb();
 
@@ -60,14 +55,9 @@ function verifyToken(req, res, next) {
     res.status(401).send(err); // Handle authentication failure
   });
 }
-const uploadDir = path.join(__dirname, 'uploads');
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
-}
-
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, 'uploads/');
+      cb(null, 'uploads');
     },
     filename: function (req, file, cb) {
       cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));
@@ -75,7 +65,7 @@ const storage = multer.diskStorage({
 });
   
 const upload = multer({ storage });
-app.post('/upload', upload.single('file'),verifyToken, uploadImage);
+app.post('/upload', upload.single('file'), uploadImage);
 
 app.get('/images/:id', verifyToken, getImageById);
 

@@ -23,6 +23,7 @@ const AttractionPage = ({ attractionId }) => {
           },
         });
         setAttraction(response.data);
+        // Initialize editedAttraction with the fetched attraction data
         setEditedAttraction(response.data);
       } catch (error) {
         console.error('Error fetching attraction:', error);
@@ -32,8 +33,7 @@ const AttractionPage = ({ attractionId }) => {
     fetchAttraction();
   }, [attractionId]);
 
-  const handleDeleteAttraction = async (e) => {
-    e.preventDefault();
+  const handleDeleteAttraction = async () => {
     try {
       const token = cookie.get('token');
 
@@ -47,12 +47,11 @@ const AttractionPage = ({ attractionId }) => {
     }
   };
 
-  const handleEditAttraction = async (e) => {
+  const handleEditAttraction = async () => {
     try {
-      e.preventDefault();
-
       const token = cookie.get('token');
 
+      // Update the editedAttraction object with the imageId
       const updatedAttraction = { ...editedAttraction, imageId };
 
       await axios.put(`http://localhost:4000/attractions/${attractionId}`, updatedAttraction, {
@@ -73,6 +72,12 @@ const AttractionPage = ({ attractionId }) => {
       ...prevAttraction,
       [name]: value
     }));
+  };
+
+  // Callback function to handle image upload
+  const handleImageUpload = (imageId) => {
+    // Set the imageId received from ImageUploader to the state
+    setImageId(imageId);
   };
 
   return (
@@ -96,7 +101,8 @@ const AttractionPage = ({ attractionId }) => {
               <input type="text" name="city" placeholder="New City" value={editedAttraction.city} onChange={handleChange} />
               <input type="text" name="x" placeholder="New X Coordinate" value={editedAttraction.x} onChange={handleChange} />
               <input type="text" name="y" placeholder="New Y Coordinate" value={editedAttraction.y} onChange={handleChange} />
-              <ImageUploader onImageUpload={setImageId} />
+              {/* Pass handleImageUpload as a prop to ImageUploader */}
+              <ImageUploader onImageUpload={handleImageUpload} />
               <button onClick={handleEditAttraction}>Save</button>
             </div>
           ) : (

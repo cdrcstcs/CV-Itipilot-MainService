@@ -19,7 +19,7 @@ export const SingleImage = ({imageId}) => {
             Authorization: `Bearer ${token}`,
         },
       });
-      setImage(response.data[0].image);
+      setImage(response.data.image);
     } catch (error) {
       console.error('Error fetching image:', error);
     }
@@ -30,7 +30,7 @@ export const SingleImage = ({imageId}) => {
       <h1>Single Image</h1>
       {image ? (
         <div>
-          <img src={`http://localhost:5173/${image}`} alt={image} />
+          <img src={`http://localhost:4000/${image}`} alt={image} />
         </div>
       ) : (
         <p>Loading...</p>
