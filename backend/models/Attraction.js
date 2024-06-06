@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 const attractionSchema = new mongoose.Schema({
+  imageId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Image'
+  },
   name: {
     type: String,
     required: true

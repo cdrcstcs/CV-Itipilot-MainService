@@ -2,10 +2,14 @@ import React, { useState, useEffect } from 'react';
 import axios from "../../AxiosSetup";
 import TagPage from '../Tag/TagPage';
 import { useCookies } from '../../Cookies';
+import { SingleImage } from '../Image/ImagePage';
+import { ImageUploader } from '../Image/ImageUploader';
+
 const AttractionPage = ({ attractionId }) => {
   const [attraction, setAttraction] = useState(null);
   const [editedAttraction, setEditedAttraction] = useState(null);
   const [editing, setEditing] = useState(false);
+  const [imageId, setImageId] = useState(null); // State to store the image ID
   const cookie = useCookies();
 
   useEffect(() => {
@@ -13,11 +17,11 @@ const AttractionPage = ({ attractionId }) => {
       try {
         const token = cookie.get('token');
 
-        const response = await axios.get(`http://localhost:4000/attractions/${attractionId}`,{
-            headers: {
-                Authorization: `Bearer ${token}`,
-              },
-          });
+        const response = await axios.get(`http://localhost:4000/attractions/${attractionId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setAttraction(response.data);
         // Initialize editedAttraction with the fetched attraction data
         setEditedAttraction(response.data);
@@ -31,12 +35,12 @@ const AttractionPage = ({ attractionId }) => {
 
   const handleDeleteAttraction = async () => {
     try {
-        const token = cookie.get('token');
+      const token = cookie.get('token');
 
-      await axios.delete(`http://localhost:4000/attractions/${attractionId}`,{
+      await axios.delete(`http://localhost:4000/attractions/${attractionId}`, {
         headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          Authorization: `Bearer ${token}`,
+        },
       });
     } catch (error) {
       console.error('Error deleting attraction:', error);
@@ -45,13 +49,16 @@ const AttractionPage = ({ attractionId }) => {
 
   const handleEditAttraction = async () => {
     try {
-        const token = cookie.get('token');
+      const token = cookie.get('token');
 
-      await axios.put(`http://localhost:4000/attractions/${attractionId}`,{
+      // Update the editedAttraction object with the imageId
+      const updatedAttraction = { ...editedAttraction, imageId };
+
+      await axios.put(`http://localhost:4000/attractions/${attractionId}`, updatedAttraction, {
         headers: {
-            Authorization: `Bearer ${token}`,
-          },
-      } ,editedAttraction);
+          Authorization: `Bearer ${token}`,
+        },
+      });
       // Exit editing mode after successfully editing attraction
       setEditing(false);
     } catch (error) {
@@ -71,6 +78,7 @@ const AttractionPage = ({ attractionId }) => {
     <div>
       {attraction ? (
         <div>
+          <SingleImage imageId={attraction.imageId}></SingleImage>
           <h1>Attraction Details</h1>
           <p>Name: {attraction.name}</p>
           <p>Address: {attraction.address}</p>
@@ -78,19 +86,17 @@ const AttractionPage = ({ attractionId }) => {
           <p>X: {attraction.x}</p>
           <p>Y: {attraction.y}</p>
           {attraction.tagIds.map((tagId) => (
-          <TagPage key={tagId} tagId={tagId} />
-        ))}          
-        {editing ? (
+            <TagPage key={tagId} tagId={tagId} />
+          ))}
+          {editing ? (
             <div>
               <input type="text" name="name" placeholder="New Name" value={editedAttraction.name} onChange={handleChange} />
               <input type="text" name="address" placeholder="New Address" value={editedAttraction.address} onChange={handleChange} />
               <input type="text" name="city" placeholder="New City" value={editedAttraction.city} onChange={handleChange} />
               <input type="text" name="x" placeholder="New X Coordinate" value={editedAttraction.x} onChange={handleChange} />
               <input type="text" name="y" placeholder="New Y Coordinate" value={editedAttraction.y} onChange={handleChange} />
-              {attraction.tagIds.map((tagId) => (
-                <TagPage key={tagId} tagId={tagId} />
-            ))}              
-            <button onClick={handleEditAttraction}>Save</button>
+              <ImageUploader onImageUpload={setImageId} />
+              <button onClick={handleEditAttraction}>Save</button>
             </div>
           ) : (
             <div>

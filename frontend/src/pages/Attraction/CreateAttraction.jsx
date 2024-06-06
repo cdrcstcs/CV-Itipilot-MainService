@@ -1,10 +1,9 @@
-// AttractionPage.js
-
 import React, { useState } from 'react';
 import axios from 'axios';
 import TagListPage from '../Tag/TagsPage';
 import TagPage from '../Tag/TagPage';
 import { useCookies } from '../../Cookies';
+import { ImageUploader } from '../Image/ImageUploader';
 
 const CreateAttractionPage = ({ onAttractionCreated }) => {
   const [formData, setFormData] = useState({
@@ -14,9 +13,11 @@ const CreateAttractionPage = ({ onAttractionCreated }) => {
     y: '',
     city: ''
   });
+  const [imageId, setImageId] = useState(null); // State to store the image ID
+
   const cookie = useCookies();
 
-  const [selectedTags, setSelectedTags] = useState();
+  const [selectedTags, setSelectedTags] = useState([]);
   const handleSelectTags = (tags) => {
     setSelectedTags(tags);
   };
@@ -28,20 +29,18 @@ const CreateAttractionPage = ({ onAttractionCreated }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const token = cookie.get('token');
+      setFormData({ ...formData, imageId: imageId });
+      const token = cookie.get('token');
 
-      const response = await axios.post('http://localhost:4000/attractions',{
+      const response = await axios.post('http://localhost:4000/attractions', formData, {
         headers: {
-            Authorization: `Bearer ${token}`,
-          },
-      }, formData);
+          Authorization: `Bearer ${token}`,
+        },
+      });
       console.log('Attraction created:', response.data);
-      // Pass the newly created attraction object to the callback function
       onAttractionCreated(response.data);
-      // Optionally, you can redirect to another page or show a success message
     } catch (error) {
       console.error('Error creating attraction:', error);
-      // Optionally, you can display an error message to the user
     }
   };
 
@@ -69,10 +68,12 @@ const CreateAttractionPage = ({ onAttractionCreated }) => {
           <label>City:</label>
           <input type="text" name="city" value={formData.city} onChange={handleChange} required />
         </div>
+        {/* Include ImageUploader component for uploading images */}
+        <ImageUploader onImageUpload={setImageId} />
         <TagListPage onSelectTags={handleSelectTags} />
-        {selectedTags && selectedTags.map((tag)=>{
-            <TagPage tagId={tag._id}></TagPage>
-        })}
+        {selectedTags && selectedTags.map((tag) => (
+          <TagPage key={tag._id} tagId={tag._id} />
+        ))}
         <button type="submit">Create</button>
       </form>
     </div>

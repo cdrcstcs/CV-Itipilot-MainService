@@ -2,6 +2,10 @@ import express from 'express';
 import cors from 'cors';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
+import multer from 'multer';
+import path from 'path';
+import fs from 'fs';
+
 import {createAttraction, getAllAttractions, getAttraction, updateAttraction, deleteAttraction} from "./controllers/Attraction.js";
 import {createEvent, getAllEvents, getEvent, updateEvent, deleteEvent} from "./controllers/Event.js";
 import {createUser, getAllUsers, loginUser, getUser, updateUser, getProfile} from "./controllers/User.js";
@@ -20,6 +24,7 @@ app.use(cors({
   origin: 'http://localhost:5173',
 }));
 
+app.use('/uploads', express.static('uploads'));
 
 const jwtSecret = 'fasefraw4r5r3wq45wdfgw34twdfg';
 function verifyToken(req, res, next) {
@@ -46,6 +51,24 @@ function verifyToken(req, res, next) {
     res.status(401).send(err); // Handle authentication failure
   });
 }
+const uploadDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir);
+}
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads/');
+    },
+    filename: function (req, file, cb) {
+      const ext = path.extname(file.originalname);
+      cb(null, `${Date.now()}${ext}`);
+    }
+});
+  
+const upload = multer({ storage });
+app.post('/upload', upload.single('image'), verifyToken, uploadImage);
+app.get('/images/:id', verifyToken, getImageById);
 
 app.get('/userdata', getDataOfUser);
 

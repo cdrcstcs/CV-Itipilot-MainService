@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useCookies } from '../../Cookies';
-
+import { SingleImage } from '../Image/ImagePage';
 const AttractionListPage = ({ onSelectAttraction }) => {
   const [attractions, setAttractions] = useState([]);
   const cookie = useCookies();
@@ -37,6 +37,7 @@ const AttractionListPage = ({ onSelectAttraction }) => {
         {attractions.map(attraction => (
           <li key={attraction._id}>
             <div>
+              <SingleImage imageId={attraction.imageId}></SingleImage>
               <p>Name: {attraction.name}</p>
               <p>Address: {attraction.address}</p>
               <p>City: {attraction.city}</p>
