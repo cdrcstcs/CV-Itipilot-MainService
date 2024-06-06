@@ -14,6 +14,15 @@ import {createRating, getAllRatings, getRating, updateRating, deleteRating} from
 import {createTag, getAllTags, getTag, updateTag, deleteTag} from "./controllers/Tag.js";
 import { getDataOfUser } from './controllers/UserData.js';
 import connectToDb from './db/db.js';
+
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+import { uploadImage } from './controllers/Image.js';
+import { getImageById } from './controllers/Image.js';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 connectToDb();
 
 const app = express();

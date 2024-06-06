@@ -24,7 +24,7 @@ export const ImageUploader = ({ onImageUpload }) => {
     })
     .then((response) => {
       if (response.data && response.data.id) {
-        onImageUpload(response.data.id);
+        onImageUpload(response.data._id);
       }
     })
     .catch((error) => {
