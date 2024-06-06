@@ -1,9 +1,11 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useCookies } from '../../Cookies';
 
 export const SingleImage = ({imageId}) => {
   const [image, setImage] = useState(null);
+  const cookie = useCookies();
 
   useEffect(() => {
     fetchImage();
@@ -11,7 +13,13 @@ export const SingleImage = ({imageId}) => {
 
   const fetchImage = async () => {
     try {
-      const response = await axios.get(`/images/${imageId}`);
+      const token = cookie.get('token');
+
+      const response = await axios.get(`http://localhost:4000/images/${imageId}`,{
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+      });
       setImage(response.data);
     } catch (error) {
       console.error('Error fetching image:', error);

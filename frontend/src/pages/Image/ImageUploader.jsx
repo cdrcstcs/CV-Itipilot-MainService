@@ -1,20 +1,25 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useCookies } from '../../Cookies';
 
 export const ImageUploader = ({ onImageUpload }) => {
   const [selectedFile, setSelectedFile] = useState(null);
+  const cookie = useCookies();
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
 
   const handleUpload = () => {
+    const token = cookie.get('token');
+
     const formData = new FormData();
     formData.append('image', selectedFile);
 
-    axios.post('/upload', formData, {
+    axios.post('http://localhost:4000/upload', formData, {
       headers: {
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`,
       }
     })
     .then((response) => {

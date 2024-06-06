@@ -14,12 +14,15 @@ import TagListPage from './pages/Tag/TagsPage.jsx';
 import CreateTag from './pages/Tag/CreateTag.jsx';
 import Header from './Header.jsx';
 import CookiesProvider from "./Cookies.jsx";
-
+import { ImageUploader } from "./pages/Image/ImageUploader.jsx";
+import { SingleImage } from "./pages/Image/ImagePage.jsx";
 function App() {
   return (
     <CookiesProvider>
       <Header path="/hi"/>
       <Routes>
+        <Route path="/image/create" element={<ImageUploader/>}/>
+        <Route path="/image" element={<SingleImage/>}/>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/account" element={<ProfilePage />} />
