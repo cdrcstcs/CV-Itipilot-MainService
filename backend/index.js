@@ -92,11 +92,11 @@ app.put('/itinerary/:id', verifyToken, updateItinerary);
 app.delete('/itinerary/:id', verifyToken, deleteItinerary);
 
 
-app.post('/user/itinerary', verifyToken, createUserItinerary);
-app.get('/user/itinerary', verifyToken, getAllUserItineraries);
-app.get('/user/itinerary/:id', verifyToken, getUserItinerary);
-app.put('/user/itinerary/:id', verifyToken, updateUserItinerary);
-app.delete('/user/itinerary/:id', verifyToken, deleteUserItinerary);
+app.post('/user_itinerary', verifyToken, createUserItinerary);
+app.get('/user_itinerary', verifyToken, getAllUserItineraries);
+app.get('/user_itinerary/:id', verifyToken, getUserItinerary);
+app.put('/user_itinerary/:id', verifyToken, updateUserItinerary);
+app.delete('/user_itinerary/:id', verifyToken, deleteUserItinerary);
 
 app.post('/tags', verifyToken, createTag);
 app.get('/tags', verifyToken, getAllTags);

@@ -7,7 +7,8 @@ import YourItinerariesPage from './UserItineraries';
 const ItineraryDetailsPage = ({ itinerary, onClose }) => {
     const [check, setCheck] = useState(false);
 
-    const handleTransferClick = () => {
+    const handleTransferClick = (e) => {
+        e.preventDefault();
         setCheck(true);
     };
     

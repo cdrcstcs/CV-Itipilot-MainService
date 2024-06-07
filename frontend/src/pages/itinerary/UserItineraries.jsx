@@ -15,7 +15,7 @@ const YourItinerariesPage = (iti) => {
     try {
         const token = cookie.get('token');
 
-      const response = await axios.post('http://localhost:4000/user/itinerary',{
+      const response = await axios.post('http://localhost:4000/user_itinerary',{
         headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -39,7 +39,7 @@ const YourItinerariesPage = (iti) => {
         
         axios.defaults.withCredentials = true;
 
-        const response = await axios.get('http://localhost:4000/user/itinerary',{
+        const response = await axios.get('http://localhost:4000/user_itinerary',{
         headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -54,7 +54,7 @@ const YourItinerariesPage = (iti) => {
     try {
         const token = cookie.get('token');
 
-      await axios.delete(`http://localhost:4000/itinerary/${itineraryId}`,{
+      await axios.delete(`http://localhost:4000/user_itinerary/${itineraryId}`,{
         headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -73,7 +73,7 @@ const YourItinerariesPage = (iti) => {
     try {
         const token = cookie.get('token');
 
-      await axios.put(`http://localhost:4000/itinerary/${itineraryId}`,{
+      await axios.put(`http://localhost:4000/user_itinerary/${itineraryId}`,{
         headers: {
             Authorization: `Bearer ${token}`,
           },
