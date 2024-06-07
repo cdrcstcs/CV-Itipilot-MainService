@@ -6,7 +6,7 @@ import EventPage from '../Event/EventPage';
 
 const ItineraryDetailsPage = ({ itinerary, onClose }) => {
   return (
-    <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', textAlign: 'center', backgroundColor: 'black', overflowY: 'auto' ,padding: '20px', borderRadius: '5px'}} onClick={onClose}>
+    <div style={{overflowY:'auto', height:'100%',position: 'absolute', top: 0, left: 0, width: '100%', textAlign: 'center', backgroundColor: 'rgba(0, 0, 0, 0.8)' ,padding: '20px', borderRadius: '5px'}} onClick={onClose}>
         <h1>Itinerary: {itinerary.title}</h1>
         <p>Name: {itinerary.name}</p>
         <p>Start Time: {itinerary.startTime}</p>
