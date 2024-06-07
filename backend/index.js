@@ -9,6 +9,8 @@ import {createAttraction, getAllAttractions, getAttraction, updateAttraction, de
 import {createEvent, getAllEvents, getEvent, updateEvent, deleteEvent} from "./controllers/Event.js";
 import {createUser, getAllUsers, loginUser, getUser, updateUser, getProfile} from "./controllers/User.js";
 import {createItinerary, getAllItineraries, getItinerary, updateItinerary, deleteItinerary} from "./controllers/Itinerary.js";
+import {createUserItinerary, getAllUserItineraries, getUserItinerary, updateUserItinerary, deleteUserItinerary} from "./controllers/UserItinerary.js";
+
 import {createRating, getAllRatings, getRating, updateRating, deleteRating} from "./controllers/Rating.js";
 import {createTag, getAllTags, getTag, updateTag, deleteTag} from "./controllers/Tag.js";
 import { getDataOfUser } from './controllers/UserData.js';
@@ -88,6 +90,13 @@ app.get('/itinerary', verifyToken, getAllItineraries);
 app.get('/itinerary/:id', verifyToken, getItinerary);
 app.put('/itinerary/:id', verifyToken, updateItinerary);
 app.delete('/itinerary/:id', verifyToken, deleteItinerary);
+
+
+app.post('/user/itinerary', verifyToken, createUserItinerary);
+app.get('/user/itinerary', verifyToken, getAllUserItineraries);
+app.get('/user/itinerary/:id', verifyToken, getUserItinerary);
+app.put('/user/itinerary/:id', verifyToken, updateUserItinerary);
+app.delete('/user/itinerary/:id', verifyToken, deleteUserItinerary);
 
 app.post('/tags', verifyToken, createTag);
 app.get('/tags', verifyToken, getAllTags);

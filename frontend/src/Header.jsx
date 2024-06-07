@@ -58,6 +58,7 @@ const Header = () => {
             <Link to="/itinerary/create" style={{ textDecoration: 'none', color: 'orangered'}}>Create Itinerary</Link>
             <Link to="/events/create" style={{ textDecoration: 'none', color: 'orangered' }}>Create Event</Link>
             <Link to="/attraction/create" style={{ textDecoration: 'none', color: 'orangered' }}>Create Attraction</Link>
+            <Link to="/itineraries/user" style={{ textDecoration: 'none', color: 'orangered' }}>Your Itineraries</Link>
           </>
         )}
     </header>
