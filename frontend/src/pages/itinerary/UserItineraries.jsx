@@ -6,7 +6,7 @@ import { useCookies } from '../../Cookies';
 import EventPage from '../Event/EventPage';
 import { useLocation } from 'react-router-dom';
 
-const YourItinerariesPage = (iti) => {
+const YourItinerariesPage = ({iti}) => {
   const [itineraries, setItineraries] = useState([]);
   const [editedItinerary, setEditedItinerary] = useState(null);
   const cookie = useCookies();
@@ -14,19 +14,18 @@ const YourItinerariesPage = (iti) => {
   const createItinerary = async () => {
     try {
         const token = cookie.get('token');
-
-      const response = await axios.post('http://localhost:4000/user_itinerary',{
+        console.log(iti);
+      const response = await axios.post('http://localhost:4000/user_itinerary', iti,{
         headers: {
             Authorization: `Bearer ${token}`,
           },
-      }, iti);
+      });
       console.log('Itinerary created:', response.data);
-      // Optionally, you can redirect to another page or show a success message
     } catch (error) {
       console.error('Error creating itinerary:', error);
-      // Optionally, you can display an error message to the user
     }
   };
+  
   createItinerary();
   useEffect(() => {
     fetchItineraries();
@@ -42,6 +41,7 @@ const YourItinerariesPage = (iti) => {
         const response = await axios.get('http://localhost:4000/user_itinerary',{
         headers: {
             Authorization: `Bearer ${token}`,
+            'Content-Type':'application/json'
           },
       });
       setItineraries(response.data);

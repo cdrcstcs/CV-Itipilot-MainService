@@ -8,8 +8,8 @@ const Header = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const cookie = useCookies();
   const token = cookie.get('token');
-  
   useEffect(() => {
+    console.log(token);
     if (token !== '') {
       setLoggedIn(true);
     } else {

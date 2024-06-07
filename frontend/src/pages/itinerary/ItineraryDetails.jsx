@@ -9,6 +9,8 @@ const ItineraryDetailsPage = ({ itinerary, onClose }) => {
 
     const handleTransferClick = (e) => {
         e.preventDefault();
+        e.stopPropagation(); // Prevent event propagation
+
         setCheck(true);
     };
     
@@ -24,7 +26,7 @@ const ItineraryDetailsPage = ({ itinerary, onClose }) => {
             <UserPage userId={itinerary.userId}></UserPage>
             <RatingPage ratingId={itinerary.ratingId}></RatingPage>
             <button onClick={handleTransferClick}>Save to your itineraries</button>
-            {check && <YourItinerariesPage itinerary={itinerary} />}
+            {check && <YourItinerariesPage iti={itinerary} />}
         </div>
     );
 };

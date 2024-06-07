@@ -2,7 +2,10 @@ import UserItinerary from "../models/UserItinerary.js";
 
 async function createUserItinerary(req, res) {
   try {
-    const itinerary = await UserItinerary.create(req.body);
+    const { _id, ...itineraryData } = req.body; // Exclude _id from itineraryData
+    console.log('ok');
+    console.log(itineraryData);
+    const itinerary = await UserItinerary.create(itineraryData);
     res.status(201).json(itinerary);
   } catch (error) {
     res.status(500).json({ message: error.message });
