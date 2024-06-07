@@ -37,9 +37,7 @@ const Header = () => {
           <div style={{ marginRight: '15px' }}><Link to="/account" style={{ textDecoration: 'none', color:'orangered' }}>Profile</Link></div>
           <div style={{ marginRight: '15px' }}><Link to="/itineraries" style={{ textDecoration: 'none', color:'orangered'}}>Itineraries</Link></div>
           <div style={{ marginRight: '15px' }}><Link to="/itinerary/create" style={{ textDecoration: 'none' , color:'orangered'}}>Create Itinerary</Link></div>
-          <div style={{ marginRight: '15px' }}><Link to="/events" style={{ textDecoration: 'none' , color:'orangered'}}>Events</Link></div>
           <div style={{ marginRight: '15px' }}><Link to="/events/create" style={{ textDecoration: 'none' , color:'orangered'}}>Create Event</Link></div>
-          <div style={{ marginRight: '15px' }}><Link to="/attractions" style={{ textDecoration: 'none', color:'orangered' }}>Attractions</Link></div>
           <div style={{ marginRight: '15px' }}><Link to="/attraction/create" style={{ textDecoration: 'none', color:'orangered' }}>Create Attraction</Link></div>
         </>
       )}

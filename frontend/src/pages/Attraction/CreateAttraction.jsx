@@ -75,7 +75,6 @@ const CreateAttractionPage = () => {
           <label>City:</label>
           <input type="text" name="city" value={formData.city} onChange={handleChange} required />
         </div>
-        {/* Include ImageUploader component for uploading images */}
         <ImageUploader onImageUpload={handleImageUpload} />
         <TagListPage onTagsSelect={handleSelectTags} />
         {selectedTags && selectedTags.map((tag) => (
