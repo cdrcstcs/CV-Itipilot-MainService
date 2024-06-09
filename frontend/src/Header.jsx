@@ -3,11 +3,15 @@ import { Link } from 'react-router-dom';
 import { useCookies } from './Cookies';
 import { useState } from 'react';
 import { useEffect } from 'react';
-
+import { useRef } from 'react';
 const Header = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const cookie = useCookies();
   const token = cookie.get('token');
+  const hiddenLinkRef1 = useRef(null);
+  const hiddenLinkRef2 = useRef(null);
+
+
   useEffect(() => {
     console.log(token);
     if (token !== '') {
@@ -21,7 +25,15 @@ const Header = () => {
     cookie.set('token', '');
     setLoggedIn(false);
   };
-
+  const handleClick1 = () => {
+    hiddenLinkRef1.current.click();
+  };
+  const handleClick2 = () => {
+    hiddenLinkRef2.current.click();
+  };
+  const replaceHistory = (url) => {
+    window.history.replaceState({}, document.title, url);
+  };
   return (
     <header
       style={{
@@ -59,6 +71,16 @@ const Header = () => {
             <Link to="/events/create" style={{ textDecoration: 'none', color: 'orangered' }}>Create Event</Link>
             <Link to="/attraction/create" style={{ textDecoration: 'none', color: 'orangered' }}>Create Attraction</Link>
             <Link to="/itineraries/user" style={{ textDecoration: 'none', color: 'orangered' }}>Your Itineraries</Link>
+            <div style={{cursor: 'pointer',backgroundColor: 'transparent',color: 'orangered'}} onClick={() => {
+              handleClick1();
+              replaceHistory(window.location.href);
+            }}>Social Media</div>
+            <a href="http://localhost:5000" ref={hiddenLinkRef1} style={{ display: 'none' }}>Hidden Link</a>
+            <div style={{cursor: 'pointer',backgroundColor: 'transparent',color: 'orangered'}} onClick={() => {
+              handleClick2();
+              replaceHistory(window.location.href);
+            }}>Attraction Map</div>
+            <a href="http://localhost:5600" ref={hiddenLinkRef2} style={{ display: 'none' }}>Hidden Link</a>
           </>
         )}
     </header>

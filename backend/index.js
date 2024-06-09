@@ -30,7 +30,6 @@ app.use(cors({
   origin: 'http://localhost:5173',
 }));
 
-app.use(express.static('uploads'));
 
 const jwtSecret = 'fasefraw4r5r3wq45wdfgw34twdfg';
 function verifyToken(req, res, next) {
@@ -46,8 +45,8 @@ function verifyToken(req, res, next) {
         } else {
           req.userData = userData;
           resolve(); 
-        }
-      });
+          }
+          });
     }
   })
   .then(() => {
@@ -55,9 +54,10 @@ function verifyToken(req, res, next) {
   })
   .catch(err => {
     res.status(401).send(err); // Handle authentication failure
-  });
-}
-const storage = multer.diskStorage({
+    });
+    }
+  app.use(express.static('uploads'));
+  const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, 'uploads');
     },
