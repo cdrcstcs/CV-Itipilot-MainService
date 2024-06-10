@@ -4,6 +4,7 @@ import { useCookies } from './Cookies';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useRef } from 'react';
+import axios from 'axios';
 const Header = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const cookie = useCookies();
@@ -11,10 +12,30 @@ const Header = () => {
   const hiddenLinkRef1 = useRef(null);
   const hiddenLinkRef2 = useRef(null);
   const hiddenLinkRef3 = useRef(null);
-
+  const hiddenLinkRef4 = useRef(null);
 
   useEffect(() => {
-    console.log(token);
+    async function fetchUserData() {
+      try {
+        const token = cookie.get('token');
+        const resp = await axios.get(`http://localhost:4000/userdata`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const userId = resp.data.userId;
+        const userResp = await axios.post(`http://localhost:4600/${userId}`);
+        console.log(userResp);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    }
+    fetchUserData();
+
+  }, [token]);
+  
+  useEffect(() => {
+    // console.log(token);
     if (token !== '') {
       setLoggedIn(true);
     } else {
@@ -34,6 +55,9 @@ const Header = () => {
   };
   const handleClick3 = () => {
     hiddenLinkRef3.current.click();
+  };
+  const handleClick4 = () => {
+    hiddenLinkRef4.current.click();
   };
   const replaceHistory = (url) => {
     window.history.replaceState({}, document.title, url);
@@ -90,6 +114,11 @@ const Header = () => {
               replaceHistory(window.location.href);
             }}>Weather</div>
             <a href="http://localhost:5700" ref={hiddenLinkRef3} style={{ display: 'none' }}>Hidden Link</a>
+            <div style={{cursor: 'pointer',backgroundColor: 'transparent',color: 'orangered'}} onClick={() => {
+              handleClick4();
+              replaceHistory(window.location.href);
+            }}>Note</div>
+            <a href="http://localhost:5800" ref={hiddenLinkRef4} style={{ display: 'none' }}>Hidden Link</a>
           </>
         )}
     </header>
