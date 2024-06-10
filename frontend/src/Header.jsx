@@ -10,6 +10,7 @@ const Header = () => {
   const token = cookie.get('token');
   const hiddenLinkRef1 = useRef(null);
   const hiddenLinkRef2 = useRef(null);
+  const hiddenLinkRef3 = useRef(null);
 
 
   useEffect(() => {
@@ -30,6 +31,9 @@ const Header = () => {
   };
   const handleClick2 = () => {
     hiddenLinkRef2.current.click();
+  };
+  const handleClick3 = () => {
+    hiddenLinkRef3.current.click();
   };
   const replaceHistory = (url) => {
     window.history.replaceState({}, document.title, url);
@@ -81,6 +85,11 @@ const Header = () => {
               replaceHistory(window.location.href);
             }}>Attraction Map</div>
             <a href="http://localhost:5600" ref={hiddenLinkRef2} style={{ display: 'none' }}>Hidden Link</a>
+            <div style={{cursor: 'pointer',backgroundColor: 'transparent',color: 'orangered'}} onClick={() => {
+              handleClick3();
+              replaceHistory(window.location.href);
+            }}>Weather</div>
+            <a href="http://localhost:5700" ref={hiddenLinkRef3} style={{ display: 'none' }}>Hidden Link</a>
           </>
         )}
     </header>
