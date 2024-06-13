@@ -34,7 +34,7 @@ const CreateItineraryPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const token = cookie.get('token');
+        const token = cookie.get('Token');
 
       const response = await axios.post('http://localhost:4000/itinerary',{
         headers: {

@@ -38,7 +38,7 @@ const CreateAttractionPage = () => {
         tagIds: selectedTags.map(tag => tag._id)
       };
   
-      const token = cookie.get('token');
+      const token = cookie.get('Token');
   
       const response = await axios.post('http://localhost:4000/attractions', updatedFormData, {
         headers: {

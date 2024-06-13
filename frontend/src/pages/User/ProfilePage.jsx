@@ -17,7 +17,7 @@ export default function ProfilePage() {
   useEffect(() => {
     async function fetchUserData() {
       try {
-        const token = cookie.get('token');
+        const token = cookie.get('Token');
         const resp = await axios.get(`http://localhost:4000/userdata`, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -37,7 +37,7 @@ export default function ProfilePage() {
   }, [user]);
 
   async function logout() {
-    cookie.set('token','');
+    cookie.set('Token','');
     setRedirect('/itineraries');
   }
 
@@ -49,7 +49,7 @@ export default function ProfilePage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const token = cookie.get('token');
+      const token = cookie.get('Token');
       await axios.put(`http://localhost:4000/users`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,

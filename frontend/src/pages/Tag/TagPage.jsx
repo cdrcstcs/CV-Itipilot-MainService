@@ -14,7 +14,7 @@ function TagPage({ tagId }) {
 
   const fetchTagById = async () => {
     try {
-        const token = cookie.get('token');
+        const token = cookie.get('Token');
 
       const response = await axios.get(`http://localhost:4000/tags/${tagId}`,{
         headers: {
@@ -31,7 +31,7 @@ function TagPage({ tagId }) {
     try {
       e.preventDefault();
 
-        const token = cookie.get('token');
+        const token = cookie.get('Token');
 
       await axios.delete(`http://localhost:4000/tags/${tagId}`,{
         headers: {
@@ -48,7 +48,7 @@ function TagPage({ tagId }) {
     try {
       e.preventDefault();
 
-        const token = cookie.get('token');
+        const token = cookie.get('Token');
 
       await axios.put(`http://localhost:4000/tags/${tagId}`,{
         headers: {

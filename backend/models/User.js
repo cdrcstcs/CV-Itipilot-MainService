@@ -5,13 +5,14 @@ const UserSchema = new Schema({
   name: String,
   email: {type:String, unique:true},
   password: String,
-  userType: {
-    type: String,
-    enum: ['ADMIN', 'USER'],
-    required: true
-  },
+  posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }], // Reference to Post model
+  savedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'SavedPost' }], // Reference to SavedPost model
+  chats: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Chat' }], // Reference to Chat model
+  chatIDs: [String],
+  phone: Number,
+  userType: String,
 },{timestamps:true});
 
-const UserModel = mongoose.model('User', UserSchema);
+const User = mongoose.model('User', UserSchema);
 
-export default UserModel;
+export default User;

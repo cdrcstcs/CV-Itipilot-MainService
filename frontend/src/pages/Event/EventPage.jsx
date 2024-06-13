@@ -18,7 +18,7 @@ const EventPage = ({ eventId }) => {
 
   const fetchEvent = async (eventId) => {
     try {
-      const token = cookie.get('token');
+      const token = cookie.get('Token');
 
       const response = await axios.get(`http://localhost:4000/events/${eventId}`, {
         headers: {
@@ -34,7 +34,7 @@ const EventPage = ({ eventId }) => {
 
   const handleDeleteEvent = async () => {
     try {
-      const token = cookie.get('token');
+      const token = cookie.get('Token');
 
       await axios.delete(`http://localhost:4000/events/${eventId}`, {
         headers: {
@@ -54,7 +54,7 @@ const EventPage = ({ eventId }) => {
 
   const handleSaveEdit = async () => {
     try {
-      const token = cookie.get('token');
+      const token = cookie.get('Token');
 
       await axios.put(`http://localhost:4000/events/${eventId}`, editedEvent, {
         headers: {

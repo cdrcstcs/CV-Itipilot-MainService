@@ -13,7 +13,7 @@ function RatingPage({ ratingId }) {
 
   const fetchRatingById = async () => {
     try {
-        const token = cookie.get('token');
+        const token = cookie.get('Token');
 
       const response = await axios.get(`http://localhost:4000/ratings/${ratingId}`,{
         headers: {
@@ -28,7 +28,7 @@ function RatingPage({ ratingId }) {
 
   const handleLike = async () => {
     try {
-        const token = cookie.get('token');
+        const token = cookie.get('Token');
 
       await axios.put(`http://localhost:4000/ratings/${ratingId}`,{
         headers: {

@@ -5,24 +5,21 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useRef } from 'react';
 import axios from 'axios';
+
 const Header = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const cookie = useCookies();
-  const token = cookie.get('token');
+  const token = cookie.get('Token');
   const hiddenLinkRef1 = useRef(null);
   const hiddenLinkRef2 = useRef(null);
   const hiddenLinkRef3 = useRef(null);
   const hiddenLinkRef4 = useRef(null);
-
+  
   useEffect(() => {
-    async function fetchUserData() {
+    async function fetchUserDataForNote() {
       try {
-        const token = cookie.get('token');
-        const resp = await axios.get(`http://localhost:4000/userdata`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        // const token = cookie.get('Token');
+        const resp = await axios.post(`http://localhost:4000/userdata`,{token});
         const userId = resp.data.userId;
         const userResp = await axios.post(`http://localhost:4600/${userId}`);
         console.log(userResp);
@@ -30,21 +27,38 @@ const Header = () => {
         console.error('Error fetching user data:', error);
       }
     }
-    fetchUserData();
+    fetchUserDataForNote();
 
   }, [token]);
-  
-  useEffect(() => {
-    // console.log(token);
-    if (token !== '') {
-      setLoggedIn(true);
-    } else {
-      setLoggedIn(false);
-    }
-  }, [token]); // Watch for changes in cookie
 
-  const handleLogout = () => {
-    cookie.set('token', '');
+  useEffect(() => {
+    async function fetchUserDataForHotel() {
+      try {
+        // const token = cookie.get('Token');
+        const resp = await axios.post(`http://localhost:4000/userdata`,{token});
+        const userId = resp.data.userId;
+        const userDetails = await axios.get(`http://localhost:4000/users/${userId}`);
+        console.log(userDetails);
+        const userResp = await axios.post("http://localhost:4800/userData", userDetails);
+        console.log(userResp);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    }
+    fetchUserDataForHotel();
+    }, [token]);
+    
+    
+    useEffect(() => {
+      if (token !== '') {
+        setLoggedIn(true);
+      } else {
+        setLoggedIn(false);
+      }
+    }, [token]); 
+    console.log(token+'2');
+    const handleLogout = () => {
+    cookie.set('Token', '');
     setLoggedIn(false);
   };
   const handleClick1 = () => {

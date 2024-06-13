@@ -14,8 +14,8 @@ const ItinerariesPage = () => {
 
   const fetchItineraries = async () => {
     try {
-      const token = cookie.get('token');
-      axios.defaults.withCredentials = true;
+      const token = cookie.get('Token');
+      console.log('hello'+ token);
       const response = await axios.get('http://localhost:4000/itinerary', {
         headers: {
           Authorization: `Bearer ${token}`,

@@ -32,14 +32,14 @@ app.use(cors({
 
 
 const jwtSecret = 'fasefraw4r5r3wq45wdfgw34twdfg';
-function verifyToken(req, res, next) {
+async function verifyToken(req, res, next) {
   return new Promise((resolve, reject) => {
-    const token = req.cookies && req.cookies.token; // Check if token exists in req.cookies
+    const token = req.cookies && req.cookies.Token; // Check if token exists in req.cookies
     if (!token) {
       reject(new Error('Token not found in cookies')); // Reject if token is not found
     } else {
-      // console.log('backend'+req.cookies.token);
-      jwt.verify(req.cookies.token, jwtSecret, {}, (err, userData) => {
+      console.log('backend'+req.cookies.Token);
+      jwt.verify(req.cookies.Token, jwtSecret, {}, (err, userData) => {
         if (err) {
           reject(err); 
         } else {
@@ -55,7 +55,7 @@ function verifyToken(req, res, next) {
   .catch(err => {
     res.status(401).send(err); // Handle authentication failure
     });
-    }
+  }
   app.use(express.static('uploads'));
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -71,7 +71,7 @@ app.post('/upload', upload.single('file'), uploadImage);
 
 app.get('/images/:id', verifyToken, getImageById);
 
-app.get('/userdata', getDataOfUser);
+app.post('/userdata', getDataOfUser);
 
 app.post('/attractions', verifyToken, createAttraction);
 app.get('/attractions', verifyToken, getAllAttractions);

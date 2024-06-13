@@ -15,7 +15,7 @@ const AttractionPage = ({ attractionId }) => {
   useEffect(() => {
     const fetchAttraction = async () => {
       try {
-        const token = cookie.get('token');
+        const token = cookie.get('Token');
 
         const response = await axios.get(`http://localhost:4000/attractions/${attractionId}`, {
           headers: {
@@ -35,7 +35,7 @@ const AttractionPage = ({ attractionId }) => {
 
   const handleDeleteAttraction = async () => {
     try {
-      const token = cookie.get('token');
+      const token = cookie.get('Token');
 
       await axios.delete(`http://localhost:4000/attractions/${attractionId}`, {
         headers: {
@@ -49,7 +49,7 @@ const AttractionPage = ({ attractionId }) => {
 
   const handleEditAttraction = async () => {
     try {
-      const token = cookie.get('token');
+      const token = cookie.get('Token');
 
       // Update the editedAttraction object with the imageId
       const updatedAttraction = { ...editedAttraction, imageId };

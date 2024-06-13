@@ -19,7 +19,7 @@ export const ImageUploader = ({ onImageUpload }) => {
 
     const handleUpload = async (e) => {
         e.preventDefault();
-        const token = cookie.get('token');
+        const token = cookie.get('Token');
 
         const formData = new FormData();
         formData.append('file', selectedFile);

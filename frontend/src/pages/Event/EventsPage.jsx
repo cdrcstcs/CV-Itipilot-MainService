@@ -13,7 +13,7 @@ const EventListPage = ({ onSelectEvents }) => {
 
   const fetchEvents = async () => {
     try {
-        const token = cookie.get('token');
+        const token = cookie.get('Token');
 
       const response = await axios.get('http://localhost:4000/events',{
         headers: {
