@@ -34,12 +34,13 @@ app.use(cors({
 const jwtSecret = 'fasefraw4r5r3wq45wdfgw34twdfg';
 async function verifyToken(req, res, next) {
   return new Promise((resolve, reject) => {
-    const token = req.cookies && req.cookies.Token; // Check if token exists in req.cookies
+    const token = req.cookies && req.cookies.usertoken; // Check if token exists in req.cookies
+    console.log(token);
     if (!token) {
       reject(new Error('Token not found in cookies')); // Reject if token is not found
     } else {
-      console.log('backend'+req.cookies.Token);
-      jwt.verify(req.cookies.Token, jwtSecret, {}, (err, userData) => {
+      console.log('backend'+req.cookies.usertoken);
+      jwt.verify(req.cookies.usertoken, jwtSecret, {}, (err, userData) => {
         if (err) {
           reject(err); 
         } else {

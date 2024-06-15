@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from "../../AxiosSetup";
+import axios from 'axios';
 import TagPage from '../Tag/TagPage';
 import { useCookies } from '../../Cookies';
 import { SingleImage } from '../Image/ImagePage';
