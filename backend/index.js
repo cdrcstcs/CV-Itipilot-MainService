@@ -35,7 +35,7 @@ const jwtSecret = 'fasefraw4r5r3wq45wdfgw34twdfg';
 async function verifyToken(req, res, next) {
   return new Promise((resolve, reject) => {
     const token = req.cookies && req.cookies.usertoken; // Check if token exists in req.cookies
-    console.log(token);
+    console.log("ll"+token);
     if (!token) {
       reject(new Error('Token not found in cookies')); // Reject if token is not found
     } else {

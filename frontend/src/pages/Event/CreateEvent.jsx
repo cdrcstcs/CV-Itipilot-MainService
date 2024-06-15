@@ -1,7 +1,7 @@
 // EventPage.js
 
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from '../../axiosSetUp';
 import AttractionListPage from '../Attraction/SelectAttraction';
 import AttractionPage from '../Attraction/AttractionPage';
 import { useCookies } from '../../Cookies';

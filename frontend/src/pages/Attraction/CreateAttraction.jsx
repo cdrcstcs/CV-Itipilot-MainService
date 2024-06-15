@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from '../../axiosSetUp';
 import TagListPage from '../Tag/TagsPage';
 import TagPage from '../Tag/TagPage';
 import { useCookies } from '../../Cookies';

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../../axiosSetUp';
 import { useCookies } from '../../Cookies';
 import { SingleImage } from '../Image/ImagePage';
 const AttractionListPage = ({ onSelectAttraction }) => {

@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useCookies } from "../../Cookies";
-import axios from "axios";
+import axios from '../../axiosSetUp';
 import { useState, useEffect } from "react";
 
 export default function ProfilePage() {

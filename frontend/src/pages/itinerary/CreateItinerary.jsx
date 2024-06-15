@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from '../../axiosSetUp';
 import EventListingPage from '../Event/EventsPage';
 import EventPage from '../Event/EventPage';
 import CreateRating from '../Rating/CreateRating';

@@ -4,8 +4,7 @@ import { useCookies } from './Cookies';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useRef } from 'react';
-import axios from 'axios';
-
+import axios from "./axiosSetUp";
 const Header = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const cookie = useCookies();
@@ -18,7 +17,6 @@ const Header = () => {
   useEffect(() => {
     async function fetchUserDataForNote() {
       try {
-        // const token = cookie.get('usertoken');
         const resp = await axios.post(`http://localhost:4000/userdata`,{token});
         const userId = resp.data.userId;
         const userResp = await axios.post(`http://localhost:4600/${userId}`);
@@ -34,10 +32,13 @@ const Header = () => {
   useEffect(() => {
     async function fetchUserDataForHotel() {
       try {
-        // const token = cookie.get('usertoken');
         const resp = await axios.post(`http://localhost:4000/userdata`,{token});
         const userId = resp.data.userId;
-        const userDetails = await axios.get(`http://localhost:4000/users/${userId}`);
+        const userDetails = await axios.get(`http://localhost:4000/users/${userId}`,{
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         console.log(userDetails);
         const userResp = await axios.post("http://localhost:4800/userData", userDetails);
         console.log(userResp);

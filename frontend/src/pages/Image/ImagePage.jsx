@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../../axiosSetUp';
 import { useCookies } from '../../Cookies';
 
 export const SingleImage = ({imageId}) => {

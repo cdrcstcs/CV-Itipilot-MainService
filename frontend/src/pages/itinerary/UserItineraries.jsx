@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../../axiosSetUp';
 import UserPage from '../User/UserPage';
 import RatingPage from '../Rating/RatingPage';
 import { useCookies } from '../../Cookies';
