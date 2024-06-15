@@ -15,8 +15,8 @@ export default function LoginPage() {
         email,
         password,
       });
-      await cookie.set('Token',response.data.token,{ path: '/' });
-      console.log(cookie.get('Token')+'1');
+      await cookie.set('usertoken',response.data.token,{ path: '/' });
+      console.log(cookie.get('usertoken')+'1');
       alert("Login successful");
       setRedirect(true);
     } catch (e) {

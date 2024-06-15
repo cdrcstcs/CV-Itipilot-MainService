@@ -6,9 +6,6 @@ const UserSchema = new Schema({
   email: {type:String, unique:true},
   password: String,
   posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }], // Reference to Post model
-  savedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'SavedPost' }], // Reference to SavedPost model
-  chats: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Chat' }], // Reference to Chat model
-  chatIDs: [String],
   phone: Number,
   userType: String,
 },{timestamps:true});

@@ -13,7 +13,7 @@ const YourItinerariesPage = ({iti}) => {
   const location = useLocation();
   const createItinerary = async () => {
     try {
-        const token = cookie.get('Token');
+        const token = cookie.get('usertoken');
         console.log(iti);
       const response = await axios.post('http://localhost:4000/user_itinerary', iti,{
         headers: {
@@ -33,7 +33,7 @@ const YourItinerariesPage = ({iti}) => {
 
   const fetchItineraries = async () => {
     try {
-        const token = cookie.get('Token');
+        const token = cookie.get('usertoken');
         // console.log(token);
         
         axios.defaults.withCredentials = true;
@@ -52,7 +52,7 @@ const YourItinerariesPage = ({iti}) => {
 
   const handleDeleteItinerary = async (itineraryId) => {
     try {
-        const token = cookie.get('Token');
+        const token = cookie.get('usertoken');
 
       await axios.delete(`http://localhost:4000/user_itinerary/${itineraryId}`,{
         headers: {
@@ -71,7 +71,7 @@ const YourItinerariesPage = ({iti}) => {
 
   const handleSaveEdit = async (itineraryId) => {
     try {
-        const token = cookie.get('Token');
+        const token = cookie.get('usertoken');
 
       await axios.put(`http://localhost:4000/user_itinerary/${itineraryId}`,{
         headers: {

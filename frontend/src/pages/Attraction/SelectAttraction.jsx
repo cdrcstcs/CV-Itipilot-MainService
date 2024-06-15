@@ -12,7 +12,7 @@ const AttractionListPage = ({ onSelectAttraction }) => {
 
   const fetchAttractions = async () => {
     try {
-      const token = cookie.get('Token');
+      const token = cookie.get('usertoken');
 
       const response = await axios.get('http://localhost:4000/attractions',{
         headers: {
