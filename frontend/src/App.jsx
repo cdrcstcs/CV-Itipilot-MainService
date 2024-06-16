@@ -3,7 +3,6 @@ import RegisterPage from "./pages/User/RegisterPage.jsx";
 import LoginPage from "./pages/User/LoginPage.jsx";
 import ProfilePage from "./pages/User/ProfilePage.jsx";
 import CreateItineraryPage from './pages/itinerary/CreateItinerary.jsx';
-import CreateAttractionPage from './pages/Attraction/CreateAttraction.jsx';
 import ItinerariesPage from './pages/itinerary/ItineraryPage.jsx';
 import AttractionListPage from './pages/Attraction/SelectAttraction.jsx';
 import RatingPage from './pages/Rating/RatingPage.jsx';
@@ -30,7 +29,6 @@ function App() {
         <Route path="/itineraries" element={<ItinerariesPage />} />
         <Route path="/itineraries/user" element={<YourItinerariesPage />} />
         <Route path="/itinerary/create" element={<CreateItineraryPage />} />
-        <Route path="/attraction/create" element={<CreateAttractionPage />} />
         <Route path="/attractions" element={<AttractionListPage />} />
         <Route path="/ratings" element={<RatingPage />} />
         <Route path="/ratings/create" element={<CreateRating />} />

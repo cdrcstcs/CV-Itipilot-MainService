@@ -112,7 +112,6 @@ const Header = () => {
             <Link to="/itineraries" style={{ textDecoration: 'none', color: 'orangered'}}>Itineraries</Link>
             <Link to="/itinerary/create" style={{ textDecoration: 'none', color: 'orangered'}}>Create Itinerary</Link>
             <Link to="/events/create" style={{ textDecoration: 'none', color: 'orangered' }}>Create Event</Link>
-            <Link to="/attraction/create" style={{ textDecoration: 'none', color: 'orangered' }}>Create Attraction</Link>
             <Link to="/itineraries/user" style={{ textDecoration: 'none', color: 'orangered' }}>Your Itineraries</Link>
             <div style={{cursor: 'pointer',backgroundColor: 'transparent',color: 'orangered'}} onClick={() => {
               handleClick1();
