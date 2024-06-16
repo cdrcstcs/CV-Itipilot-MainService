@@ -6,7 +6,6 @@ export const ImageUploader = ({ onImageUpload }) => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [previewURL, setPreviewURL] = useState('');
     const cookie = useCookies();
-
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         setSelectedFile(file);
@@ -16,7 +15,6 @@ export const ImageUploader = ({ onImageUpload }) => {
         };
         reader.readAsDataURL(file);
     };
-
     const handleUpload = async (e) => {
         e.preventDefault();
         const token = cookie.get('usertoken');
@@ -34,7 +32,6 @@ export const ImageUploader = ({ onImageUpload }) => {
             console.error('Error uploading image: ', error);
         }
     };
-
     return (
         <div>
             <input type="file" onChange={handleFileChange} />

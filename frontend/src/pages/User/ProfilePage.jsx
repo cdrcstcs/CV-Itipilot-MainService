@@ -69,7 +69,7 @@ export default function ProfilePage() {
   if (redirect) {
     return <Navigate to={redirect} />;
   }
-
+  console.log(user);
   return (
     <div>
       <div className="text-center max-w-lg mx-auto">

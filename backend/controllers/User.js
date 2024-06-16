@@ -7,13 +7,14 @@ const jwtSecret = 'fasefraw4r5r3wq45wdfgw34twdfg';
 // Create user
 async function createUser(req, res) {
   try {
-    const { name, email, password, userType } = req.body;
+    const { imageId ,name, email, password, userType } = req.body;
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create the user with the hashed password
     const user = await User.create({
+      imageId,
       name,
       email,
       password: hashedPassword,
