@@ -2,7 +2,7 @@ import { Navigate } from "react-router-dom";
 import { useCookies } from "../../Cookies";
 import axios from '../../axiosSetUp';
 import { useState, useEffect } from "react";
-
+import { SingleImage } from "../Image/ImagePage";
 export default function ProfilePage() {
   const [redirect, setRedirect] = useState(null);
   const [formData, setFormData] = useState({
@@ -74,6 +74,7 @@ export default function ProfilePage() {
     <div>
       <div className="text-center max-w-lg mx-auto">
         <h2>Profile</h2>
+        <SingleImage imageId={user.imageId}></SingleImage>
         <p>Logged in as {user.name} ({user.email})</p>
         <button onClick={logout} className="primary max-w-sm mt-2">Logout</button>
         <h3>Edit Profile</h3>

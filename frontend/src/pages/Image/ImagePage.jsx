@@ -6,11 +6,9 @@ import { useCookies } from '../../Cookies';
 export const SingleImage = ({imageId}) => {
   const [image, setImage] = useState(null);
   const cookie = useCookies();
-
   useEffect(() => {
     fetchImage();
   }, []);
-
   const fetchImage = async () => {
     try {
       const token = cookie.get('usertoken');
@@ -24,7 +22,6 @@ export const SingleImage = ({imageId}) => {
       console.error('Error fetching image:', error);
     }
   };
-
   return (
     <div>
       <h1>Single Image</h1>

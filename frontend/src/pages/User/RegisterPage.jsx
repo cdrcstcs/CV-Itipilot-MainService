@@ -1,17 +1,19 @@
 import {Link} from "react-router-dom";
 import {useState} from "react";
 import axios from '../../axiosSetUp';
-
+import { ImageUploader } from "../Image/ImageUploader";
 export default function RegisterPage() {
   const [name,setName] = useState('');
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
   const [userType, setUserType] = useState('');
   const [phone, setPhone] = useState('');
+  const [imageId, setImageId] = useState('');
   async function registerUser(ev) {
     ev.preventDefault();
     try {
       await axios.post('http://localhost:4000/register', {
+        imageId,
         name,
         email,
         password,
@@ -23,10 +25,14 @@ export default function RegisterPage() {
       alert('Registration failed. Please try again later');
     }
   }
+  const onImage = (imgId) =>{
+    setImageId(imgId);
+  }
   return (
     <div className="mt-4 grow flex items-center justify-around" style={{flexDirection:'column'}}>
       <div className="mb-64">
         <h1 className="text-4xl text-center mb-4">Register</h1>
+        <ImageUploader onImageUpload={onImage}></ImageUploader>
         <form className="max-w-md mx-auto" onSubmit={registerUser}>
           <input type="text"
                  placeholder="John Doe"
