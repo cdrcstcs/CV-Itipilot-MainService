@@ -7,6 +7,8 @@ const UserSchema = new Schema({
   password: String,
   hotels: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Hotel' }],
   phone: Number,
+  longtitude: Number,
+  latitude: Number, 
   userType: String,
 },{timestamps:true});
 
