@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
   credentials: true,
-  origin: 'http://localhost:5173',
+  origin: true,
 }));
 const jwtSecret = 'fasefraw4r5r3wq45wdfgw34twdfg';
 async function verifyToken(req, res, next) {
