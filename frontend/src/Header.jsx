@@ -4,7 +4,6 @@ import { useCookies } from './Cookies';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useRef } from 'react';
-import axios from "./axiosSetUp";
 const Header = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const cookie = useCookies();
@@ -13,83 +12,6 @@ const Header = () => {
   const hiddenLinkRef2 = useRef(null);
   const hiddenLinkRef3 = useRef(null);
   const hiddenLinkRef4 = useRef(null);
-  
-  useEffect(() => {
-    async function fetchUserDataForNote() {
-      try {
-        const resp = await axios.post(`http://localhost:4000/userdata`,{token});
-        const userId = resp.data.userId;
-        const userResp = await axios.post(`http://localhost:4600/${userId}`);
-        console.log(userResp);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    }
-    fetchUserDataForNote();
-
-  }, [token]);
-
-  useEffect(() => {
-    async function fetchUserDataForHotel() {
-      try {
-        const resp = await axios.post(`http://localhost:4000/userdata`,{token});
-        const userId = resp.data.userId;
-        const userDetails = await axios.get(`http://localhost:4000/users/${userId}`,{
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        console.log(userDetails);
-        const userResp = await axios.post("http://localhost:4800/userData", userDetails);
-        console.log(userResp);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    }
-    fetchUserDataForHotel();
-    }, [token]);
-
-  useEffect(() => {
-    async function fetchUserDataForMap() {
-      try {
-        const resp = await axios.post(`http://localhost:4000/userdata`,{token});
-        const userId = resp.data.userId;
-        const userDetails = await axios.get(`http://localhost:4000/users/${userId}`,{
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        console.log(userDetails);
-        const userResp = await axios.post("http://localhost:4500/userData", userDetails);
-        console.log(userResp);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    }
-    fetchUserDataForMap();
-    }, [token]);
-
-    useEffect(() => {
-      async function fetchUserDataForChat() {
-        try {
-          const resp = await axios.post(`http://localhost:4000/userdata`,{token});
-          const userId = resp.data.userId;
-          const userDetails = await axios.get(`http://localhost:4000/users/${userId}`,{
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          console.log(userDetails);
-          const userResp = await axios.post("http://localhost:3500/userData", userDetails);
-          console.log(userResp);
-        } catch (error) {
-          console.error('Error fetching user data:', error);
-        }
-      }
-      fetchUserDataForChat();
-      }, [token]);
-  
-    
     useEffect(() => {
       if (token !== '') {
         setLoggedIn(true);
