@@ -68,6 +68,26 @@ const Header = () => {
     }
     fetchUserDataForMap();
     }, [token]);
+
+    useEffect(() => {
+      async function fetchUserDataForChat() {
+        try {
+          const resp = await axios.post(`http://localhost:4000/userdata`,{token});
+          const userId = resp.data.userId;
+          const userDetails = await axios.get(`http://localhost:4000/users/${userId}`,{
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          console.log(userDetails);
+          const userResp = await axios.post("http://localhost:3500/userData", userDetails);
+          console.log(userResp);
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      }
+      fetchUserDataForChat();
+      }, [token]);
   
     
     useEffect(() => {
