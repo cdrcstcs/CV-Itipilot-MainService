@@ -11,6 +11,7 @@ import {createItinerary, getAllItineraries, getItinerary, updateItinerary, delet
 import {createUserItinerary, getAllUserItineraries, getUserItinerary, updateUserItinerary, deleteUserItinerary} from "./controllers/UserItinerary.js";
 import {createRating, getAllRatings, getRating, updateRating, deleteRating} from "./controllers/Rating.js";
 import {createTag, getAllTags, getTag, updateTag, deleteTag} from "./controllers/Tag.js";
+import { searchItinerary } from './controllers/Search.js';
 import { getDataOfUser } from './controllers/UserData.js';
 import connectToDb from './db/db.js';
 import { uploadImage } from './controllers/Image.js';
@@ -98,4 +99,5 @@ app.get('/users', verifyToken, getAllUsers);
 app.get('/users/:id', verifyToken, getUser);
 app.put('/users', verifyToken, updateUser);
 app.get('/profile', verifyToken, getProfile);
+app.get('/search', searchItinerary);
 app.listen(4000, 'localhost');

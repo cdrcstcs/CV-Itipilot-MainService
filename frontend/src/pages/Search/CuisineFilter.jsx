@@ -1,58 +1,45 @@
-import {cuisineList} from '../../config/restaurant-options-config';
+import {tagList} from '../../config/attraction-options-config';
 import { Label } from "@radix-ui/react-label";
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@radix-ui/themes";
-const CuisineFilter = ({
-  onChange,
-  selectedCuisines,
-  isExpanded,
-  onExpandedClick,
-}) => {
-  const handleCuisinesChange = (event) => {
-    const clickedCuisine = event.target.value;
+const TagFilter = ({onChange, selectedTags, isExpanded, onExpandedClick}) => {
+  const handleTagsChange = (event) => {
+    const clickedTag = event.target.value;
     const isChecked = event.target.checked;
-    const newCuisinesList = isChecked
-      ? [...selectedCuisines, clickedCuisine]
-      : selectedCuisines.filter((cuisine) => cuisine !== clickedCuisine);
-    onChange(newCuisinesList);
+    const newTagsList = isChecked ? [...selectedTags, clickedTag] : selectedTags.filter((Tag) => Tag !== clickedTag);
+    onChange(newTagsList);
   };
-  const handleCuisinesReset = () => onChange([]);
+  const handleTagsReset = () => onChange([]);
   return (
     <>
       <div className="flex justify-between items-center px-2">
-        <div className="text-md font-semibold mb-2">Filter By Cuisine</div>
+        <div className="text-md font-semibold mb-2">Filter By Attraction Tag</div>
         <div
-          onClick={handleCuisinesReset}
+          onClick={handleTagsReset}
           className="text-sm font-semibold mb-2 underline cursor-pointer text-blue-500"
         >
           Reset Filters
         </div>
       </div>
       <div className="space-y-2 flex flex-col">
-        {cuisineList
-          .slice(0, isExpanded ? cuisineList.length : 7)
-          .map((cuisine) => {
-            const isSelected = selectedCuisines.includes(cuisine);
+        {tagList.slice(0, isExpanded ? tagList.length : 7).map((Tag) => {
+            const isSelected = selectedTags.includes(Tag);
             return (
               <div className="flex">
                 <input
-                  id={`cuisine_${cuisine}`}
+                  id={`Tag_${Tag}`}
                   type="checkbox"
                   className="hidden"
-                  value={cuisine}
+                  value={Tag}
                   checked={isSelected}
-                  onChange={handleCuisinesChange}
+                  onChange={handleTagsChange}
                 />
                 <Label
-                  htmlFor={`cuisine_${cuisine}`}
-                  className={`flex flex-1 items-center cursor-pointer text-sm rounded-full px-4 py-2 font-semibold ${
-                    isSelected
-                      ? "border border-green-600 text-green-600"
-                      : "border border-slate-300"
-                  }`}
+                  htmlFor={`Tag_${Tag}`}
+                  className={`flex flex-1 items-center cursor-pointer text-sm rounded-full px-4 py-2 font-semibold ${isSelected ? "border border-green-600 text-green-600": "border border-slate-300"}`}
                 >
                   {isSelected && <Check size={20} strokeWidth={3} />}
-                  {cuisine}
+                  {Tag}
                 </Label>
               </div>
             );
@@ -76,4 +63,4 @@ const CuisineFilter = ({
     </>
   );
 };
-export default CuisineFilter;
+export default TagFilter;

@@ -1,19 +1,34 @@
-import CuisineFilter from "./CuisineFilter";
+import TagFilter from "./TagFilter";
 import PaginationSelector from "./PaginationSelector";
-import SearchBar, { SearchForm } from "./SearchBar";
+import SearchBar from "./SearchBar";
 import SortOptionDropdown from "./SortOptionDropdown";
+import ItineraryResultsPage from "../itinerary/ItineraryResults";
+import ItinerariesPage from "../itinerary/ItineraryPage";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+
+const useSearchRestaurants = async(searchState) => {
+    const params = new URLSearchParams();
+    params.set("searchQuery", searchState.searchQuery);
+    params.set("page", searchState.page.toString());
+    params.set("selectedTags", searchState.selectedTags.join(","));
+    params.set("sortOption", searchState.sortOption);
+    const response = await axios.get(`http://localhost:4000/search/`, {
+      params: params,
+    });
+    if (!response.data) {
+      throw new Error("Failed to get restaurant");
+    }
+    return response.json();
+};
 const SearchPage = () => {
-  const { city } = useParams();
   const [searchState, setSearchState] = useState({
     searchQuery: "",
     page: 1,
-    selectedCuisines: [],
+    selectedTags: [],
     sortOption: "bestMatch",
   });
   const [isExpanded, setIsExpanded] = useState(false);
-  const { results, isLoading } = useSearchRestaurants(searchState, city);
+  const results = useSearchRestaurants(searchState);
   const setSortOption = (sortOption) => {
     setSearchState((prevState) => ({
       ...prevState,
@@ -21,10 +36,10 @@ const SearchPage = () => {
       page: 1,
     }));
   };
-  const setSelectedCuisines = (selectedCuisines) => {
+  const setSelectedTags = (selectedTags) => {
     setSearchState((prevState) => ({
       ...prevState,
-      selectedCuisines,
+      selectedTags,
       page: 1,
     }));
   };
@@ -48,18 +63,12 @@ const SearchPage = () => {
       page: 1,
     }));
   };
-  if (isLoading) {
-    <span>Loading ...</span>;
-  }
-  if (!results?.data || !city) {
-    return <span>No results found</span>;
-  }
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-5">
-      <div id="cuisines-list">
-        <CuisineFilter
-          selectedCuisines={searchState.selectedCuisines}
-          onChange={setSelectedCuisines}
+      <div id="Tags-list">
+        <TagFilter
+          selectedTags={searchState.selectedTags}
+          onChange={setSelectedTags}
           isExpanded={isExpanded}
           onExpandedClick={() =>
             setIsExpanded((prevIsExpanded) => !prevIsExpanded)
@@ -70,19 +79,19 @@ const SearchPage = () => {
         <SearchBar
           searchQuery={searchState.searchQuery}
           onSubmit={setSearchQuery}
-          placeHolder="Search by Cuisine or Restaurant Name"
+          placeHolder="Search by Itinerary Title"
           onReset={resetSearch}
         />
         <div className="flex justify-between flex-col gap-3 lg:flex-row">
-          <SearchResultInfo total={results.pagination.total} city={city} />
+          <div className="text-xl font-bold flex flex-col gap-3 justify-between lg:items-center lg:flex-row">
+            <span>{results.pagination.total}</span>
+          </div>
           <SortOptionDropdown
             sortOption={searchState.sortOption}
             onChange={(value) => setSortOption(value)}
           />
         </div>
-        {results.data.map((restaurant) => (
-          <SearchResultCard restaurant={restaurant} />
-        ))}
+        {results.data?<ItineraryResultsPage itineraries={results.data}></ItineraryResultsPage>:<ItinerariesPage></ItinerariesPage>}
         <PaginationSelector
           page={results.pagination.page}
           pages={results.pagination.pages}

@@ -3,7 +3,6 @@ import RegisterPage from "./pages/User/RegisterPage.jsx";
 import LoginPage from "./pages/User/LoginPage.jsx";
 import ProfilePage from "./pages/User/ProfilePage.jsx";
 import CreateItineraryPage from './pages/itinerary/CreateItinerary.jsx';
-import ItinerariesPage from './pages/itinerary/ItineraryPage.jsx';
 import AttractionListPage from './pages/Attraction/SelectAttraction.jsx';
 import RatingPage from './pages/Rating/RatingPage.jsx';
 import CreateRating from './pages/Rating/CreateRating.jsx';
@@ -16,6 +15,7 @@ import CookiesProvider from "./Cookies.jsx";
 import { ImageUploader } from "./pages/Image/ImageUploader.jsx";
 import { SingleImage } from "./pages/Image/ImagePage.jsx";
 import YourItinerariesPage from "./pages/itinerary/UserItineraries.jsx";
+import SearchPage from "./pages/Search/SearchPage.jsx";
 function App() {
   return (
     <CookiesProvider>
@@ -26,7 +26,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/account" element={<ProfilePage />} />
-        <Route path="/itineraries" element={<ItinerariesPage />} />
+        <Route path="/search" element={<SearchPage />} />
         <Route path="/itineraries/user" element={<YourItinerariesPage />} />
         <Route path="/itinerary/create" element={<CreateItineraryPage />} />
         <Route path="/attractions" element={<AttractionListPage />} />

@@ -25,7 +25,7 @@ export default function LoginPage() {
   }
 
   if (redirect) {
-    return <Navigate to={"/itineraries"} />;
+    return <Navigate to={"/search"} />;
   }
 
   return (

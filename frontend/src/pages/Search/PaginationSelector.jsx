@@ -11,7 +11,6 @@ const PaginationSelector = ({ page, pages, onPageChange }) => {
   for (let i = 1; i <= pages; i++) {
     pageNumbers.push(i);
   }
-
   return (
     <Pagination>
       <PaginationContent>
@@ -23,7 +22,6 @@ const PaginationSelector = ({ page, pages, onPageChange }) => {
             />
           </PaginationItem>
         )}
-
         {pageNumbers.map((number) => (
           <PaginationItem>
             <PaginationLink
@@ -35,7 +33,6 @@ const PaginationSelector = ({ page, pages, onPageChange }) => {
             </PaginationLink>
           </PaginationItem>
         ))}
-
         {page !== pageNumbers.length && (
           <PaginationItem>
             <PaginationNext href="#" onClick={() => onPageChange(page + 1)} />
@@ -45,5 +42,4 @@ const PaginationSelector = ({ page, pages, onPageChange }) => {
     </Pagination>
   );
 };
-
 export default PaginationSelector;

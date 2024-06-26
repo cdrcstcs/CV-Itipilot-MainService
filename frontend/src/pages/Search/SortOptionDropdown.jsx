@@ -11,20 +11,16 @@ const SORT_OPTIONS = [
     value: "bestMatch",
   },
   {
-    label: "Delivery price",
-    value: "deliveryPrice",
+    label: "Earliest Event Start Time",
+    value: "earliest",
   },
   {
-    label: "Estimated delivery time",
-    value: "estimatedDeliveryTime",
+    label: "Latest Event Start Time",
+    value: "latest",
   },
 ];
-
 const SortOptionDropdown = ({ onChange, sortOption }) => {
-  const selectedSortLabel =
-    SORT_OPTIONS.find((option) => option.value === sortOption)?.label ||
-    SORT_OPTIONS[0].label;
-
+  const selectedSortLabel = SORT_OPTIONS.find((option) => option.value === sortOption)?.label || SORT_OPTIONS[0].label;
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="cursor-pointer">
@@ -45,5 +41,4 @@ const SortOptionDropdown = ({ onChange, sortOption }) => {
     </DropdownMenu>
   );
 };
-
 export default SortOptionDropdown;

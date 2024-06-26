@@ -5,34 +5,27 @@ import { Input } from "../../components/ui/input";
 import { Button } from "../../components/ui/button";
 import { useEffect } from "react";
 const SearchBar = ({ onSubmit, onReset, placeHolder, searchQuery }) => {
-  const form = useForm<SearchForm>({
-    resolver: zodResolver(formSchema),
+  const form = useForm({
     defaultValues: {
       searchQuery,
     },
   });
-
   useEffect(() => {
     form.reset({ searchQuery });
   }, [form, searchQuery]);
-
   const handleReset = () => {
     form.reset({
       searchQuery: "",
     });
-
     if (onReset) {
       onReset();
     }
   };
-
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className={`flex items-center gap-3 justify-between flex-row border-2 rounded-full p-3 ${
-          form.formState.errors.searchQuery && "border-red-500"
-        }`}
+        className={"flex items-center gap-3 justify-between flex-row border-2 rounded-full p-3"}
       >
         <Search
           strokeWidth={2.5}
@@ -69,5 +62,4 @@ const SearchBar = ({ onSubmit, onReset, placeHolder, searchQuery }) => {
     </Form>
   );
 };
-
 export default SearchBar;
