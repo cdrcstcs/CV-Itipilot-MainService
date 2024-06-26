@@ -4,7 +4,7 @@ import TagPage from '../Tag/TagPage';
 import { useCookies } from '../../Cookies';
 import { SingleImage } from '../Image/ImagePage';
 import { ImageUploader } from '../Image/ImageUploader';
-import { Card, Button, Input, Label } from '@shadcn/ui';
+
 const AttractionPage = ({ attractionId }) => {
   const [attraction, setAttraction] = useState(null);
   const [editedAttraction, setEditedAttraction] = useState(null);
@@ -81,62 +81,36 @@ const AttractionPage = ({ attractionId }) => {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div>
       {attraction ? (
-        <div className="space-y-4">
-          <SingleImage imageId={attraction.imageId} />
-          <Card className="bg-white p-4 shadow-md">
-            <Card.Header>
-              <Card.Title className="text-3xl font-bold">Attraction Details</Card.Title>
-            </Card.Header>
-            <Card.Content className="mb-4">
-              <div className="space-y-2">
-                <div>
-                  <Label>Name:</Label>
-                  <p>{attraction.name}</p>
-                </div>
-                <div>
-                  <Label>Address:</Label>
-                  <p>{attraction.address}</p>
-                </div>
-                <div>
-                  <Label>City:</Label>
-                  <p>{attraction.city}</p>
-                </div>
-                <div>
-                  <Label>X:</Label>
-                  <p>{attraction.x}</p>
-                </div>
-                <div>
-                  <Label>Y:</Label>
-                  <p>{attraction.y}</p>
-                </div>
-              </div>
-            </Card.Content>
-            <Card.Footer className="flex space-x-2">
-              {attraction.tagIds.map((tagId) => (
-                <TagPage key={tagId} tagId={tagId} />
-              ))}
-            </Card.Footer>
-            {editing ? (
-              <div className="mt-4 space-y-4">
-                <Input type="text" name="name" placeholder="New Name" value={editedAttraction.name} onChange={handleChange} />
-                <Input type="text" name="address" placeholder="New Address" value={editedAttraction.address} onChange={handleChange} />
-                <Input type="text" name="city" placeholder="New City" value={editedAttraction.city} onChange={handleChange} />
-                <Input type="text" name="x" placeholder="New X Coordinate" value={editedAttraction.x} onChange={handleChange} />
-                <Input type="text" name="y" placeholder="New Y Coordinate" value={editedAttraction.y} onChange={handleChange} />
-                <ImageUploader onImageUpload={handleImageUpload} />
-                <Button onClick={handleEditAttraction}>Save</Button>
-              </div>
-            ) : (
-              <div className="mt-4 flex space-x-2">
-                <Button onClick={() => setEditing(true)}>Edit Attraction</Button>
-                <Button variant="destructive" onClick={handleDeleteAttraction}>
-                  Delete Attraction
-                </Button>
-              </div>
-            )}
-          </Card>
+        <div>
+          <SingleImage imageId={attraction.imageId}></SingleImage>
+          <h1>Attraction Details</h1>
+          <p>Name: {attraction.name}</p>
+          <p>Address: {attraction.address}</p>
+          <p>City: {attraction.city}</p>
+          <p>X: {attraction.x}</p>
+          <p>Y: {attraction.y}</p>
+          {attraction.tagIds.map((tagId) => (
+            <TagPage key={tagId} tagId={tagId} />
+          ))}
+          {editing ? (
+            <div>
+              <input type="text" name="name" placeholder="New Name" value={editedAttraction.name} onChange={handleChange} />
+              <input type="text" name="address" placeholder="New Address" value={editedAttraction.address} onChange={handleChange} />
+              <input type="text" name="city" placeholder="New City" value={editedAttraction.city} onChange={handleChange} />
+              <input type="text" name="x" placeholder="New X Coordinate" value={editedAttraction.x} onChange={handleChange} />
+              <input type="text" name="y" placeholder="New Y Coordinate" value={editedAttraction.y} onChange={handleChange} />
+              {/* Pass handleImageUpload as a prop to ImageUploader */}
+              <ImageUploader onImageUpload={handleImageUpload} />
+              <button onClick={handleEditAttraction}>Save</button>
+            </div>
+          ) : (
+            <div>
+              <button onClick={() => setEditing(true)}>Edit Attraction</button>
+              <button onClick={handleDeleteAttraction}>Delete Attraction</button>
+            </div>
+          )}
         </div>
       ) : (
         <p>Loading...</p>

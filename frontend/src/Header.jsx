@@ -49,13 +49,13 @@ const Header = () => {
         alignItems: 'center',
         gap:'50px',
         justifyContent:'flex-start',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        backgroundImage: 'url("../header.jpg")',
+        backgroundColor: 'rgba(0, 255, 255, 0.2)',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         display: 'flex',
         overflowX: 'auto', // Make the header scrollable
         padding: '10px 20px', // Adjust padding for better appearance
+        borderRadius:'20px'
       }}
     >
       <div>
