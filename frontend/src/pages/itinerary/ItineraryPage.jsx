@@ -44,7 +44,7 @@ const ItinerariesPage = () => {
       <ul style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', listStyleType: 'none', padding: '0' }}>
         {itineraries.map((itinerary) => (
           <li key={itinerary._id} style={{ flex: '0 0 calc(30% - 60px)', margin: '15px', width: '30%' }}>
-            <div style={{ border: '1px solid #ccc', padding: '10px', cursor: 'pointer' }} onClick={(e) => handleItineraryClick(e,itinerary)}>
+            <div style={{ alignItems:'center', borderRadius:'10px', border: '5px solid white', padding: '10px', cursor: 'pointer' }} onClick={(e) => handleItineraryClick(e,itinerary)}>
               <h2>{itinerary.title}</h2>
               <p>Name: {itinerary.name}</p>
               <p>Start Time: {itinerary.startTime}</p>

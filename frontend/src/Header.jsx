@@ -1,44 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useCookies } from './Cookies';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { useRef } from 'react';
+
 const Header = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const cookie = useCookies();
   const token = cookie.get('usertoken');
-  const hiddenLinkRef1 = useRef(null);
-  const hiddenLinkRef2 = useRef(null);
-  const hiddenLinkRef3 = useRef(null);
-  const hiddenLinkRef4 = useRef(null);
-    useEffect(() => {
-      if (token !== '') {
-        setLoggedIn(true);
-      } else {
-        setLoggedIn(false);
-      }
-    }, [token]); 
-    console.log(token+'2');
-    const handleLogout = () => {
+  const hiddenLinkRefs = useRef([]);
+
+  useEffect(() => {
+    setLoggedIn(token !== '');
+  }, [token]);
+
+  const handleLogout = () => {
     cookie.set('usertoken', '');
     setLoggedIn(false);
   };
-  const handleClick1 = () => {
-    hiddenLinkRef1.current.click();
+
+  const handleClick = (index) => {
+    hiddenLinkRefs.current[index].click();
+    replaceHistory(window.location.href);
   };
-  const handleClick2 = () => {
-    hiddenLinkRef2.current.click();
-  };
-  const handleClick3 = () => {
-    hiddenLinkRef3.current.click();
-  };
-  const handleClick4 = () => {
-    hiddenLinkRef4.current.click();
-  };
+
   const replaceHistory = (url) => {
     window.history.replaceState({}, document.title, url);
   };
+
   return (
     <header
       style={{
@@ -55,7 +42,8 @@ const Header = () => {
         display: 'flex',
         overflowX: 'auto', // Make the header scrollable
         padding: '10px 20px', // Adjust padding for better appearance
-        borderRadius:'20px'
+        borderRadius:'20px',
+        border: '5px solid white'
       }}
     >
       <div>
@@ -75,26 +63,22 @@ const Header = () => {
             <Link to="/itinerary/create" style={{ textDecoration: 'none', color: 'orangered'}}>Create Itinerary</Link>
             <Link to="/events/create" style={{ textDecoration: 'none', color: 'orangered' }}>Create Event</Link>
             <Link to="/itineraries/user" style={{ textDecoration: 'none', color: 'orangered' }}>Your Itineraries</Link>
-            <div style={{cursor: 'pointer',backgroundColor: 'transparent',color: 'orangered'}} onClick={() => {
-              handleClick1();
-              replaceHistory(window.location.href);
-            }}>Social Media</div>
-            <a href="http://localhost:5000" ref={hiddenLinkRef1} style={{ display: 'none' }}>Hidden Link</a>
-            <div style={{cursor: 'pointer',backgroundColor: 'transparent',color: 'orangered'}} onClick={() => {
-              handleClick2();
-              replaceHistory(window.location.href);
-            }}>Attraction Map</div>
-            <a href="http://localhost:5600" ref={hiddenLinkRef2} style={{ display: 'none' }}>Hidden Link</a>
-            <div style={{cursor: 'pointer',backgroundColor: 'transparent',color: 'orangered'}} onClick={() => {
-              handleClick3();
-              replaceHistory(window.location.href);
-            }}>Weather</div>
-            <a href="http://localhost:5700" ref={hiddenLinkRef3} style={{ display: 'none' }}>Hidden Link</a>
-            <div style={{cursor: 'pointer',backgroundColor: 'transparent',color: 'orangered'}} onClick={() => {
-              handleClick4();
-              replaceHistory(window.location.href);
-            }}>Note</div>
-            <a href="http://localhost:5800" ref={hiddenLinkRef4} style={{ display: 'none' }}>Hidden Link</a>
+            {[
+              { text: 'Social Media', url: 'http://localhost:5000' },
+              { text: 'Attraction Map', url: 'http://localhost:5600' },
+              { text: 'Weather', url: 'http://localhost:5700' },
+              { text: 'Note', url: 'http://localhost:5800' },
+              { text: 'Food', url: 'http://localhost:5174' },
+            ].map((link, index) => (
+              <div
+                key={index}
+                style={{cursor: 'pointer',backgroundColor: 'transparent',color: 'orangered'}}
+                onClick={() => handleClick(index)}
+              >
+                {link.text}
+                <a href={link.url} ref={(el) => (hiddenLinkRefs.current[index] = el)} style={{ display: 'none' }}>Hidden Link</a>
+              </div>
+            ))}
           </>
         )}
     </header>
