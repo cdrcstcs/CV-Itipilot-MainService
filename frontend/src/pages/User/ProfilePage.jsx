@@ -18,13 +18,14 @@ export default function ProfilePage() {
     async function fetchUserData() {
       try {
         const token = cookie.get('usertoken');
-        const resp = await axios.get(`http://localhost:4000/userdata`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        console.log(token);
+        const resp = await axios.post(`http://localhost:4000/userdata`, {token});
         const userId = resp.data.userId;
-        const userResp = await axios.get(`http://localhost:4000/users/${userId}`);
+        const userResp = await axios.get(`http://localhost:4000/users/${userId}`,{
+          headers: {
+              Authorization: `Bearer ${token}`,
+            },
+        });
         setUser(userResp.data);
       } catch (error) {
         console.error('Error fetching user data:', error);

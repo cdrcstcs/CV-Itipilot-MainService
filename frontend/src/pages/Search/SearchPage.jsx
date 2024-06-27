@@ -4,22 +4,31 @@ import SearchBar from "./SearchBar";
 import SortOptionDropdown from "./SortOptionDropdown";
 import ItineraryResultsPage from "../itinerary/ItineraryResults";
 import ItinerariesPage from "../itinerary/ItineraryPage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-const useSearchRestaurants = async(searchState) => {
-    const params = new URLSearchParams();
-    params.set("searchQuery", searchState.searchQuery);
-    params.set("page", searchState.page.toString());
-    params.set("selectedTags", searchState.selectedTags.join(","));
-    params.set("sortOption", searchState.sortOption);
+const useSearchRestaurants = async (searchState) => {
+  const params = {
+    searchQuery: searchState.searchQuery,
+    page: searchState.page.toString(),
+    selectedTags: searchState.selectedTags.join(","),
+    sortOption: searchState.sortOption,
+  };
+  
+  try {
     const response = await axios.get(`http://localhost:4000/search/`, {
       params: params,
     });
     if (!response.data) {
-      throw new Error("Failed to get restaurant");
+      throw new Error("Failed to get data");
     }
-    return response.json();
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
 };
+
 const SearchPage = () => {
   const [searchState, setSearchState] = useState({
     searchQuery: "",
@@ -27,8 +36,21 @@ const SearchPage = () => {
     selectedTags: [],
     sortOption: "bestMatch",
   });
+  const [results, setResults] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
-  const results = useSearchRestaurants(searchState);
+
+  useEffect(() => {
+    const fetchResults = async () => {
+      try {
+        const data = await useSearchRestaurants(searchState);
+        setResults(data);
+      } catch (error) {
+        console.error("Error in fetchResults:", error);
+      }
+    };
+    fetchResults();
+  }, [searchState]);
+
   const setSortOption = (sortOption) => {
     setSearchState((prevState) => ({
       ...prevState,
@@ -36,6 +58,7 @@ const SearchPage = () => {
       page: 1,
     }));
   };
+
   const setSelectedTags = (selectedTags) => {
     setSearchState((prevState) => ({
       ...prevState,
@@ -43,12 +66,14 @@ const SearchPage = () => {
       page: 1,
     }));
   };
+
   const setPage = (page) => {
     setSearchState((prevState) => ({
       ...prevState,
       page,
     }));
   };
+
   const setSearchQuery = (searchFormData) => {
     setSearchState((prevState) => ({
       ...prevState,
@@ -56,6 +81,7 @@ const SearchPage = () => {
       page: 1,
     }));
   };
+
   const resetSearch = () => {
     setSearchState((prevState) => ({
       ...prevState,
@@ -63,19 +89,18 @@ const SearchPage = () => {
       page: 1,
     }));
   };
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-5">
-      <div id="Tags-list">
+      <div>
         <TagFilter
           selectedTags={searchState.selectedTags}
           onChange={setSelectedTags}
           isExpanded={isExpanded}
-          onExpandedClick={() =>
-            setIsExpanded((prevIsExpanded) => !prevIsExpanded)
-          }
+          onExpandedClick={() => setIsExpanded((prevIsExpanded) => !prevIsExpanded)}
         />
       </div>
-      <div id="main-content" className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5">
         <SearchBar
           searchQuery={searchState.searchQuery}
           onSubmit={setSearchQuery}
@@ -83,22 +108,29 @@ const SearchPage = () => {
           onReset={resetSearch}
         />
         <div className="flex justify-between flex-col gap-3 lg:flex-row">
-          <div className="text-xl font-bold flex flex-col gap-3 justify-between lg:items-center lg:flex-row">
-            <span>{results.pagination.total}</span>
+          <div className="text-black font-bold flex flex-col gap-3 justify-between lg:items-center lg:flex-row">
+            <span>{results?.pagination.total} results found</span>
           </div>
           <SortOptionDropdown
             sortOption={searchState.sortOption}
             onChange={(value) => setSortOption(value)}
           />
         </div>
-        {results.data?<ItineraryResultsPage itineraries={results.data}></ItineraryResultsPage>:<ItinerariesPage></ItinerariesPage>}
-        <PaginationSelector
-          page={results.pagination.page}
-          pages={results.pagination.pages}
-          onPageChange={setPage}
-        />
+        {results && results.data ? (
+          <ItineraryResultsPage itineraries={results.data}></ItineraryResultsPage>
+        ) : (
+          <ItinerariesPage></ItinerariesPage>
+        )}
+        {results && (
+          <PaginationSelector
+            page={results.pagination.page}
+            pages={results.pagination.pages}
+            onPageChange={setPage}
+          />
+        )}
       </div>
     </div>
   );
 };
+
 export default SearchPage;
