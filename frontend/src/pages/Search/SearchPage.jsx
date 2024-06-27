@@ -3,7 +3,6 @@ import PaginationSelector from "./PaginationSelector";
 import SearchBar from "./SearchBar";
 import SortOptionDropdown from "./SortOptionDropdown";
 import ItineraryResultsPage from "../itinerary/ItineraryResults";
-import ItinerariesPage from "../itinerary/ItineraryPage";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -116,11 +115,7 @@ const SearchPage = () => {
             onChange={(value) => setSortOption(value)}
           />
         </div>
-        {results && results.data ? (
-          <ItineraryResultsPage itineraries={results.data}></ItineraryResultsPage>
-        ) : (
-          <ItinerariesPage></ItinerariesPage>
-        )}
+        <ItineraryResultsPage itineraries={results.data}></ItineraryResultsPage>
         {results && (
           <PaginationSelector
             page={results.pagination.page}
