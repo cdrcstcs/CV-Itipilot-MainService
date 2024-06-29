@@ -31,6 +31,7 @@ const searchItinerary = async (req, res) => {
         const selectedTags = req.query.selectedTags || [];
         const sortOption = req.query.sortOption || "earliest";
         const page = parseInt(req.query.page, 10) || 1;
+        console.log(searchQuery, selectedTags, sortOption, page );
         const pageSize = 4;
         const skip = (page - 1) * pageSize;
         let itineraries = await getFullyPopulatedItineraries();

@@ -115,7 +115,7 @@ const SearchPage = () => {
             onChange={(value) => setSortOption(value)}
           />
         </div>
-        <ItineraryResultsPage itineraries={results.data}></ItineraryResultsPage>
+        {results && <ItineraryResultsPage itineraries={results.data}></ItineraryResultsPage>}
         {results && (
           <PaginationSelector
             page={results.pagination.page}
