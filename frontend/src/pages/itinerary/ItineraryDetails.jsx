@@ -15,20 +15,36 @@ const ItineraryDetailsPage = ({ itinerary, onClose }) => {
     };
     
     return (
-        <div style={{ overflowY: 'auto', height: '100%', position: 'absolute', top: 0, left: 0, width: '100%', textAlign: 'center', backgroundColor: 'rgba(0, 0, 0, 0.8)', padding: '20px', borderRadius: '5px' }} onClick={onClose}>
-            <h1>Itinerary: {itinerary.title}</h1>
-            <p>Name: {itinerary.name}</p>
-            <p>Start Time: {itinerary.startTime}</p>
-            <p>End Time: {itinerary.endTime}</p>
-            {itinerary.eventIds.map((eventId) => (
+        <div
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50"
+          onClick={onClose}
+        >
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md mx-4 text-center">
+            <h1 className="text-2xl font-bold mb-4">Itinerary: {itinerary.title}</h1>
+            <div className="space-y-4">
+              <p>Name: {itinerary.name}</p>
+              <p>Start Time: {itinerary.startTime}</p>
+              <p>End Time: {itinerary.endTime}</p>
+            </div>
+            <div className="space-y-4">
+              {itinerary.eventIds.map((eventId) => (
                 <EventPage key={eventId} eventId={eventId} />
-            ))}
-            <UserPage userId={itinerary.userId}></UserPage>
-            <RatingPage ratingId={itinerary.ratingId}></RatingPage>
-            <button onClick={handleTransferClick}>Save to your itineraries</button>
+              ))}
+            </div>
+            <div className="space-y-4">
+              <UserPage userId={itinerary.userId} />
+              <RatingPage ratingId={itinerary.ratingId} />
+            </div>
+            <button
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md mt-4"
+              onClick={handleTransferClick}
+            >
+              Save to your itineraries
+            </button>
             {check && <YourItinerariesPage iti={itinerary} />}
+          </div>
         </div>
-    );
+      );
 };
 
 export default ItineraryDetailsPage;

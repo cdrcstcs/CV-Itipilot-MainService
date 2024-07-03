@@ -31,11 +31,22 @@ const UserPage = ({ userId }) => {
   }
 
   return (
-    <div>
-      <h1>User Details</h1>
-      <p>Name: {user.name}</p>
-      <p>Email: {user.email}</p>
-      <p>User Type: {user.userType}</p>
+    <div className="bg-white shadow-md rounded-lg p-6 max-w-md mx-auto">
+      <h1 className="text-3xl font-bold mb-4 text-gray-800">User Details</h1>
+      <div className="space-y-4">
+        <div>
+          <p className="font-medium text-gray-700">Name:</p>
+          <p className="text-gray-600">{user.name}</p>
+        </div>
+        <div>
+          <p className="font-medium text-gray-700">Email:</p>
+          <p className="text-gray-600">{user.email}</p>
+        </div>
+        <div>
+          <p className="font-medium text-gray-700">User Type:</p>
+          <p className="text-gray-600">{user.userType}</p>
+        </div>
+      </div>
     </div>
   );
 };

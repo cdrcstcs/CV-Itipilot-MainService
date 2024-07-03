@@ -90,63 +90,88 @@ const YourItinerariesPage = ({iti}) => {
     setEditedItinerary({ ...editedItinerary, [name]: value });
   };
 
-  return location.pathname === '/itineraries/user' ? (        
+  return location.pathname === '/itineraries/user' ? (
     <div>
-      <h1>Your Itineraries</h1>
-      <ul style={{ display: 'flex', justifyContent:'space-between',flexWrap: 'wrap', listStyleType: 'none', padding: 0  }}>
+      <h1 className="text-2xl font-bold mb-4">Your Itineraries</h1>
+      <ul className="flex flex-wrap justify-between list-none p-0">
         {itineraries.map((itinerary) => (
-          <li key={itinerary._id} style={{ height: '1000px', overflow: 'auto', flex: '0 0 calc(30% - 60px)', margin: '15px', width:'30%'}}>
+          <li
+            key={itinerary._id}
+            className="flex-1 basis-[calc(30%-1.5rem)] m-3 overflow-auto"
+          >
             {editedItinerary && editedItinerary._id === itinerary._id ? (
-              <div>
+              <div className="bg-white rounded-lg border-5 border-white p-4">
                 <input
+                  className="block w-full mb-2 border border-gray-300 rounded-md p-2"
                   type="text"
                   name="title"
                   value={editedItinerary.title}
                   onChange={handleChange}
                 />
                 <input
+                  className="block w-full mb-2 border border-gray-300 rounded-md p-2"
                   type="text"
                   name="name"
                   value={editedItinerary.name}
                   onChange={handleChange}
                 />
                 <input
+                  className="block w-full mb-2 border border-gray-300 rounded-md p-2"
                   type="datetime-local"
                   name="startTime"
                   value={editedItinerary.startTime}
                   onChange={handleChange}
                 />
                 <input
+                  className="block w-full mb-2 border border-gray-300 rounded-md p-2"
                   type="datetime-local"
                   name="endTime"
                   value={editedItinerary.endTime}
                   onChange={handleChange}
                 />
-                <UserPage userId = {itinerary.userId}></UserPage>
-                <RatingPage ratingId={itinerary.ratingId}></RatingPage>
-                {/* Include input fields for other itinerary properties */}
-                <button onClick={() => handleSaveEdit(itinerary._id)}>Save</button>
+                <UserPage userId={itinerary.userId} />
+                <RatingPage ratingId={itinerary.ratingId} />
+                <button
+                  className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+                  onClick={() => handleSaveEdit(itinerary._id)}
+                >
+                  Save
+                </button>
               </div>
             ) : (
-              <div>
-                <h1>Itinerary: {itinerary.title}</h1>
-                <p>Name: {itinerary.name}</p>
-                <p>Start Time: {itinerary.startTime}</p>
-                <p>End Time: {itinerary.endTime}</p>
+              <div className="bg-white rounded-lg border-5 border-white p-4">
+                <h2 className="text-xl font-semibold mb-2">Itinerary: {itinerary.title}</h2>
+                <div className="space-y-2">
+                  <p>Name: {itinerary.name}</p>
+                  <p>Start Time: {itinerary.startTime}</p>
+                  <p>End Time: {itinerary.endTime}</p>
+                </div>
                 {itinerary.eventIds && itinerary.eventIds.map((eventId) => (
-                <EventPage key={eventId} eventId={eventId} />
+                  <EventPage key={eventId} eventId={eventId} />
                 ))}
-                <UserPage userId = {itinerary.userId}></UserPage>
-                <RatingPage ratingId={itinerary.ratingId}></RatingPage>                
-                <button onClick={() => handleDeleteItinerary(itinerary._id)}>Delete</button>
-                <button onClick={() => handleEditItinerary(itinerary)}>Edit</button>
+                <UserPage userId={itinerary.userId} />
+                <RatingPage ratingId={itinerary.ratingId} />
+                <div className="mt-4 space-x-2">
+                  <button
+                    className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded"
+                    onClick={() => handleDeleteItinerary(itinerary._id)}
+                  >
+                    Delete
+                  </button>
+                  <button
+                    className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded"
+                    onClick={() => handleEditItinerary(itinerary)}
+                  >
+                    Edit
+                  </button>
+                </div>
               </div>
             )}
           </li>
         ))}
       </ul>
     </div>
- ) : null;
+  ) : null;
 };
 
 export default YourItinerariesPage;

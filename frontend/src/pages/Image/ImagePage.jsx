@@ -23,14 +23,18 @@ export const SingleImage = ({imageId}) => {
     }
   };
   return (
-    <div>
-      <h1>Single Image</h1>
+    <div className="bg-white rounded-lg shadow-lg p-6">
+      <h1 className="text-2xl font-bold mb-4">Single Image</h1>
       {image ? (
-        <div>
-          <img src={`http://localhost:4000/${image}`} alt={image} />
+        <div className="flex justify-center">
+          <img
+            src={`http://localhost:4000/${image}`}
+            alt={image}
+            className="max-w-full h-auto rounded-lg shadow-md"
+          />
         </div>
       ) : (
-        <p>Loading...</p>
+        <p className="text-gray-500 text-center">Loading...</p>
       )}
     </div>
   );

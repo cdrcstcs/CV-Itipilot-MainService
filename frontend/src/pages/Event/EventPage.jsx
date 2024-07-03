@@ -79,42 +79,79 @@ const EventPage = ({ eventId }) => {
   }
 
   return (
-    <div>
-      <h1>Event Details</h1>
-      <p>Start Time: {event.startTime}</p>
-      <p>End Time: {event.endTime}</p>
-      <AttractionPage attractionId={event.attractionId}></AttractionPage>
-      <p>Description: {event.description}</p>
-
-      {editedEvent ? (
-        <div>
-          <input
-            type="datetime-local"
-            name="startTime"
-            value={editedEvent.startTime}
-            onChange={handleChange}
-          />
-          <input
-            type="datetime-local"
-            name="endTime"
-            value={editedEvent.endTime}
-            onChange={handleChange}
-          />
-          <AttractionPage attractionId={event.attractionId}></AttractionPage>
-          <input
-            type="text"
-            name="description"
-            value={editedEvent.description}
-            onChange={handleChange}
-          />
-          <button onClick={handleSaveEdit}>Save</button>
+    <div className="bg-white rounded-lg shadow-lg p-6">
+      <h1 className="text-2xl font-bold mb-4">Event Details</h1>
+      <div className="space-y-4">
+        <div className="flex items-center space-x-4">
+          <span className="w-32 font-medium">Start Time:</span>
+          <p>{event.startTime}</p>
         </div>
-      ) : (
-        <div>
-          <button onClick={handleEditEvent}>Edit</button>
-          <button onClick={handleDeleteEvent}>Delete</button>
+        <div className="flex items-center space-x-4">
+          <span className="w-32 font-medium">End Time:</span>
+          <p>{event.endTime}</p>
         </div>
-      )}
+        <AttractionPage attractionId={event.attractionId}></AttractionPage>
+        <div className="flex items-center space-x-4">
+          <span className="w-32 font-medium">Description:</span>
+          <p>{event.description}</p>
+        </div>
+        {editedEvent ? (
+          <div className="space-y-4">
+            <div className="flex items-center space-x-4">
+              <span className="w-32 font-medium">Start Time:</span>
+              <input
+                type="datetime-local"
+                name="startTime"
+                value={editedEvent.startTime}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div className="flex items-center space-x-4">
+              <span className="w-32 font-medium">End Time:</span>
+              <input
+                type="datetime-local"
+                name="endTime"
+                value={editedEvent.endTime}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <AttractionPage attractionId={event.attractionId}></AttractionPage>
+            <div className="flex items-center space-x-4">
+              <span className="w-32 font-medium">Description:</span>
+              <input
+                type="text"
+                name="description"
+                value={editedEvent.description}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <button
+              onClick={handleSaveEdit}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
+            >
+              Save
+            </button>
+          </div>
+        ) : (
+          <div className="space-x-4">
+            <button
+              onClick={handleEditEvent}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
+            >
+              Edit
+            </button>
+            <button
+              onClick={handleDeleteEvent}
+              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md"
+            >
+              Delete
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

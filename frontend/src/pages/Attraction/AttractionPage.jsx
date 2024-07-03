@@ -81,39 +81,43 @@ const AttractionPage = ({ attractionId }) => {
   };
 
   return (
-    <div>
+    <div className="bg-white shadow-lg rounded-lg p-6 space-y-4">
       {attraction ? (
         <div>
-          <SingleImage imageId={attraction.imageId}></SingleImage>
-          <h1>Attraction Details</h1>
-          <p>Name: {attraction.name}</p>
-          <p>Address: {attraction.address}</p>
-          <p>City: {attraction.city}</p>
-          <p>X: {attraction.x}</p>
-          <p>Y: {attraction.y}</p>
-          {attraction.tagIds.map((tagId) => (
-            <TagPage key={tagId} tagId={tagId} />
-          ))}
-          {editing ? (
-            <div>
-              <input type="text" name="name" placeholder="New Name" value={editedAttraction.name} onChange={handleChange} />
-              <input type="text" name="address" placeholder="New Address" value={editedAttraction.address} onChange={handleChange} />
-              <input type="text" name="city" placeholder="New City" value={editedAttraction.city} onChange={handleChange} />
-              <input type="text" name="x" placeholder="New X Coordinate" value={editedAttraction.x} onChange={handleChange} />
-              <input type="text" name="y" placeholder="New Y Coordinate" value={editedAttraction.y} onChange={handleChange} />
-              {/* Pass handleImageUpload as a prop to ImageUploader */}
-              <ImageUploader onImageUpload={handleImageUpload} />
-              <button onClick={handleEditAttraction}>Save</button>
+          <SingleImage imageId={attraction.imageId} className="w-full h-64 object-cover rounded-t-lg" />
+          <div className="px-4 py-6">
+            <h1 className="text-2xl font-bold mb-2">{attraction.name}</h1>
+            <div className="space-y-2">
+              <p className="text-gray-600">Address: {attraction.address}</p>
+              <p className="text-gray-600">City: {attraction.city}</p>
+              <p className="text-gray-600">X: {attraction.x}</p>
+              <p className="text-gray-600">Y: {attraction.y}</p>
             </div>
-          ) : (
-            <div>
-              <button onClick={() => setEditing(true)}>Edit Attraction</button>
-              <button onClick={handleDeleteAttraction}>Delete Attraction</button>
+            <div className="mt-4 space-x-2">
+              {attraction.tagIds.map((tagId) => (
+                <TagPage key={tagId} tagId={tagId} className="inline-block bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm" />
+              ))}
             </div>
-          )}
+            {editing ? (
+              <div className="mt-4 space-y-2">
+                <input type="text" name="name" placeholder="New Name" value={editedAttraction.name} onChange={handleChange} className="w-full border border-gray-300 rounded-md px-4 py-2" />
+                <input type="text" name="address" placeholder="New Address" value={editedAttraction.address} onChange={handleChange} className="w-full border border-gray-300 rounded-md px-4 py-2" />
+                <input type="text" name="city" placeholder="New City" value={editedAttraction.city} onChange={handleChange} className="w-full border border-gray-300 rounded-md px-4 py-2" />
+                <input type="text" name="x" placeholder="New X Coordinate" value={editedAttraction.x} onChange={handleChange} className="w-full border border-gray-300 rounded-md px-4 py-2" />
+                <input type="text" name="y" placeholder="New Y Coordinate" value={editedAttraction.y} onChange={handleChange} className="w-full border border-gray-300 rounded-md px-4 py-2" />
+                <ImageUploader onImageUpload={handleImageUpload} />
+                <button onClick={handleEditAttraction} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">Save</button>
+              </div>
+            ) : (
+              <div className="mt-4 space-x-2">
+                <button onClick={() => setEditing(true)} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">Edit Attraction</button>
+                <button onClick={handleDeleteAttraction} className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md">Delete Attraction</button>
+              </div>
+            )}
+          </div>
         </div>
       ) : (
-        <p>Loading...</p>
+        <p className="text-gray-500">Loading...</p>
       )}
     </div>
   );

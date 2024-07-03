@@ -30,18 +30,18 @@ const AttractionListPage = ({ onSelectAttraction }) => {
     onSelectAttraction(selectedAttraction);
   };
   return (
-    <div>
-      <h1>All Attractions</h1>
-      <h2>Select Attractions</h2>
-      <ul>
+    <div className="bg-white rounded-lg shadow-lg p-6">
+      <h1 className="text-2xl font-bold mb-4">All Attractions</h1>
+      <h2 className="text-lg font-medium mb-4">Select Attractions</h2>
+      <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {attractions.map(attraction => (
-          <li key={attraction._id}>
-            <div>
-              <SingleImage imageId={attraction.imageId}></SingleImage>
-              <p>Name: {attraction.name}</p>
-              <p>Address: {attraction.address}</p>
-              <p>City: {attraction.city}</p>
-              <button onClick={() => handleSelectAttraction(attraction._id)}>Select</button>
+          <li key={attraction._id} className="bg-gray-100 rounded-lg overflow-hidden">
+            <div className="p-4 space-y-2">
+              <SingleImage imageId={attraction.imageId} className="w-full h-48 object-cover rounded-t-lg" />
+              <h3 className="text-lg font-medium">{attraction.name}</h3>
+              <p className="text-gray-600">{attraction.address}</p>
+              <p className="text-gray-600">{attraction.city}</p>
+              <button onClick={() => handleSelectAttraction(attraction._id)} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">Select</button>
             </div>
           </li>
         ))}

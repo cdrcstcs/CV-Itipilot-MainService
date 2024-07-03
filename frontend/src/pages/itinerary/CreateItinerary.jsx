@@ -54,32 +54,82 @@ const CreateItineraryPage = () => {
   };
 
   return (
-    <div>
-      <h1>Create Itinerary</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Title:</label>
-          <input type="text" name="title" value={formData.title} onChange={handleChange} required />
+    <div className="bg-white rounded-lg shadow-lg p-6">
+      <h1 className="text-2xl font-bold mb-4">Create Itinerary</h1>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="title" className="block font-medium text-gray-700">
+              Title:
+            </label>
+            <input
+              id="title"
+              type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="name" className="block font-medium text-gray-700">
+              Name:
+            </label>
+            <input
+              id="name"
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              required
+            />
+          </div>
         </div>
-        <div>
-          <label>Name:</label>
-          <input type="text" name="name" value={formData.name} onChange={handleChange} required />
-        </div>
-        <div>
-          <label>Start Time:</label>
-          <input type="datetime-local" name="startTime" value={formData.startTime} onChange={handleChange} required />
-        </div>
-        <div>
-          <label>End Time:</label>
-          <input type="datetime-local" name="endTime" value={formData.endTime} onChange={handleChange} required />
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="startTime" className="block font-medium text-gray-700">
+              Start Time:
+            </label>
+            <input
+              id="startTime"
+              type="datetime-local"
+              name="startTime"
+              value={formData.startTime}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="endTime" className="block font-medium text-gray-700">
+              End Time:
+            </label>
+            <input
+              id="endTime"
+              type="datetime-local"
+              name="endTime"
+              value={formData.endTime}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              required
+            />
+          </div>
         </div>
         <EventListingPage onSelectEvents={handleSelectEvents} />
-        {selectedEvents && selectedEvents.map((event)=>{
-            <EventPage eventId={event._id}></EventPage>
-        })}
-        <CreateRating onRatingCreated={handleCreateRating}></CreateRating>
-        {rating && <RatingPage ratingId={rating._id}></RatingPage>}
-        <button type="submit">Create</button>
+        {selectedEvents &&
+          selectedEvents.map((event) => (
+            <EventPage key={event._id} eventId={event._id} />
+          ))}
+        <CreateRating onRatingCreated={handleCreateRating} />
+        {rating && <RatingPage ratingId={rating._id} />}
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
+        >
+          Create
+        </button>
       </form>
     </div>
   );

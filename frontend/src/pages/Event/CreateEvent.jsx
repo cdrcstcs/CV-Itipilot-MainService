@@ -44,28 +44,61 @@ const CreateEventPage = () => {
   };
 
   return (
-    <div>
-      <h1>Create Event</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Start Time:</label>
-          <input type="datetime-local" name="startTime" value={formData.startTime} onChange={handleChange} required />
+    <div className="bg-white rounded-lg shadow-lg p-6">
+      <h1 className="text-2xl font-bold mb-4">Create Event</h1>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="flex items-center space-x-4">
+          <label className="w-32 font-medium">Start Time:</label>
+          <input
+            type="datetime-local"
+            name="startTime"
+            value={formData.startTime}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
         </div>
-        <div>
-          <label>End Time:</label>
-          <input type="datetime-local" name="endTime" value={formData.endTime} onChange={handleChange} required />
+        <div className="flex items-center space-x-4">
+          <label className="w-32 font-medium">End Time:</label>
+          <input
+            type="datetime-local"
+            name="endTime"
+            value={formData.endTime}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
         </div>
-        <div>
-          <label>Attraction ID:</label>
-          <input type="text" name="attractionId" value={formData.attractionId} onChange={handleChange} required />
+        <div className="flex items-center space-x-4">
+          <label className="w-32 font-medium">Attraction ID:</label>
+          <input
+            type="text"
+            name="attractionId"
+            value={formData.attractionId}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
         </div>
-        <div>
-          <label>Description:</label>
-          <input type="text" name="description" value={formData.description} onChange={handleChange} required />
+        <div className="flex items-center space-x-4">
+          <label className="w-32 font-medium">Description:</label>
+          <input
+            type="text"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
         </div>
         <AttractionListPage onSelectAttraction={handleSelectAttraction}></AttractionListPage>
         {selectedAttraction && <AttractionPage attractionIdId={selectedAttraction._id}></AttractionPage>}
-        <button type="submit">Create</button>
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
+        >
+          Create
+        </button>
       </form>
     </div>
   );
