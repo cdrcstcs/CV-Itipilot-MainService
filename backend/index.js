@@ -24,7 +24,7 @@ import Attraction from './models/Attraction.js';
 import Event from './models/Event.js';
 import Itinerary from './models/Itinerary.js';
 import UserItinerary from './models/UserItinerary.js';
-import { usersData, eventsData, itinerariesData, imagesData, attractionsData, tagObjects, ratingsData } from './data.js';
+import { generateUsers, generateEvents, generateItineraries, generateImageData, generateTags, generateRatings, generateAttractions } from './data.js';
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
@@ -36,11 +36,10 @@ const jwtSecret = 'fasefraw4r5r3wq45wdfgw34twdfg';
 async function verifyToken(req, res, next) {
   return new Promise((resolve, reject) => {
     const token = req.cookies && req.cookies.usertoken; // Check if token exists in req.cookies
-    console.log("ll"+token);
+    // console.log("ll"+token);
     if (!token) {
       reject(new Error('Token not found in cookies')); // Reject if token is not found
     } else {
-      console.log('backend'+req.cookies.usertoken);
       jwt.verify(req.cookies.usertoken, jwtSecret, {}, (err, userData) => {
         if (err) {
           reject(err); 
@@ -119,12 +118,12 @@ mongoose.connect(MONGO_URL).then(async () => {
   await Event.deleteMany();
   await Itinerary.deleteMany();
   await UserItinerary.deleteMany();
-  await Image.insertMany(imagesData);
-  await User.insertMany(usersData);
-  await Tag.insertMany(tagObjects);
-  await Rating.insertMany(ratingsData);
-  await Attraction.insertMany(attractionsData);
-  await Event.insertMany(eventsData);
-  await Itinerary.insertMany(itinerariesData);
+  await Image.insertMany(generateImageData());
+  await User.insertMany(await generateUsers());
+  await Tag.insertMany(generateTags());
+  await Rating.insertMany(generateRatings());
+  await Attraction.insertMany(await generateAttractions());
+  await Event.insertMany(await generateEvents());
+  await Itinerary.insertMany(await generateItineraries());
   app.listen(PORT, () => console.log(`Server running on PORT: ${PORT}`));
 }).catch((error) => console.log(`${error} did not connect`));

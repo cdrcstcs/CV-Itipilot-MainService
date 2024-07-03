@@ -21,7 +21,7 @@ const ItineraryResultsPage = ({itineraries}) => {
             className="flex-1 basis-[calc(30%-1.5rem)] m-3 cursor-pointer"
             onClick={(e) => handleItineraryClick(e, itinerary)}
           >
-            <div className="h-64 flex flex-col justify-center items-center bg-white rounded-lg border-5 border-white p-4">
+            <div className="h-64 flex flex-col justify-center items-center bg-white border-5 border-white p-4 rounded-2xl">
               <h2 className="text-xl font-semibold mb-2">{itinerary.title}</h2>
               <div className="space-y-2">
                 <p>Name: {itinerary.name}</p>

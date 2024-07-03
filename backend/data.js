@@ -2,8 +2,30 @@ import Attraction from "./models/Attraction.js";
 import Rating from "./models/Rating.js";
 import Tag from "./models/Tag.js";
 import User from "./models/User.js";
-import Image from "./models/Images.js";
+import Image from "./models/Image.js";
 import Event from "./models/Event.js";
+const imageUrls = [
+    "1.jpeg",
+    "2.jpeg",
+    "3.jpeg",
+    "4.jpeg",
+    "5.jpeg",
+    "6.jpeg",
+    "7.jpeg",
+    "8.jpeg",
+    "9.jpeg",
+    "10.jpeg",
+];
+const generateImageData = () => {
+    const imageData = [];
+
+    for (let i = 0; i < 10; i++) {
+        const image = imageUrls[i % imageUrls.length]; // Cycling through sample URLs
+        const imageEntry = { image };
+        imageData.push(imageEntry);
+    }
+    return imageData;
+};
 const tagList = [
     '#Travel',
     '#TravelPhotography',
@@ -56,7 +78,9 @@ const tagList = [
     '#TravelAfrica',
     '#SouthAmericaTravel',
 ];
-const tagObjects = tagList.map(tag => ({ value: tag }));
+const generateTags = () =>{
+    return tagList.map(tag => ({ value: tag }));
+}
 const getRandomInt = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
@@ -64,37 +88,15 @@ const generateRatings = () => {
     const ratings = [];
     for (let i = 0; i < 20; i++) {
         const score = getRandomInt(1, 100);
-        const rating = new { score };
+        const rating = { score };
         ratings.push(rating);
     }
     return ratings;
 };
-const ratingsData = generateRatings();
 const generateRandomPhoneNumber = () => {
-const digits = Math.floor(Math.random() * 9000000000) + 1000000000;
-return digits;
+    const digits = Math.floor(Math.random() * 9000000000) + 1000000000;
+    return digits;
 };
-const generateUsers = () => {
-    const users = [];
-    const countries = ["USA", "Canada", "UK", "Australia", "Germany", "France", "Japan", "Brazil", "India", "South Africa"];
-    const userTypes = ["ADMIN", "USER"];
-    for (let i = 0; i < 20; i++) {
-        const user= {
-        imageId: imageIds[getRandomInt(0, imageIds.length - 1)],
-        name: `User ${i + 1}`,
-        email: `user${i + 1}@example.com`,
-        password: `password${i + 1}`,
-        country: convertCountryToAbbreviation(countries[Math.floor(Math.random() * countries.length)]),
-        phone: generateRandomPhoneNumber(),
-        longtitude: getRandomInt(-180, 180),
-        latitude: getRandomInt(-90, 90),
-        userType: userTypes[Math.floor(Math.random() * userTypes.length)],
-        };
-        users.push(user);
-    }
-    return users;
-};
-
 const countryMappings = {
     'United States': 'USA',
     'Canada': 'CAN',
@@ -296,7 +298,30 @@ const countryMappings = {
 function convertCountryToAbbreviation(countryName) {
     return countryMappings[countryName] || countryName; // Return abbreviation or original name if not found
 }
-const usersData = generateUsers();
+const generateUsers = async () => {
+    const users = [];
+    const countries = ["USA", "Canada", "UK", "Australia", "Germany", "France", "Japan", "Brazil", "India", "South Africa"];
+    const userTypes = ["ADMIN", "USER"];
+    const imageIds = (await Image.find()).map(({_id})=>{
+        return _id;
+    })
+    for (let i = 0; i < 20; i++) {
+        const user= {
+        imageId: imageIds[getRandomInt(0, imageIds.length - 1)],
+        name: `User ${i + 1}`,
+        email: `user${i + 1}@example.com`,
+        password: `password${i + 1}`,
+        country: convertCountryToAbbreviation(countries[Math.floor(Math.random() * countries.length)]),
+        phone: generateRandomPhoneNumber(),
+        longtitude: getRandomInt(-180, 180),
+        latitude: getRandomInt(-90, 90),
+        userType: userTypes[Math.floor(Math.random() * userTypes.length)],
+        };
+        users.push(user);
+    }
+    // console.log(users);
+    return users;
+};
 const generateAttractions = async () => {
     const attractions = [];
     const cities = ["New York", "London", "Paris", "Tokyo", "Sydney", "Rome", "Dubai", "Barcelona", "Berlin", "Rio de Janeiro"];
@@ -306,6 +331,9 @@ const generateAttractions = async () => {
     const ratings =  (await Rating.find()).map(({_id})=>{
         return _id;
     });
+    const imageIds = (await Image.find()).map(({_id})=>{
+        return _id;
+    })    
     for (let i = 0; i < 20; i++) {
       const attraction = {
         imageId: imageIds[getRandomInt(0, imageIds.length - 1)],
@@ -321,16 +349,10 @@ const generateAttractions = async () => {
     }
     return attractions;
 };
-const attractionsData = generateAttractions();
-const imageIds = (await Image.find()).map(({_id})=>{
-    return _id;
-})
 const getRandomDate = (start, end) => {
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-  };
-  
-  // Generate 20 random events
-  const generateEvents = (attractionIds) => {
+};
+const generateEvents = async () => {
     const events = [];
     const descriptions = [
       "Annual Festival",
@@ -345,13 +367,14 @@ const getRandomDate = (start, end) => {
       "Fashion Show",
       "Tech Conference",
     ];
-    
+    const attractionIds = (await Attraction.find()).map(({_id})=>{
+        return _id;
+    });    
     for (let i = 0; i < 20; i++) {
       const attractionId = attractionIds[Math.floor(Math.random() * attractionIds.length)];
       const startTime = getRandomDate(new Date(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)));
       const endTime = new Date(startTime.getTime() + Math.random() * (24 * 60 * 60 * 1000)); // Random duration up to 24 hours
       const description = descriptions[Math.floor(Math.random() * descriptions.length)];
-  
       const event = {
         startTime,
         endTime,
@@ -362,12 +385,7 @@ const getRandomDate = (start, end) => {
     }
     return events;
 };
-const attractionIds = (await Attraction.find()).map(({_id})=>{
-    return _id;
-});
-const eventsData = generateEvents(attractionIds);
-  // Generate 20 random itineraries
-const generateItineraries = (userIds, eventIds) => {
+const generateItineraries = async () => {
     const itineraries = [];
     const titles = [
       "Weekend Getaway",
@@ -391,7 +409,15 @@ const generateItineraries = (userIds, eventIds) => {
       "Bucket List Journey",
       "Volunteer Mission",
     ];
-    
+    const userIds =  (await User.find()).map(({_id})=>{
+        return _id;
+    });
+    const eventIds = (await Event.find()).map(({_id})=>{
+        return _id;
+    });
+    const ratingIds = (await Rating.find()).map(({_id})=>{
+        return _id;
+    });
     for (let i = 0; i < 20; i++) {
       const userId = userIds[Math.floor(Math.random() * userIds.length)];
       const title = titles[Math.floor(Math.random() * titles.length)];
@@ -399,7 +425,7 @@ const generateItineraries = (userIds, eventIds) => {
       const startTime = getRandomDate(new Date(), new Date(new Date().setFullYear(new Date().getFullYear() + 1)));
       const endTime = new Date(startTime.getTime() + Math.random() * (7 * 24 * 60 * 60 * 1000)); // Random duration up to 7 days
       const eventIdsSubset = eventIds.slice(0, Math.floor(Math.random() * eventIds.length) + 1); // Random subset of eventIds
-  
+      const ratingId = ratingIds[Math.floor(Math.random() * ratingIds.length)];
       const itinerary = {
         title,
         name,
@@ -407,41 +433,10 @@ const generateItineraries = (userIds, eventIds) => {
         startTime,
         endTime,
         eventIds: eventIdsSubset,
+        ratingId
       };
       itineraries.push(itinerary);
     }
     return itineraries;
 };
-  
-const userIds =  (await User.find()).map(({_id})=>{
-    return _id;
-});
-const eventIds = (await Event.find()).map(({_id})=>{
-    return _id;
-});
-const itinerariesData = generateItineraries(userIds, eventIds);
-const imageUrls = [
-    "1.jpeg",
-    "2.jpeg",
-    "3.jpeg",
-    "4.jpeg",
-    "5.jpeg",
-    "6.jpeg",
-    "7.jpeg",
-    "8.jpeg",
-    "9.jpeg",
-    "10.jpeg",
-];
-const generateImageData = () => {
-    const imageData = [];
-
-    for (let i = 0; i < 20; i++) {
-        const image = imageUrls[i % imageUrls.length]; // Cycling through sample URLs
-        const imageEntry = { image };
-        imageData.push(imageEntry);
-    }
-    return imageData;
-};
-  
-const imagesData = generateImageData();
-export {usersData, attractionsData, tagObjects, ratingsData, eventsData, itinerariesData, imagesData};
+export {generateAttractions, generateEvents, generateImageData, generateItineraries, generateRatings, generateUsers, generateTags};

@@ -24,14 +24,14 @@ const SortOptionDropdown = ({ onChange, sortOption }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="cursor-pointer">
-        <Button variant="outline" className="w-full">
+        <Button variant="outline" className="w-full text-red-600 rounded-3xl">
           Sort by: {selectedSortLabel}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent className=" font-bold">
         {SORT_OPTIONS.map((option) => (
           <DropdownMenuItem
-            className="cursor-pointer"
+            className="cursor-pointer mt-1 text-red-600 rounded"
             onClick={() => onChange(option.value)}
           >
             {option.label}

@@ -47,6 +47,9 @@ const Header = () => {
           <Link to="/account" className="text-[orangered] no-underline">
             Profile
           </Link>
+          <Link to="/search" className="text-[orangered] no-underline">
+            Home
+          </Link>
           <Link to="/itinerary/create" className="text-[orangered] no-underline">
             Create Itinerary
           </Link>

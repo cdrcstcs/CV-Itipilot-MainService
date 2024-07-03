@@ -4,7 +4,6 @@ const jwtSecret = 'fasefraw4r5r3wq45wdfgw34twdfg';
 
 export function getDataOfUser(req, res) {
     const token = req.body.token;
-    console.log(token+'3');
     if (!token) {
         return res.status(401).json({ error: 'Token not provided' });
     }

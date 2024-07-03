@@ -29,6 +29,7 @@ const PaginationSelector = ({ page, pages, onPageChange }) => {
               onClick={() => onPageChange(number)}
               isActive={page === number}
               className={'text-black'}
+              styles={{borderRadius:'20px'}}
             >
               {number}
             </PaginationLink>
@@ -36,7 +37,7 @@ const PaginationSelector = ({ page, pages, onPageChange }) => {
         ))}
         {page !== pageNumbers.length && (
           <PaginationItem>
-            <PaginationNext href="#" onClick={() => onPageChange(page + 1)} />
+            <PaginationNext className={'text-red-600'} href="#" onClick={() => onPageChange(page + 1)} />
           </PaginationItem>
         )}
       </PaginationContent>
