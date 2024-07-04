@@ -55,7 +55,7 @@ const searchItinerary = async (req, res) => {
         const total = itineraries.length;
 
         // Pagination
-        const results = itineraries.slice(skip, skip + pageSize);
+        const results = await Itinerary.find({ _id: { $in: itineraries.slice(skip, skip + pageSize).map(({_id})=>{return _id;})} }) ;
 
         // Prepare response object with paginated data
         const response = {

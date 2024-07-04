@@ -19,7 +19,7 @@ const EventPage = ({ eventId }) => {
   const fetchEvent = async (eventId) => {
     try {
       const token = cookie.get('usertoken');
-
+      console.log(eventId);
       const response = await axios.get(`http://localhost:4000/events/${eventId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -79,7 +79,7 @@ const EventPage = ({ eventId }) => {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
+    <div className="bg-white rounded-lg shadow-lg">
       <h1 className="text-2xl font-bold mb-4">Event Details</h1>
       <div className="space-y-4">
         <div className="flex items-center space-x-4">

@@ -23,6 +23,7 @@ async function getAllEvents(req, res) {
 // Read single event by ID
 async function getEvent(req, res) {
   try {
+    console.log(req.params.id);
     const event = await Event.findById(req.params.id);
     if (!event) return res.status(404).json({ message: 'Event not found' });
     res.json(event);

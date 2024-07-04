@@ -9,6 +9,7 @@ const ItineraryResultsPage = ({itineraries}) => {
   };
   const handleCloseDetails = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     setSelectedItinerary(null);
   };
   return (

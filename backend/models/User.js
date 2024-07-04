@@ -6,7 +6,6 @@ const UserSchema = new Schema({
   email: {type:String, unique:true},
   password: String,
   hotels: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Hotel' }],
-  country: String,
   phone: Number,
   longtitude: Number,
   latitude: Number, 

@@ -36,27 +36,27 @@ const Header = () => {
         />
       </div>
       {!loggedIn ? (
-        <Link to="/login" className="text-[orangered] no-underline">
+        <Link to="/login" className="text-[orangered] font-semibold no-underline">
           Login
         </Link>
       ) : (
         <>
-          <button onClick={handleLogout} className="text-[orangered]">
+          <button onClick={handleLogout} className="text-[orangered] font-semibold">
             Logout
           </button>
-          <Link to="/account" className="text-[orangered] no-underline">
+          <Link to="/account" className="text-[orangered] no-underline font-semibold">
             Profile
           </Link>
-          <Link to="/search" className="text-[orangered] no-underline">
+          <Link to="/search" className="text-[orangered] no-underline font-semibold">
             Home
           </Link>
-          <Link to="/itinerary/create" className="text-[orangered] no-underline">
+          <Link to="/itinerary/create" className="text-[orangered] no-underline font-semibold">
             Create Itinerary
           </Link>
-          <Link to="/events/create" className="text-[orangered] no-underline">
+          <Link to="/events/create" className="text-[orangered] no-underline font-semibold">
             Create Event
           </Link>
-          <Link to="/itineraries/user" className="text-[orangered] no-underline">
+          <Link to="/itineraries/user" className="text-[orangered] no-underline font-semibold">
             Your Itineraries
           </Link>
           {[
@@ -68,7 +68,7 @@ const Header = () => {
           ].map((link, index) => (
             <div
               key={index}
-              className="cursor-pointer bg-transparent text-[orangered]"
+              className="cursor-pointer bg-transparent text-[orangered] font-semibold"
               onClick={() => handleClick(index)}
             >
               {link.text}

@@ -30,7 +30,7 @@ const SearchBar = ({ onSubmit, onReset, placeHolder, searchQuery }) => {
         <Search
           strokeWidth={2.5}
           size={30}
-          className="ml-1 text-blue-500 hidden md:block"
+          className="ml-1 text-red-600 hidden md:block"
         />
         <FormField
           control={form.control}
@@ -40,7 +40,7 @@ const SearchBar = ({ onSubmit, onReset, placeHolder, searchQuery }) => {
               <FormControl>
                 <Input
                   {...field}
-                  className="border-none text-red-600 shadow-none text-xl focus-visible:ring-0" 
+                  className="border-none text-blue-500 font-semibold font-serif shadow-none text-xl focus-visible:ring-0" 
                   placeholder={placeHolder}
                 />
               </FormControl>
