@@ -53,9 +53,6 @@ const Header = () => {
           <Link to="/itinerary/create" className="text-[orangered] no-underline font-semibold">
             Create Itinerary
           </Link>
-          <Link to="/events/create" className="text-[orangered] no-underline font-semibold">
-            Create Event
-          </Link>
           <Link to="/itineraries/saved" className="text-[orangered] no-underline font-semibold">
             Saved Itineraries
           </Link>

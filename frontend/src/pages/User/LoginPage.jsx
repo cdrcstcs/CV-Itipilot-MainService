@@ -16,7 +16,6 @@ export default function LoginPage() {
         password,
       });
       await cookie.set('usertoken',response.data.token,{ path: '/' });
-      console.log(cookie.get('usertoken')+'1');
       alert("Login successful");
       setRedirect(true);
     } catch (e) {

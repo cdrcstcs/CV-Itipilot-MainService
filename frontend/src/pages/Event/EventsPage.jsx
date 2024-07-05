@@ -37,13 +37,13 @@ const EventListPage = ({ onSelectEvents }) => {
     <div className="bg-white rounded-lg shadow-lg p-6">
       <h1 className="text-2xl font-bold mb-4">All Events</h1>
       <h2 className="text-xl font-semibold mb-4">Select Events</h2>
-      <ul className="space-y-4">
+      <ul className="space-y-4 flex flex-row max-w-full overflow-x-auto items-start justify-between">
         {events.map(event => (
           <li
             key={event._id}
-            className="bg-gray-100 rounded-lg p-4 shadow-md"
+            className="bg-gray-100 rounded-lg p-4 shadow-md mr-2"
           >
-            <div className="space-y-2">
+            <div className="space-y-2 rounded-lg">
               <div className="flex items-center space-x-4">
                 <span className="w-32 font-medium">Start Time:</span>
                 <p>{event.startTime}</p>

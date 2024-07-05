@@ -3,7 +3,9 @@ import Itinerary from '../models/Itinerary.js';
 // Create itinerary
 async function createItinerary(req, res) {
   try {
-    const itinerary = await Itinerary.create(req.body);
+    console.log(req.body);
+    const body = {...req.body, userId: req.userData.userId};
+    const itinerary = await Itinerary.create(body);
     res.status(201).json(itinerary);
   } catch (error) {
     res.status(500).json({ message: error.message });

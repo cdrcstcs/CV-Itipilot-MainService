@@ -4,7 +4,11 @@ import EventListingPage from '../Event/EventsPage';
 import EventPage from '../Event/EventPage';
 import CreateRating from '../Rating/CreateRating';
 import RatingPage from '../Rating/RatingPage';
-import { useCookies } from '../../Cookies';
+function getCookie(name) {
+  const cookieRegex = new RegExp(`(^|;)\\s*${name}\\s*=\\s*([^;]+)`);
+  const cookieMatch = document.cookie.match(cookieRegex);
+  return cookieMatch ? decodeURIComponent(cookieMatch[2]) : null;
+}
 
 const CreateItineraryPage = () => {
   const [formData, setFormData] = useState({
@@ -13,7 +17,6 @@ const CreateItineraryPage = () => {
     startTime: '',
     endTime: ''
   });
-  const cookie = useCookies();
 
   const [selectedEvents, setSelectedEvents] = useState([]);
   const [rating, onRatingCreated] = useState([]);
@@ -34,16 +37,18 @@ const CreateItineraryPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const token = cookie.get('usertoken');
-
-      const response = await axios.post('http://localhost:4000/itinerary',{
-        headers: {
-            Authorization: `Bearer ${token}`,
-          },
-      }, {
+        const token = getCookie('usertoken');
+      console.log(formData);
+      console.log(selectedEvents);
+      console.log(rating);
+      const response = await axios.post('http://localhost:4000/itinerary', {
         ...formData,
         eventIds: selectedEvents.map(event => event._id), // Send only event IDs to the backend
         ratingId: rating._id,
+      },{
+        headers: {
+            Authorization: `Bearer ${token}`,
+          },
       });
       console.log('Itinerary created:', response.data);
       // Optionally, you can redirect to another page or show a success message
