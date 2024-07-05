@@ -10,6 +10,7 @@ const UserSchema = new Schema({
   longtitude: Number,
   latitude: Number, 
   userType: String,
+  savedItinerary:[{ type: mongoose.Schema.Types.ObjectId, ref: 'Itinerary' }],
 },{timestamps:true});
 
 const User = mongoose.model('User', UserSchema);

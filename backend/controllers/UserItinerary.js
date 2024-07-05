@@ -1,58 +1,53 @@
-import UserItinerary from "../models/UserItinerary.js";
-
-async function createUserItinerary(req, res) {
+import Itinerary from "../models/Itinerary.js";
+import User from "../models/User.js";
+async function saveUserItinerary(req, res) {
+  console.log('htllo');
   try {
-    const { _id, ...itineraryData } = req.body; // Exclude _id from itineraryData
-    const itinerary = await UserItinerary.create(itineraryData);
-    res.status(201).json(itinerary);
+    const itiId = req.params.itiId; // Exclude _id from itineraryData
+    console.log("heelo " + itiId);
+    console.log(req.userData);
+    const user = await User.findById(req.userData.userId);
+    console.log(user);
+    user.savedItinerary.push(itiId);
+    user.save();
+    res.status(201).json("ok");
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 }
-
-// Read all itineraries
+async function getAllUserSavedItinerary(req, res) {
+  try {
+    const user = await User.findById(req.userData.userId);
+    const itineraries = await Itinerary.find({_id:{'$in': user.savedItinerary}});
+    res.status(201).json(itineraries);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
 async function getAllUserItineraries(req, res) {
   try {
-    // console.log('ok');
-    const itineraries = await UserItinerary.find();
-    // console.log(itineraries);
+    const itineraries = await Itinerary.find({userId: req.userData.userId});
     res.json(itineraries);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 }
-
-// Read single itinerary by ID
-async function getUserItinerary(req, res) {
-  try {
-    const itinerary = await UserItinerary.findById(req.params.id);
-    if (!itinerary) return res.status(404).json({ message: 'Itinerary not found' });
-    res.json(itinerary);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-}
-
-// Update itinerary by ID
 async function updateUserItinerary(req, res) {
   try {
-    const itinerary = await UserItinerary.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const itinerary = await Itinerary.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!itinerary) return res.status(404).json({ message: 'Itinerary not found' });
     res.json(itinerary);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 }
-
-// Delete itinerary by ID
 async function deleteUserItinerary(req, res) {
   try {
-    const itinerary = await UserItinerary.findByIdAndDelete(req.params.id);
+    const itinerary = await Itinerary.findByIdAndDelete(req.params.id);
     if (!itinerary) return res.status(404).json({ message: 'Itinerary not found' });
     res.json({ message: 'Itinerary deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 }
-
-export { createUserItinerary, getAllUserItineraries, getUserItinerary, updateUserItinerary, deleteUserItinerary };
+export { saveUserItinerary, getAllUserItineraries, getAllUserSavedItinerary, updateUserItinerary, deleteUserItinerary };

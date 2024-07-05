@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import UserPage from '../User/UserPage';
 import RatingPage from '../Rating/RatingPage';
 import EventPage from '../Event/EventPage';
-import YourItinerariesPage from './UserItineraries';
-
+import SavedItinerariesPage from './SavedItineraries';
 const ItineraryDetailsPage = ({ itinerary, onClose }) => {
     const [check, setCheck] = useState(false);
     console.log(itinerary);
@@ -57,7 +56,7 @@ const ItineraryDetailsPage = ({ itinerary, onClose }) => {
             >
               Save to your itineraries
             </button>
-            {check && <YourItinerariesPage iti={itinerary} />}
+            {check && <SavedItinerariesPage itiId={itinerary._id} />}
           </div>
         </div>
       );

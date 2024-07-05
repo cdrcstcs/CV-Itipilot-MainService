@@ -5,12 +5,27 @@ import RatingPage from '../Rating/RatingPage';
 import { useCookies } from '../../Cookies';
 import EventPage from '../Event/EventPage';
 import { useLocation } from 'react-router-dom';
-
-const YourItinerariesPage = () => {
+const SavedItinerariesPage = ({itiId}) => {
   const [itineraries, setItineraries] = useState([]);
   const [editedItinerary, setEditedItinerary] = useState(null);
   const cookie = useCookies();
   const location = useLocation();
+  const createItinerary = async () => {
+    try {
+      const token = cookie.get('usertoken');
+      const response = await axios.get(`http://localhost:4000/saved/${itiId}`,{
+        headers: {
+            Authorization: `Bearer ${token}`,
+          },
+      });
+      console.log('Itinerary created:', response);
+    } catch (error) {
+      console.error('Error creating itinerary:', error);
+    }
+  };
+  if (location.pathname != '/itineraries/saved'){
+    createItinerary();
+  }
   useEffect(() => {
     fetchItineraries();
   }, []);
@@ -18,10 +33,9 @@ const YourItinerariesPage = () => {
     try {
         const token = cookie.get('usertoken');        
         axios.defaults.withCredentials = true;
-        const response = await axios.get('http://localhost:4000/user_itinerary',{
+        const response = await axios.get('http://localhost:4000/saved',{
         headers: {
             Authorization: `Bearer ${token}`,
-            'Content-Type':'application/json'
           },
       });
       setItineraries(response.data);
@@ -31,9 +45,8 @@ const YourItinerariesPage = () => {
   };
   const handleDeleteItinerary = async (itineraryId) => {
     try {
-        const token = cookie.get('usertoken');
-
-      await axios.delete(`http://localhost:4000/user_itinerary/${itineraryId}`,{
+      const token = cookie.get('usertoken');
+      await axios.delete(`http://localhost:4000/saved/${itineraryId}`,{
         headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -47,9 +60,8 @@ const YourItinerariesPage = () => {
   };
   const handleSaveEdit = async (itineraryId) => {
     try {
-        const token = cookie.get('usertoken');
-
-      await axios.put(`http://localhost:4000/user_itinerary/${itineraryId}`, editedItinerary,{
+      const token = cookie.get('usertoken');
+      await axios.put(`http://localhost:4000/saved/${itineraryId}`, editedItinerary,{
         headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -63,9 +75,9 @@ const YourItinerariesPage = () => {
     const { name, value } = e.target;
     setEditedItinerary({ ...editedItinerary, [name]: value });
   };
-  return location.pathname === '/itineraries/user' ? (
+  return location.pathname === '/itineraries/saved' ? (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Your Itineraries</h1>
+      <h1 className="text-2xl font-bold mb-4">Saved Itineraries</h1>
       <ul className="flex flex-wrap justify-between list-none p-0">
         {itineraries.map((itinerary) => (
           <li
@@ -146,5 +158,4 @@ const YourItinerariesPage = () => {
     </div>
   ) : null;
 };
-
-export default YourItinerariesPage;
+export default SavedItinerariesPage;

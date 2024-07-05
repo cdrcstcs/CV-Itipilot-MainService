@@ -26,7 +26,9 @@ const EventListPage = ({ onSelectEvents }) => {
     }
   };
 
-  const handleSelectEvents = (eventId) => {
+  const handleSelectEvents = (e, eventId) => {
+    e.preventDefault();
+    e.stopPropagation();
     const selectedEvent = events.find(event => event._id === eventId);
     onSelectEvents(prev => [...prev,selectedEvent]);
   };
@@ -56,7 +58,7 @@ const EventListPage = ({ onSelectEvents }) => {
               </div>
               <AttractionPage attractionId={event.attractionId}></AttractionPage>
               <button
-                onClick={() => handleSelectEvents(event._id)}
+                onClick={(e) => handleSelectEvents(e, event._id)}
                 className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
               >
                 Select

@@ -26,7 +26,9 @@ function RatingPage({ ratingId }) {
     }
   };
 
-  const handleLike = async () => {
+  const handleLike = async (e) => {
+    e.stopPropagation();
+    e.preventDefault();
     try {
         const token = cookie.get('usertoken');
 
@@ -50,7 +52,7 @@ function RatingPage({ ratingId }) {
           <div className="flex items-center justify-between">
             <p className="text-lg font-medium">Score: {rating.score}</p>
             <button
-              onClick={handleLike}
+              onClick={(e)=> handleLike(e)}
               disabled={isLiked}
               className={`px-4 py-2 rounded-md font-medium transition-colors ${
                 isLiked

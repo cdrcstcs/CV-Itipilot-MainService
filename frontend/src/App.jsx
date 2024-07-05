@@ -16,6 +16,7 @@ import { ImageUploader } from "./pages/Image/ImageUploader.jsx";
 import { SingleImage } from "./pages/Image/ImagePage.jsx";
 import YourItinerariesPage from "./pages/itinerary/UserItineraries.jsx";
 import SearchPage from "./pages/Search/SearchPage.jsx";
+import SavedItinerariesPage from "./pages/itinerary/SavedItineraries.jsx";
 function App() {
   return (
     <CookiesProvider>
@@ -28,6 +29,7 @@ function App() {
         <Route path="/account" element={<ProfilePage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/itineraries/user" element={<YourItinerariesPage />} />
+        <Route path="/itineraries/saved" element={<SavedItinerariesPage />} />
         <Route path="/itinerary/create" element={<CreateItineraryPage />} />
         <Route path="/attractions" element={<AttractionListPage />} />
         <Route path="/ratings" element={<RatingPage />} />
