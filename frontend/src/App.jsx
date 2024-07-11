@@ -4,7 +4,6 @@ import LoginPage from "./pages/User/LoginPage.jsx";
 import ProfilePage from "./pages/User/ProfilePage.jsx";
 import CreateItineraryPage from './pages/itinerary/CreateItinerary.jsx';
 import RatingPage from './pages/Rating/RatingPage.jsx';
-import CreateRating from './pages/Rating/CreateRating.jsx';
 import EventListPage from './pages/Event/EventsPage.jsx';
 import TagListPage from './pages/Tag/TagsPage.jsx';
 import Header from './Header.jsx';
@@ -29,7 +28,6 @@ function App() {
         <Route path="/itineraries/saved" element={<SavedItinerariesPage />} />
         <Route path="/itinerary/create" element={<CreateItineraryPage />} />
         <Route path="/ratings" element={<RatingPage />} />
-        <Route path="/ratings/create" element={<CreateRating />} />
         <Route path="/events" element={<EventListPage />} />
         <Route path="/tags" element={<TagListPage />} />
       </Routes>

@@ -27,13 +27,15 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-[rgba(0,255,255,0.2)] bg-cover bg-no-repeat px-5 py-4 rounded-3xl border-5 border-white flex items-center justify-start gap-10 overflow-x-auto font-fantasy text-[ButtonHighlight] text-[17px] mt-5">
+    <header className="bg-white mb-3 bg-cover p-2 border-4 border-red-600 bg-no-repeat px-5 py-4 rounded-3xl border-5  flex items-center justify-start gap-10 overflow-x-auto font-fantasy text-[ButtonHighlight] text-[17px] mt-5">
       <div>
-        <img
-          src="../icon.png"
-          alt="Icon"
-          className="w-12 h-12 rounded-full"
-        />
+        <Link to="/search" className="text-[orangered] no-underline font-semibold">
+          <img
+            src="../icon.png"
+            alt="Icon"
+            className="w-12 h-12 rounded-full"
+          />
+        </Link>
       </div>
       {!loggedIn ? (
         <Link to="/login" className="text-[orangered] font-semibold no-underline">
@@ -46,9 +48,6 @@ const Header = () => {
           </button>
           <Link to="/account" className="text-[orangered] no-underline font-semibold">
             Profile
-          </Link>
-          <Link to="/search" className="text-[orangered] no-underline font-semibold">
-            Home
           </Link>
           <Link to="/itinerary/create" className="text-[orangered] no-underline font-semibold">
             Create Itinerary

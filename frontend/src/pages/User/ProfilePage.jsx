@@ -72,7 +72,7 @@ export default function ProfilePage() {
   }
   console.log(user);
   return (
-    <div className="bg-gray-100 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="bg-black py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         <div className="bg-white shadow-md rounded-lg p-8">
           <div className="text-center mb-6">

@@ -34,7 +34,7 @@ const EventListPage = ({ onSelectEvents }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
+    <div className="bg-white text-black rounded-lg shadow-lg p-6">
       <h1 className="text-2xl font-bold mb-4">All Events</h1>
       <h2 className="text-xl font-semibold mb-4">Select Events</h2>
       <ul className="space-y-4 flex flex-row max-w-full overflow-x-auto items-start justify-between">

@@ -2,8 +2,8 @@ import Rating from '../models/Rating.js';
 
 // Create rating
 async function createRating(req, res) {
+  console.log(req.body);
   try {
-    console.log(req.body);
     const rating = await Rating.create(req.body);
     res.status(201).json(rating);
   } catch (error) {

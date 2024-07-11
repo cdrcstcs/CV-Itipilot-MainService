@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from '../../axiosSetUp';
 import EventListingPage from '../Event/EventsPage';
 import EventPage from '../Event/EventPage';
-import CreateRating from '../Rating/CreateRating';
-import RatingPage from '../Rating/RatingPage';
 function getCookie(name) {
   const cookieRegex = new RegExp(`(^|;)\\s*${name}\\s*=\\s*([^;]+)`);
   const cookieMatch = document.cookie.match(cookieRegex);
@@ -19,8 +17,20 @@ const CreateItineraryPage = () => {
   });
 
   const [selectedEvents, setSelectedEvents] = useState([]);
-  const [rating, onRatingCreated] = useState([]);
-
+  const createRating = async () => {
+    const token = getCookie('usertoken');
+    try {
+      const response = await axios.post('http://localhost:4000/ratings', {score:0}, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log('Rating created:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error creating rating:', error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,25 +40,24 @@ const CreateItineraryPage = () => {
   const handleSelectEvents = (events) => {
     setSelectedEvents(events);
   };
-  const handleCreateRating = (rating) => {
-    onRatingCreated(rating);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const token = getCookie('usertoken');
+      const token = getCookie('usertoken');
       console.log(formData);
       console.log(selectedEvents);
-      console.log(rating);
+      console.log(token);
+      const ratingId = (await createRating())._id;
+      console.log(ratingId);
       const response = await axios.post('http://localhost:4000/itinerary', {
         ...formData,
         eventIds: selectedEvents.map(event => event._id), // Send only event IDs to the backend
-        ratingId: rating._id,
+        ratingId,
       },{
         headers: {
             Authorization: `Bearer ${token}`,
-          },
+        },
       });
       console.log('Itinerary created:', response.data);
       // Optionally, you can redirect to another page or show a success message
@@ -59,10 +68,10 @@ const CreateItineraryPage = () => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
+    <div className="bg-black rounded-lg shadow-lg p-6">
       <h1 className="text-2xl font-bold mb-4">Create Itinerary</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4 text-black">
           <div>
             <label htmlFor="title" className="block font-medium text-gray-700">
               Title:
@@ -92,7 +101,7 @@ const CreateItineraryPage = () => {
             />
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4 text-black">
           <div>
             <label htmlFor="startTime" className="block font-medium text-gray-700">
               Start Time:
@@ -127,8 +136,6 @@ const CreateItineraryPage = () => {
           selectedEvents.map((event) => (
             <EventPage key={event._id} eventId={event._id} />
           ))}
-        <CreateRating onRatingCreated={handleCreateRating} />
-        {rating && <RatingPage ratingId={rating._id} />}
         <button
           type="submit"
           className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"

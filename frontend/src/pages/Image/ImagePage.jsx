@@ -24,7 +24,6 @@ export const SingleImage = ({imageId}) => {
   };
   return (
     <div className="bg-white rounded-lg shadow-lg p-6">
-      <h1 className="text-2xl font-bold mb-4">Single Image</h1>
       {image ? (
         <div className="flex justify-center">
           <img
