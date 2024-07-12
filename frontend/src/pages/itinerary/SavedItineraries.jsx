@@ -4,8 +4,9 @@ import UserPage from '../User/UserPage';
 import RatingPage from '../Rating/RatingPage';
 import { useCookies } from '../../Cookies';
 import EventPage from '../Event/EventPage';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 const SavedItinerariesPage = ({itiId}) => {
+  const navigate = useNavigate();
   const [itineraries, setItineraries] = useState([]);
   const [editedItinerary, setEditedItinerary] = useState(null);
   const cookie = useCookies();
@@ -75,6 +76,9 @@ const SavedItinerariesPage = ({itiId}) => {
     const { name, value } = e.target;
     setEditedItinerary({ ...editedItinerary, [name]: value });
   };
+  if(location.pathname !=="/itineraries/saved"){
+    navigate("/itineraries/saved");
+  }
   return location.pathname === '/itineraries/saved' ? (
     <div>
       <h1 className="text-2xl font-bold mb-4">Saved Itineraries</h1>

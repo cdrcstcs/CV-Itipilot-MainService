@@ -2,6 +2,7 @@ import {Link} from "react-router-dom";
 import {useState} from "react";
 import axios from '../../axiosSetUp';
 import { ImageUploader } from "../Image/ImageUploader";
+import { useNavigate } from "react-router-dom";
 export default function RegisterPage() {
   const [name,setName] = useState('');
   const [email,setEmail] = useState('');
@@ -9,6 +10,7 @@ export default function RegisterPage() {
   const [userType, setUserType] = useState('');
   const [phone, setPhone] = useState('');
   const [imageId, setImageId] = useState('');
+  const navigate = useNavigate();
   async function registerUser(ev) {
     ev.preventDefault();
     try {
@@ -21,6 +23,7 @@ export default function RegisterPage() {
         phone,
       });
       alert('Registration successful. Now you can log in');
+      navigate("/login");
     } catch (e) {
       alert('Registration failed. Please try again later');
     }

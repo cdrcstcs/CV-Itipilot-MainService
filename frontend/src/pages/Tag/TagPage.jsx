@@ -91,16 +91,16 @@ function TagPage({ tagId }) {
           ) : (
             <div className="flex items-center justify-between">
               <p className="text-lg font-medium">Value: {tag.value}</p>
-              <div className="space-x-2">
+              <div className="space-x-2 flex">
                 <button
                   onClick={() => setEditMode(true)}
-                  className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-md"
+                  className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-xl"
                 >
                   Edit
                 </button>
                 <button
                   onClick={handleDelete}
-                  className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md"
+                  className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-xl"
                 >
                   Delete
                 </button>

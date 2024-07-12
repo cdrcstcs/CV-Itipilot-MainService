@@ -81,21 +81,21 @@ const AttractionPage = ({ attractionId }) => {
   };
 
   return (
-    <div className="bg-white shadow-lg rounded-lg p-6 space-y-4">
+    <div className="bg-white shadow-lg w-full rounded-lg p-6 space-y-4">
       {attraction ? (
         <div>
           <SingleImage imageId={attraction.imageId} className="w-full h-64 object-cover rounded-t-lg" />
           <div className="px-4 py-6">
             <h1 className="text-2xl font-bold mb-2">{attraction.name}</h1>
             <div className="space-y-2">
-              <p className="text-gray-600">Address: {attraction.address}</p>
-              <p className="text-gray-600">City: {attraction.city}</p>
-              <p className="text-gray-600">X: {attraction.x}</p>
-              <p className="text-gray-600">Y: {attraction.y}</p>
+              <p className="text-black">Address: {attraction.address}</p>
+              <p className="text-black">City: {attraction.city}</p>
+              <p className="text-black">X: {attraction.x}</p>
+              <p className="text-black">Y: {attraction.y}</p>
             </div>
             <div className="mt-4 space-x-2">
               {attraction.tagIds.map((tagId) => (
-                <TagPage key={tagId} tagId={tagId} className="inline-block bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm" />
+                <TagPage key={tagId} tagId={tagId} className="inline-block" />
               ))}
             </div>
             {editing ? (
@@ -109,9 +109,9 @@ const AttractionPage = ({ attractionId }) => {
                 <button onClick={handleEditAttraction} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">Save</button>
               </div>
             ) : (
-              <div className="mt-4 space-x-2">
-                <button onClick={() => setEditing(true)} className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">Edit Attraction</button>
-                <button onClick={handleDeleteAttraction} className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md">Delete Attraction</button>
+              <div className="mt-4 space-x-2 w-full flex justify-center">
+                <button onClick={() => setEditing(true)} className="bg-blue-500  hover:bg-blue-600 text-white px-4 py-2 rounded-xl">Edit Attraction</button>
+                <button onClick={handleDeleteAttraction} className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl">Delete Attraction</button>
               </div>
             )}
           </div>

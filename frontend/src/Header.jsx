@@ -1,33 +1,23 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useCookies } from './Cookies';
+import { useCookies } from 'react-cookie';
 
 const Header = () => {
   const [loggedIn, setLoggedIn] = useState(false);
-  const cookie = useCookies();
-  const token = cookie.get('usertoken');
-  const hiddenLinkRefs = useRef([]);
+  const [cookies, setCookie, removeCookie] = useCookies(['usertoken']);
 
   useEffect(() => {
-    setLoggedIn(token !== '');
-  }, [token]);
+    const usertoken = cookies.usertoken;
+    setLoggedIn(usertoken !== undefined && usertoken !== '');
+  }, [cookies]);
 
   const handleLogout = () => {
-    cookie.set('usertoken', '');
+    removeCookie('usertoken');
     setLoggedIn(false);
   };
 
-  const handleClick = (index) => {
-    hiddenLinkRefs.current[index].click();
-    replaceHistory(window.location.href);
-  };
-
-  const replaceHistory = (url) => {
-    window.history.replaceState({}, document.title, url);
-  };
-
   return (
-    <header className="bg-white mb-3 bg-cover p-2 border-4 border-red-600 bg-no-repeat px-5 py-4 rounded-3xl border-5  flex items-center justify-start gap-10 overflow-x-auto font-fantasy text-[ButtonHighlight] text-[17px] mt-5">
+    <header className="bg-white mb-3 bg-cover p-2 border-4 border-red-600 bg-no-repeat px-5 py-4 rounded-3xl border-5  flex items-center justify-start gap-10 overflow-x-auto hide-scrollbar font-fantasy text-[ButtonHighlight] text-[17px] mt-5">
       <div>
         <Link to="/search" className="text-[orangered] no-underline font-semibold">
           <img
@@ -58,28 +48,36 @@ const Header = () => {
           <Link to="/itineraries/user" className="text-[orangered] no-underline font-semibold">
             Your Itineraries
           </Link>
-          {[
-            { text: 'Social Media', url: 'http://localhost:5000' },
-            { text: 'Attraction Map', url: 'http://localhost:5600' },
-            { text: 'Weather', url: 'http://localhost:5700' },
-            { text: 'Note', url: 'http://localhost:5800' },
-            { text: 'Food', url: 'http://localhost:5174' },
-          ].map((link, index) => (
-            <div
-              key={index}
-              className="cursor-pointer bg-transparent text-[orangered] font-semibold"
-              onClick={() => handleClick(index)}
-            >
-              {link.text}
-              <a
-                href={link.url}
-                ref={(el) => (hiddenLinkRefs.current[index] = el)}
-                className="hidden"
-              >
-                Hidden Link
-              </a>
-            </div>
-          ))}
+          <a
+            href="http://localhost:5000"
+            className="text-[orangered] no-underline font-semibold"
+          >
+            Social Media
+          </a>
+          <a
+            href="http://localhost:5600"
+            className="text-[orangered] no-underline font-semibold"
+          >
+            Attraction Map
+          </a>
+          <a
+            href="http://localhost:5700"
+            className="text-[orangered] no-underline font-semibold"
+          >
+            Weather
+          </a>
+          <a
+            href="http://localhost:5800"
+            className="text-[orangered] no-underline font-semibold"
+          >
+            Note
+          </a>
+          <a
+            href="http://localhost:5174"
+            className="text-[orangered] no-underline font-semibold"
+          >
+            Food
+          </a>
         </>
       )}
     </header>

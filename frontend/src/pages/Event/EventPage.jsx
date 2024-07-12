@@ -81,24 +81,24 @@ const EventPage = ({ eventId }) => {
   return (
     <div className="bg-white rounded-lg shadow-lg">
       <h1 className="text-2xl font-bold mb-4">Event Details</h1>
-      <div className="space-y-4">
-        <div className="flex items-center space-x-4">
-          <span className="w-32 font-medium">Start Time:</span>
+      <div className="space-y-4 flex-col justify-center items-center">
+        <div className="flex items-center space-x-4 i">
+          <span className="w-32 font-medium text-black">Start Time:</span>
           <p>{event.startTime}</p>
         </div>
         <div className="flex items-center space-x-4">
-          <span className="w-32 font-medium">End Time:</span>
+          <span className="w-32 font-medium text-black">End Time:</span>
           <p>{event.endTime}</p>
         </div>
         <AttractionPage attractionId={event.attractionId}></AttractionPage>
         <div className="flex items-center space-x-4">
-          <span className="w-32 font-medium">Description:</span>
+          <span className="w-32 font-medium text-black">Description:</span>
           <p>{event.description}</p>
         </div>
         {editedEvent ? (
           <div className="space-y-4">
-            <div className="flex items-center space-x-4">
-              <span className="w-32 font-medium">Start Time:</span>
+            <div className="flex items-center justify-center space-x-4">
+              <span className="w-32 font-medium text-black">Start Time:</span>
               <input
                 type="datetime-local"
                 name="startTime"
@@ -108,7 +108,7 @@ const EventPage = ({ eventId }) => {
               />
             </div>
             <div className="flex items-center space-x-4">
-              <span className="w-32 font-medium">End Time:</span>
+              <span className="w-32 font-medium text-black">End Time:</span>
               <input
                 type="datetime-local"
                 name="endTime"
@@ -139,13 +139,13 @@ const EventPage = ({ eventId }) => {
           <div className="space-x-4">
             <button
               onClick={handleEditEvent}
-              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl"
             >
               Edit
             </button>
             <button
               onClick={handleDeleteEvent}
-              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md"
+              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl"
             >
               Delete
             </button>
