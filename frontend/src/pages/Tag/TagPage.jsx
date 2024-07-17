@@ -89,8 +89,8 @@ function TagPage({ tagId }) {
               </button>
             </div>
           ) : (
-            <div className="flex items-center justify-between">
-              <p className="text-lg font-medium">Value: {tag.value}</p>
+            <div className="flex-col items-center justify-between">
+              <p className="text-lg font-medium">Value: <br></br>{tag.value}</p>
               <div className="space-x-2 flex">
                 <button
                   onClick={() => setEditMode(true)}

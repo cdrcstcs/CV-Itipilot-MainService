@@ -86,7 +86,7 @@ const SavedItinerariesPage = ({itiId}) => {
         {itineraries.map((itinerary) => (
           <li
             key={itinerary._id}
-            className="flex-1 basis-[calc(30%-1.5rem)] m-3 overflow-auto"
+            className="mt-3 flex-1 basis-[calc(30%-1.5rem)] m-3 overflow-auto"
           >
             {editedItinerary && editedItinerary._id === itinerary._id ? (
               <div className="bg-white rounded-lg border-5 border-white p-4">

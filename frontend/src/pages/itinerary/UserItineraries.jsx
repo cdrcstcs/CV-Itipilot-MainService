@@ -122,8 +122,6 @@ const YourItinerariesPage = () => {
                 {itinerary.eventIds && itinerary.eventIds.map((eventId) => (
                   <EventPage key={eventId} eventId={eventId} />
                 ))}
-                <UserPage userId={itinerary.userId} />
-                <RatingPage ratingId={itinerary.ratingId} />
                 <div className="mt-4 space-x-2">
                   <button
                     className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded"

@@ -29,7 +29,7 @@ export const SingleImage = ({imageId}) => {
           <img
             src={`http://localhost:4000/${image}`}
             alt={image}
-            className="max-w-full h-auto rounded-lg shadow-md"
+            className="w-52 h-52 rounded-lg shadow-md"
           />
         </div>
       ) : (

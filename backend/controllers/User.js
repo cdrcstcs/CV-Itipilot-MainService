@@ -1,8 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
-
-const jwtSecret = 'fasefraw4r5r3wq45wdfgw34twdfg';
+import 'dotenv/config';
 
 // Create user
 async function createUser(req, res) {
@@ -40,7 +39,7 @@ async function loginUser(req, res) {
         return res.status(401).json({ message: 'Invalid credentials' });
       }
   
-      const token = jwt.sign({ userId: user._id }, jwtSecret);
+      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
       res.json({ user, token });
     } catch (error) {
       res.status(500).json({ message: error.message });

@@ -23,6 +23,7 @@ import Rating from './models/Rating.js';
 import Attraction from './models/Attraction.js';
 import Event from './models/Event.js';
 import Itinerary from './models/Itinerary.js';
+import 'dotenv/config';
 import { generateUsers, generateEvents, generateItineraries, generateImageData, generateTags, generateRatings, generateAttractions } from './data.js';
 const app = express();
 app.use(express.json());
@@ -31,15 +32,14 @@ app.use(cors({
   credentials: true,
   origin: true,
 }));
-const jwtSecret = 'fasefraw4r5r3wq45wdfgw34twdfg';
+console.log("hello");
 async function verifyToken(req, res, next) {
   return new Promise((resolve, reject) => {
     const token = req.cookies && req.cookies.usertoken; // Check if token exists in req.cookies
-    // console.log("ll"+token);
     if (!token) {
       reject(new Error('Token not found in cookies')); // Reject if token is not found
     } else {
-      jwt.verify(req.cookies.usertoken, jwtSecret, {}, (err, userData) => {
+      jwt.verify(req.cookies.usertoken, process.env.JWT_SECRET, {}, (err, userData) => {
         if (err) {
           reject(err); 
         } else {
@@ -108,9 +108,7 @@ app.get('/users/:id', verifyToken, getUser);
 app.put('/users', verifyToken, updateUser);
 app.get('/profile', verifyToken, getProfile);
 app.get('/search', searchItinerary);
-const MONGO_URL = "mongodb://localhost:27017/mongo-golang";
-const PORT = 4000;
-mongoose.connect(MONGO_URL).then(async () => {
+mongoose.connect(process.env.MONGO_URL).then(async () => {
   await Image.deleteMany();
   await User.deleteMany();
   await Tag.deleteMany();
@@ -125,5 +123,5 @@ mongoose.connect(MONGO_URL).then(async () => {
   await Attraction.insertMany(await generateAttractions());
   await Event.insertMany(await generateEvents());
   await Itinerary.insertMany(await generateItineraries());
-  app.listen(PORT, () => console.log(`Server running on PORT: ${PORT}`));
+  app.listen(process.env.PORT, () => console.log(`Server running on PORT: ${process.env.PORT}`));
 }).catch((error) => console.log(`${error} did not connect`));
